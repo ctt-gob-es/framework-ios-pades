@@ -2377,6 +2377,23 @@
 		833549212D0967C200865BB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833549202D0967C200865BB2 /* UIKit.framework */; };
 		833549242D09680200865BB2 /* PAdESSignatureUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 833549222D09680100865BB2 /* PAdESSignatureUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		833549252D09680200865BB2 /* PAdESSignatureUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 833549232D09680200865BB2 /* PAdESSignatureUtils.m */; };
+		8355BAD42D0C53FA0068467A /* PKCS1DecoderUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */; };
+		8355BAD52D0C561E0068467A /* PKCS1DecoderUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83F13D812D09928A00FE5227 /* Courier-Bold.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D702D09928A00FE5227 /* Courier-Bold.afm */; };
+		83F13D822D09928A00FE5227 /* Courier-BoldOblique.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D712D09928A00FE5227 /* Courier-BoldOblique.afm */; };
+		83F13D832D09928A00FE5227 /* Courier-Oblique.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D722D09928A00FE5227 /* Courier-Oblique.afm */; };
+		83F13D842D09928A00FE5227 /* Courier.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D732D09928A00FE5227 /* Courier.afm */; };
+		83F13D852D09928A00FE5227 /* glyphlist.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D742D09928A00FE5227 /* glyphlist.txt */; };
+		83F13D862D09928A00FE5227 /* Helvetica-Bold.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D752D09928A00FE5227 /* Helvetica-Bold.afm */; };
+		83F13D872D09928A00FE5227 /* Helvetica-BoldOblique.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D762D09928A00FE5227 /* Helvetica-BoldOblique.afm */; };
+		83F13D882D09928A00FE5227 /* Helvetica-Oblique.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D772D09928A00FE5227 /* Helvetica-Oblique.afm */; };
+		83F13D892D09928A00FE5227 /* Helvetica.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D782D09928A00FE5227 /* Helvetica.afm */; };
+		83F13D8A2D09928A00FE5227 /* Symbol.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D792D09928A00FE5227 /* Symbol.afm */; };
+		83F13D8B2D09928A00FE5227 /* Times-Bold.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7A2D09928A00FE5227 /* Times-Bold.afm */; };
+		83F13D8C2D09928A00FE5227 /* Times-BoldItalic.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7B2D09928A00FE5227 /* Times-BoldItalic.afm */; };
+		83F13D8D2D09928A00FE5227 /* Times-Italic.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7C2D09928A00FE5227 /* Times-Italic.afm */; };
+		83F13D8E2D09928A00FE5227 /* Times-Roman.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7D2D09928A00FE5227 /* Times-Roman.afm */; };
+		83F13D8F2D09928A00FE5227 /* ZapfDingbats.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7E2D09928A00FE5227 /* ZapfDingbats.afm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -4751,6 +4768,23 @@
 		833549202D0967C200865BB2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		833549222D09680100865BB2 /* PAdESSignatureUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAdESSignatureUtils.h; sourceTree = "<group>"; };
 		833549232D09680200865BB2 /* PAdESSignatureUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAdESSignatureUtils.m; sourceTree = "<group>"; };
+		8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKCS1DecoderUtils.h; sourceTree = "<group>"; };
+		8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKCS1DecoderUtils.m; sourceTree = "<group>"; };
+		83F13D702D09928A00FE5227 /* Courier-Bold.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-Bold.afm"; sourceTree = "<group>"; };
+		83F13D712D09928A00FE5227 /* Courier-BoldOblique.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-BoldOblique.afm"; sourceTree = "<group>"; };
+		83F13D722D09928A00FE5227 /* Courier-Oblique.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-Oblique.afm"; sourceTree = "<group>"; };
+		83F13D732D09928A00FE5227 /* Courier.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Courier.afm; sourceTree = "<group>"; };
+		83F13D742D09928A00FE5227 /* glyphlist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = glyphlist.txt; sourceTree = "<group>"; };
+		83F13D752D09928A00FE5227 /* Helvetica-Bold.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Helvetica-Bold.afm"; sourceTree = "<group>"; };
+		83F13D762D09928A00FE5227 /* Helvetica-BoldOblique.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Helvetica-BoldOblique.afm"; sourceTree = "<group>"; };
+		83F13D772D09928A00FE5227 /* Helvetica-Oblique.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Helvetica-Oblique.afm"; sourceTree = "<group>"; };
+		83F13D782D09928A00FE5227 /* Helvetica.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Helvetica.afm; sourceTree = "<group>"; };
+		83F13D792D09928A00FE5227 /* Symbol.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Symbol.afm; sourceTree = "<group>"; };
+		83F13D7A2D09928A00FE5227 /* Times-Bold.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Times-Bold.afm"; sourceTree = "<group>"; };
+		83F13D7B2D09928A00FE5227 /* Times-BoldItalic.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Times-BoldItalic.afm"; sourceTree = "<group>"; };
+		83F13D7C2D09928A00FE5227 /* Times-Italic.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Times-Italic.afm"; sourceTree = "<group>"; };
+		83F13D7D2D09928A00FE5227 /* Times-Roman.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Times-Roman.afm"; sourceTree = "<group>"; };
+		83F13D7E2D09928A00FE5227 /* ZapfDingbats.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ZapfDingbats.afm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4789,6 +4823,8 @@
 				833549222D09680100865BB2 /* PAdESSignatureUtils.h */,
 				833549232D09680200865BB2 /* PAdESSignatureUtils.m */,
 				8335360F2D087EDC00865BB2 /* PAdESSignature.h */,
+				8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */,
+				8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */,
 			);
 			path = PAdESSignature;
 			sourceTree = "<group>";
@@ -4796,6 +4832,7 @@
 		833536162D09673F00865BB2 /* J2OBJC */ = {
 			isa = PBXGroup;
 			children = (
+				83F13D802D09928A00FE5227 /* resources */,
 				833536172D09673F00865BB2 /* src */,
 			);
 			path = J2OBJC;
@@ -8294,6 +8331,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		83F13D7F2D09928A00FE5227 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				83F13D702D09928A00FE5227 /* Courier-Bold.afm */,
+				83F13D712D09928A00FE5227 /* Courier-BoldOblique.afm */,
+				83F13D722D09928A00FE5227 /* Courier-Oblique.afm */,
+				83F13D732D09928A00FE5227 /* Courier.afm */,
+				83F13D742D09928A00FE5227 /* glyphlist.txt */,
+				83F13D752D09928A00FE5227 /* Helvetica-Bold.afm */,
+				83F13D762D09928A00FE5227 /* Helvetica-BoldOblique.afm */,
+				83F13D772D09928A00FE5227 /* Helvetica-Oblique.afm */,
+				83F13D782D09928A00FE5227 /* Helvetica.afm */,
+				83F13D792D09928A00FE5227 /* Symbol.afm */,
+				83F13D7A2D09928A00FE5227 /* Times-Bold.afm */,
+				83F13D7B2D09928A00FE5227 /* Times-BoldItalic.afm */,
+				83F13D7C2D09928A00FE5227 /* Times-Italic.afm */,
+				83F13D7D2D09928A00FE5227 /* Times-Roman.afm */,
+				83F13D7E2D09928A00FE5227 /* ZapfDingbats.afm */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		83F13D802D09928A00FE5227 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				83F13D7F2D09928A00FE5227 /* fonts */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -9209,6 +9276,7 @@
 				833543B72D09674B00865BB2 /* SecP160K1Curve.h in Headers */,
 				833543D42D09674B00865BB2 /* SecT571FieldElement.h in Headers */,
 				8335484A2D09674D00865BB2 /* PdfArray.h in Headers */,
+				8355BAD52D0C561E0068467A /* PKCS1DecoderUtils.h in Headers */,
 				833541232D09674A00865BB2 /* OriginatorIdentifierOrKey.h in Headers */,
 				8335474D2D09674D00865BB2 /* PdfPageLabels.h in Headers */,
 				833541112D09674A00865BB2 /* KeyTransRecipientInfo.h in Headers */,
@@ -9547,6 +9615,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F13D8A2D09928A00FE5227 /* Symbol.afm in Resources */,
+				83F13D8F2D09928A00FE5227 /* ZapfDingbats.afm in Resources */,
+				83F13D812D09928A00FE5227 /* Courier-Bold.afm in Resources */,
+				83F13D862D09928A00FE5227 /* Helvetica-Bold.afm in Resources */,
+				83F13D8E2D09928A00FE5227 /* Times-Roman.afm in Resources */,
+				83F13D882D09928A00FE5227 /* Helvetica-Oblique.afm in Resources */,
+				83F13D8C2D09928A00FE5227 /* Times-BoldItalic.afm in Resources */,
+				83F13D832D09928A00FE5227 /* Courier-Oblique.afm in Resources */,
+				83F13D8B2D09928A00FE5227 /* Times-Bold.afm in Resources */,
+				83F13D842D09928A00FE5227 /* Courier.afm in Resources */,
+				83F13D892D09928A00FE5227 /* Helvetica.afm in Resources */,
+				83F13D8D2D09928A00FE5227 /* Times-Italic.afm in Resources */,
+				83F13D822D09928A00FE5227 /* Courier-BoldOblique.afm in Resources */,
+				83F13D852D09928A00FE5227 /* glyphlist.txt in Resources */,
+				83F13D872D09928A00FE5227 /* Helvetica-BoldOblique.afm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9953,6 +10036,7 @@
 				833543162D09674A00865BB2 /* WNafUtil.m in Sources */,
 				833548C92D09674E00865BB2 /* XmpWriter.m in Sources */,
 				833547492D09674D00865BB2 /* PdfNumberTree.m in Sources */,
+				8355BAD42D0C53FA0068467A /* PKCS1DecoderUtils.m in Sources */,
 				8335473E2D09674D00865BB2 /* PdfTransparencyGroup.m in Sources */,
 				833548C12D09674E00865BB2 /* XmlPeer.m in Sources */,
 				83353FFC2D09674900865BB2 /* DERVisibleString.m in Sources */,

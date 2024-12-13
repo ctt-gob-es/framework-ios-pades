@@ -79,7 +79,7 @@ typedef void (^SignPdfCompletionHandler)(NSString * result, NSError * error);
 	
 	EsGobAfirmaIosPadesSignerWrapper *signerWrapper = [[EsGobAfirmaIosPadesSignerWrapper alloc] init];
 	
-	//We don´t know the sign algorithm to use so we pass nil	
+	//We don´t know the sign algorithm to use so we pass nil
 	EsGobAfirmaIosSignatureResult *result = [signerWrapper presignWithByteArray:iosPdfData
 																   withNSString:signAlgorithm
 										   withJavaSecurityCertCertificateArray:pvt
@@ -184,6 +184,9 @@ typedef void (^SignPdfCompletionHandler)(NSString * result, NSError * error);
 	NSData *data = [NSData dataWithBytes:byteArray->buffer_ length:byteArray->size_];
 	NSString *base64String = [data base64EncodedStringWithOptions:0];
 	return base64String;
+}
+
+- (void)postSignPdfWithData:(NSData *)pdfData signAlgorithm:(NSString *)signAlgorithm privateKey:(SecKeyRef)privateKey certificate:(SecCertificateRef)certificate certificateAlgorithm:(NSString *)certificateAlgorithm extraParams:(NSDictionary *)extraParams presignResult:(EsGobAfirmaIosPresignResult *)presignResult pkcs1:(IOSByteArray *)pkcs1 completion:(__strong SignPdfCompletionHandler)completion {
 }
 
 @end
