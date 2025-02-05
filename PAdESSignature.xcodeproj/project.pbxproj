@@ -2374,11 +2374,15 @@
 		8335491C2D09674E00865BB2 /* SimpleTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 83353FDE2D09674900865BB2 /* SimpleTable.m */; };
 		8335491D2D09674E00865BB2 /* RectangleReadOnly.h in Headers */ = {isa = PBXBuildFile; fileRef = 83353FDF2D09674900865BB2 /* RectangleReadOnly.h */; };
 		8335491E2D09674E00865BB2 /* Row.h in Headers */ = {isa = PBXBuildFile; fileRef = 83353FE02D09674900865BB2 /* Row.h */; };
-		833549212D0967C200865BB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833549202D0967C200865BB2 /* UIKit.framework */; };
 		833549242D09680200865BB2 /* PAdESSignatureUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 833549222D09680100865BB2 /* PAdESSignatureUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		833549252D09680200865BB2 /* PAdESSignatureUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 833549232D09680200865BB2 /* PAdESSignatureUtils.m */; };
 		8355BAD42D0C53FA0068467A /* PKCS1DecoderUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */; };
 		8355BAD52D0C561E0068467A /* PKCS1DecoderUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		835E0E4D2D5364AC00AED45A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835E0E4C2D5364AC00AED45A /* UIKit.framework */; };
+		83EF820B2D534CAF0008920A /* PresignResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EF820A2D534CAE0008920A /* PresignResponse.m */; };
+		83EF820D2D534CC00008920A /* PresignResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 83EF820C2D534CBA0008920A /* PresignResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83EF82102D534CDE0008920A /* PostsignResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EF820F2D534CDE0008920A /* PostsignResponse.m */; };
+		83EF82112D534CE10008920A /* PostsignResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 83EF820E2D534CD20008920A /* PostsignResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		83F13D812D09928A00FE5227 /* Courier-Bold.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D702D09928A00FE5227 /* Courier-Bold.afm */; };
 		83F13D822D09928A00FE5227 /* Courier-BoldOblique.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D712D09928A00FE5227 /* Courier-BoldOblique.afm */; };
 		83F13D832D09928A00FE5227 /* Courier-Oblique.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D722D09928A00FE5227 /* Courier-Oblique.afm */; };
@@ -4765,11 +4769,15 @@
 		83353FDE2D09674900865BB2 /* SimpleTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleTable.m; sourceTree = "<group>"; };
 		83353FDF2D09674900865BB2 /* RectangleReadOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleReadOnly.h; sourceTree = "<group>"; };
 		83353FE02D09674900865BB2 /* Row.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Row.h; sourceTree = "<group>"; };
-		833549202D0967C200865BB2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		833549222D09680100865BB2 /* PAdESSignatureUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAdESSignatureUtils.h; sourceTree = "<group>"; };
 		833549232D09680200865BB2 /* PAdESSignatureUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAdESSignatureUtils.m; sourceTree = "<group>"; };
 		8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKCS1DecoderUtils.h; sourceTree = "<group>"; };
 		8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKCS1DecoderUtils.m; sourceTree = "<group>"; };
+		835E0E4C2D5364AC00AED45A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		83EF820A2D534CAE0008920A /* PresignResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PresignResponse.m; sourceTree = "<group>"; };
+		83EF820C2D534CBA0008920A /* PresignResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PresignResponse.h; sourceTree = "<group>"; };
+		83EF820E2D534CD20008920A /* PostsignResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostsignResponse.h; sourceTree = "<group>"; };
+		83EF820F2D534CDE0008920A /* PostsignResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostsignResponse.m; sourceTree = "<group>"; };
 		83F13D702D09928A00FE5227 /* Courier-Bold.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-Bold.afm"; sourceTree = "<group>"; };
 		83F13D712D09928A00FE5227 /* Courier-BoldOblique.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-BoldOblique.afm"; sourceTree = "<group>"; };
 		83F13D722D09928A00FE5227 /* Courier-Oblique.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-Oblique.afm"; sourceTree = "<group>"; };
@@ -4792,7 +4800,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				833549212D0967C200865BB2 /* UIKit.framework in Frameworks */,
+				835E0E4D2D5364AC00AED45A /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4825,6 +4833,10 @@
 				8335360F2D087EDC00865BB2 /* PAdESSignature.h */,
 				8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */,
 				8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */,
+				83EF820C2D534CBA0008920A /* PresignResponse.h */,
+				83EF820A2D534CAE0008920A /* PresignResponse.m */,
+				83EF820E2D534CD20008920A /* PostsignResponse.h */,
+				83EF820F2D534CDE0008920A /* PostsignResponse.m */,
 			);
 			path = PAdESSignature;
 			sourceTree = "<group>";
@@ -8326,7 +8338,7 @@
 		8335491F2D0967C200865BB2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				833549202D0967C200865BB2 /* UIKit.framework */,
+				835E0E4C2D5364AC00AED45A /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -9267,12 +9279,14 @@
 				8335477B2D09674D00865BB2 /* JBIG2Image.h in Headers */,
 				833543242D09674A00865BB2 /* AbstractECMultiplier.h in Headers */,
 				833547FD2D09674D00865BB2 /* PdfString.h in Headers */,
+				83EF820D2D534CC00008920A /* PresignResponse.h in Headers */,
 				833546EF2D09674C00865BB2 /* RtfElementInterface.h in Headers */,
 				8335487C2D09674E00865BB2 /* PdfMediaClipData.h in Headers */,
 				8335447E2D09674B00865BB2 /* OriginatorInformation.h in Headers */,
 				8335441D2D09674B00865BB2 /* FiniteFields.h in Headers */,
 				833545EF2D09674C00865BB2 /* KeyStoreDialogManager.h in Headers */,
 				833545532D09674B00865BB2 /* NativeImageFormat.h in Headers */,
+				83EF82112D534CE10008920A /* PostsignResponse.h in Headers */,
 				833543B72D09674B00865BB2 /* SecP160K1Curve.h in Headers */,
 				833543D42D09674B00865BB2 /* SecT571FieldElement.h in Headers */,
 				8335484A2D09674D00865BB2 /* PdfArray.h in Headers */,
@@ -10575,6 +10589,7 @@
 				8335438F2D09674B00865BB2 /* SecT571Field.m in Sources */,
 				833548872D09674E00865BB2 /* PdfXConformance.m in Sources */,
 				8335414B2D09674A00865BB2 /* ESSCertID.m in Sources */,
+				83EF820B2D534CAF0008920A /* PresignResponse.m in Sources */,
 				8335429E2D09674A00865BB2 /* BCX509SignatureUtil.m in Sources */,
 				833542172D09674A00865BB2 /* MD4Digest.m in Sources */,
 				833541A42D09674A00865BB2 /* BCSignedData.m in Sources */,
@@ -10655,6 +10670,7 @@
 				833546392D09674C00865BB2 /* DerInputStream.m in Sources */,
 				833547F32D09674D00865BB2 /* ArabicLigaturizer.m in Sources */,
 				8335483A2D09674D00865BB2 /* PdfEncodings.m in Sources */,
+				83EF82102D534CDE0008920A /* PostsignResponse.m in Sources */,
 				833541392D09674A00865BB2 /* KEKIdentifier.m in Sources */,
 				833543AC2D09674B00865BB2 /* SecP384R1Curve.m in Sources */,
 				8335448F2D09674B00865BB2 /* NullOutputStream.m in Sources */,
@@ -11010,6 +11026,7 @@
 		833536142D087EDC00865BB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -11026,6 +11043,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11034,12 +11052,14 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USE_HEADERMAP = NO;
 			};
 			name = Debug;
 		};
 		833536152D087EDC00865BB2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -11056,6 +11076,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11064,6 +11085,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USE_HEADERMAP = NO;
 			};
 			name = Release;
 		};
