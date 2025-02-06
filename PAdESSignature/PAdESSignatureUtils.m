@@ -30,14 +30,6 @@
 
 typedef void (^SignPdfCompletionHandler)(NSString * result, NSError * error);
 
-/*- (instancetype)initWithDelegate:(id<PadesManagerDelegate>)delegate {
-	self = [super init];
-	if (self) {
-		_delegate = delegate; // Assign delegate
-	}
-	return self;
-}*/
-
 - (void)signPdfWithData:(NSData *)pdfData
 		  signAlgorithm:(NSString *)signAlgorithm
 			 privateKey:(SecKeyRef)privateKey
@@ -63,7 +55,6 @@ typedef void (^SignPdfCompletionHandler)(NSString * result, NSError * error);
 	if(result.getErrorCode == -1) {
 		IOSByteArray *byteArray = [result getSignature];
 		NSString *base64String = [self convertIOSByteArrayToBase64String:byteArray];
-		printf("Signature generated in device : %s\n", [base64String UTF8String]);
 		completion(base64String, nil);
 	} else {
 		NSInteger errorCode = [result getErrorCode];
@@ -97,16 +88,13 @@ EsGobAfirmaIosPresignResult* testPresignResult;
 		NSError *error = [NSError errorWithDomain:@"DNIePresignError"
 											 code:errorCode
 										 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"DNIe presign failed with error code %ld", (long)errorCode]}];
-		NSLog(@"DNIe presign failed: %@", error.localizedDescription);
-		return [[PresignResponse alloc] initWithData:nil error:error];
+		return [[PresignResponse alloc] initWithData:nil error:error retry:presignResult.canRetry];
 	}
 
 	testPresignResult = presignResult;
-
 	NSData *presignDataResult = [[[presignResult getPreSignature] getSign] toNSData];
-	NSLog(@"DNIe presign successful");
-
-	return [[PresignResponse alloc] initWithData:presignDataResult error:nil];
+	
+	return [[PresignResponse alloc] initWithData:presignDataResult error:nil retry:false];
 }
 
 - (PostsignResponse *)dniePostsignPdfWithData:(NSData *)pdfData
@@ -119,8 +107,7 @@ EsGobAfirmaIosPresignResult* testPresignResult;
 		NSError *error = [NSError errorWithDomain:@"DNIePostsignError"
 											 code:-2
 										 userInfo:@{NSLocalizedDescriptionKey: @"Postsign failed: No valid presign result available"}];
-		NSLog(@"DNIe postsign error: %@", error.localizedDescription);
-		return [[PostsignResponse alloc] initWithSignedString:nil error:error];
+		return [[PostsignResponse alloc] initWithSignedString:nil error:error retry:testPresignResult.canRetry];
 	}
 
 	IOSByteArray *iosPdfData = [self dataToIOSByteArray:pdfData];
@@ -142,68 +129,14 @@ EsGobAfirmaIosPresignResult* testPresignResult;
 		NSError *error = [NSError errorWithDomain:@"DNIePostsignError"
 											 code:errorCode
 										 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"DNIe postsign failed with error code %ld", (long)errorCode]}];
-		NSLog(@"DNIe postsign error: %@", error.localizedDescription);
-		return [[PostsignResponse alloc] initWithSignedString:nil error:error];
+		return [[PostsignResponse alloc] initWithSignedString:nil error:error retry:false];
 	}
 
 	IOSByteArray *byteArray = [postsignResult getSignature];
 	NSString *base64String = [self convertIOSByteArrayToBase64String:byteArray];
 
-	return [[PostsignResponse alloc] initWithSignedString:base64String error:nil];
+	return [[PostsignResponse alloc] initWithSignedString:base64String error:nil retry:false];
 }
-
-
-/*- (void)dnieSignPdfWithData:(NSData *)pdfData
-			  signAlgorithm:(NSString *)signAlgorithm
-				 privateKey:(SecKeyRef)privateKey
-				certificate:(SecCertificateRef)certificate
-	   certificateAlgorithm:(NSString *)certificateAlgorithm
-				extraParams:(NSDictionary *)extraParams
-				 completion:(SignPdfCompletionHandler)completion {
-	IOSByteArray *iosPdfData = [self dataToIOSByteArray:pdfData];
-	JavaSecurityPrivateKey *pvt = [self obtainPrivateKey:privateKey withNSString:certificateAlgorithm];
-	IOSObjectArray *certChainArray = [self obtainCertificateChain:certificate];
-	JavaUtilProperties *javaProperties = [self obtainExtraParams:extraParams];
-	EsGobAfirmaIosPadesSignerWrapper *signerWrapper = [[EsGobAfirmaIosPadesSignerWrapper alloc] init];
-	EsGobAfirmaIosPresignResult *presignResult = [signerWrapper presignWithByteArray:iosPdfData
-																   withNSString:signAlgorithm
-										   withJavaSecurityCertCertificateArray:certChainArray
-														 withJavaUtilProperties:javaProperties];
-	
-	if(presignResult.getErrorCode == -1) {
-		if (self.delegate) {
-			NSData *presignDataResult = [[[presignResult getPreSignature] getSign] toNSData];
-			[self.delegate generatePKCS1WithPreSignResult: presignDataResult completion:^(NSData *pkcs1) {
-				IOSByteArray *convertedPKCS1 = [self dataToIOSByteArray:pkcs1];
-				EsGobAfirmaIosSignatureResult *result = [signerWrapper postsignWithByteArray:iosPdfData
-															 withEsGobAfirmaIosPresignResult:presignResult
-																			   withByteArray:convertedPKCS1
-																				withNSString:signAlgorithm
-														withJavaSecurityCertCertificateArray:certChainArray
-																	  withJavaUtilProperties:javaProperties];
-				
-				if(result.getErrorCode == -1) {
-					IOSByteArray *byteArray = [result getSignature];
-					NSString *base64String = [self convertIOSByteArrayToBase64String:byteArray];
-					printf("Signature generated in device : %s\n", [base64String UTF8String]);
-					completion(base64String, nil);
-				} else {
-					NSInteger errorCode = [result getErrorCode];
-					NSError *error = [NSError errorWithDomain:@"Error Signing PDF"
-														 code:errorCode
-													 userInfo:@{NSLocalizedDescriptionKey: @"Signing failed"}];
-					completion(nil, error);
-				}
-			}];
-		}
-	} else {
-		NSInteger errorCode = [presignResult getErrorCode];
-		NSError *error = [NSError errorWithDomain:@"Error Signing PDF"
-											 code:errorCode
-										 userInfo:@{NSLocalizedDescriptionKey: @"Signing failed"}];
-		completion(nil, error);
-	}
-}*/
 
 - (IOSByteArray *)dataToIOSByteArray:(NSData *)data {
 	return [IOSByteArray arrayWithBytes:[data bytes] count:[data length]];
@@ -219,7 +152,6 @@ EsGobAfirmaIosPresignResult* testPresignResult;
 	if (attributes) {
 		CFRelease(attributes);
 	}
-	
 	return pvt;
 }
 

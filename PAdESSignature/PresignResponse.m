@@ -9,11 +9,14 @@
 
 @implementation PresignResponse
 
-- (instancetype)initWithData:(nullable NSData *)data error:(nullable NSError *)error {
+- (instancetype)initWithData:(nullable NSData *)data
+					   error:(nullable NSError *)error
+					   retry:(BOOL)retry {
 	self = [super init];
 	if (self) {
 		_data = data;
 		_error = error;
+		_retry = retry;
 	}
 	return self;
 }

@@ -9,11 +9,14 @@
 
 @implementation PostsignResponse
 
-- (instancetype)initWithSignedString:(nullable NSString *)signedString error:(nullable NSError *)error {
+- (instancetype)initWithSignedString:(nullable NSString *)signedString
+							   error:(nullable NSError *)error
+							   retry:(BOOL)retry {
 	self = [super init];
 	if (self) {
-		_signedString = signedString;
+		_signedString = [signedString copy];
 		_error = error;
+		_retry = retry;
 	}
 	return self;
 }
