@@ -25,21 +25,25 @@
 #include "java/security/cert/CertificateFactory.h"
 #include "java/security/cert/Certificate.h"
 #include "java/security/PrivateKey.h"
+#include "SignatureAlgorithmType.h"
+
 
 @implementation PAdESSignatureUtils
 
 typedef void (^SignPdfCompletionHandler)(NSString * result, NSError * error);
 
 - (void)signPdfWithData:(NSData *)pdfData
-		  signAlgorithm:(NSString *)signAlgorithm
+      hashAlgorithmType:(HashAlgorithmType)hashAlgorithmType
 			 privateKey:(SecKeyRef)privateKey
 			certificate:(SecCertificateRef)certificate
-   certificateAlgorithm:(NSString *)certificateAlgorithm
 			extraParams:(NSDictionary *)extraParams
 			 completion:(SignPdfCompletionHandler)completion {
 	
+    SignatureAlgorithmType certificateAlgorithm = [self getCertificateAlgorithm:certificate];
+    NSString *signAlgorithm = [self getSignAlgorithm:hashAlgorithmType withSignatureAlgorithmType:certificateAlgorithm];
+    
 	IOSByteArray *iosPdfData = [self dataToIOSByteArray:pdfData];
-	JavaSecurityPrivateKey *pvt = [self obtainPrivateKey:privateKey withNSString:certificateAlgorithm];
+	id<JavaSecurityPrivateKey> pvt = [self obtainPrivateKey:privateKey withNSString:certificateAlgorithm];
 	IOSObjectArray *certChainArray = [self obtainCertificateChain:certificate];
 	JavaUtilProperties *javaProperties = [self obtainExtraParams:extraParams];
 	
@@ -68,20 +72,19 @@ typedef void (^SignPdfCompletionHandler)(NSString * result, NSError * error);
 EsGobAfirmaIosPresignResult* testPresignResult;
 
 - (PresignResponse *)dniePresignPdfWithData:(NSData *)pdfData
-							  signAlgorithm:(NSString *)signAlgorithm
+                          hashAlgorithmType:(HashAlgorithmType)hashAlgorithmType
 								certificate:(SecCertificateRef)certificate
-					   certificateAlgorithm:(NSString *)certificateAlgorithm
 							   extraParams:(NSDictionary *)extraParams {
 
+    SignatureAlgorithmType certificateAlgorithm = [self getCertificateAlgorithm:certificate];
+    NSString *signAlgorithm = [self getSignAlgorithm:hashAlgorithmType withSignatureAlgorithmType:certificateAlgorithm];
+    
 	IOSByteArray *iosPdfData = [self dataToIOSByteArray:pdfData];
 	IOSObjectArray *certChainArray = [self obtainCertificateChain:certificate];
 	JavaUtilProperties *javaProperties = [self obtainExtraParams:extraParams];
 
 	EsGobAfirmaIosPadesSignerWrapper *signerWrapper = [[EsGobAfirmaIosPadesSignerWrapper alloc] init];
-	EsGobAfirmaIosPresignResult *presignResult = [signerWrapper presignWithByteArray:iosPdfData
-																	   withNSString:signAlgorithm
-											   withJavaSecurityCertCertificateArray:certChainArray
-															 withJavaUtilProperties:javaProperties];
+	EsGobAfirmaIosPresignResult *presignResult = [signerWrapper presignWithByteArray:iosPdfData withNSString:signAlgorithm withJavaSecurityCertCertificateArray:certChainArray withJavaUtilProperties:javaProperties];
 
 	if (!presignResult || presignResult.getErrorCode != -1) {
 		NSInteger errorCode = presignResult ? presignResult.getErrorCode : -9999;
@@ -98,12 +101,15 @@ EsGobAfirmaIosPresignResult* testPresignResult;
 }
 
 - (PostsignResponse *)dniePostsignPdfWithData:(NSData *)pdfData
-								signAlgorithm:(NSString *)signAlgorithm
+                            hashAlgorithmType:(HashAlgorithmType)hashAlgorithmType
 								  certificate:(SecCertificateRef)certificate
-						 certificateAlgorithm:(NSString *)certificateAlgorithm
 								 extraParams:(NSDictionary *)extraParams
 									   pkcs1:(NSData *)pkcs1 {
-	if (!testPresignResult) {
+    
+    SignatureAlgorithmType certificateAlgorithm = [self getCertificateAlgorithm:certificate];
+    NSString *signAlgorithm = [self getSignAlgorithm:hashAlgorithmType withSignatureAlgorithmType:certificateAlgorithm];
+    
+    if (!testPresignResult) {
 		NSError *error = [NSError errorWithDomain:@"DNIePostsignError"
 											 code:-2
 										 userInfo:@{NSLocalizedDescriptionKey: @"Postsign failed: No valid presign result available"}];
@@ -117,12 +123,7 @@ EsGobAfirmaIosPresignResult* testPresignResult;
 	EsGobAfirmaIosPadesSignerWrapper *signerWrapper = [[EsGobAfirmaIosPadesSignerWrapper alloc] init];
 
 	IOSByteArray *convertedPKCS1 = [self dataToIOSByteArray:pkcs1];
-	EsGobAfirmaIosSignatureResult *postsignResult = [signerWrapper postsignWithByteArray:iosPdfData
-													 withEsGobAfirmaIosPresignResult:testPresignResult
-																	   withByteArray:convertedPKCS1
-																		withNSString:signAlgorithm
-											  withJavaSecurityCertCertificateArray:certChainArray
-															withJavaUtilProperties:javaProperties];
+	EsGobAfirmaIosSignatureResult *postsignResult = [signerWrapper postsignWithByteArray:iosPdfData withEsGobAfirmaIosPresignResult:testPresignResult withByteArray:convertedPKCS1 withNSString:signAlgorithm withJavaSecurityCertCertificateArray:certChainArray withJavaUtilProperties:javaProperties];
 
 	if (!postsignResult || postsignResult.getErrorCode != -1) {
 		NSInteger errorCode = postsignResult ? postsignResult.getErrorCode : -9999;
@@ -142,7 +143,7 @@ EsGobAfirmaIosPresignResult* testPresignResult;
 	return [IOSByteArray arrayWithBytes:[data bytes] count:[data length]];
 }
 
-- (JavaSecurityPrivateKey *)obtainPrivateKey:(SecKeyRef)privateKey withNSString:(NSString *)algorithm {
+- (id<JavaSecurityPrivateKey>)obtainPrivateKey:(SecKeyRef)privateKey withNSString:(NSString *)algorithm {
 	CFDictionaryRef attributes = SecKeyCopyAttributes(privateKey);
 	NSData *privateKeyNSData = CFDictionaryGetValue(attributes, kSecValueData);
 	IOSByteArray *privateKeyData = [IOSByteArray arrayWithBytes:[privateKeyNSData bytes] count:[privateKeyNSData length]];
@@ -183,6 +184,82 @@ EsGobAfirmaIosPresignResult* testPresignResult;
 	NSData *data = [NSData dataWithBytes:byteArray->buffer_ length:byteArray->size_];
 	NSString *base64String = [data base64EncodedStringWithOptions:0];
 	return base64String;
+}
+
+- (NSString *) getSignAlgorithm:(HashAlgorithmType) hashAlgorithmType withSignatureAlgorithmType:(SignatureAlgorithmType) signatureAlgorithmType {
+    
+    NSString *prefix = HashAlgorithmTypeSHA256;
+    if (hashAlgorithmType != nil) {
+        prefix = hashAlgorithmType;
+    }
+    
+    NSString *suffix = @"withRSA";
+    if (signatureAlgorithmType != nil && [signatureAlgorithmType isEqualToString: SignatureAlgorithmTypeRSA]) {
+        suffix = @"withRSA";
+    } else if (signatureAlgorithmType != nil && [signatureAlgorithmType isEqualToString: SignatureAlgorithmTypeEC]) {
+        suffix = @"withECDSA";
+    }
+    
+    return [NSString stringWithFormat:@"%@%@", prefix, suffix];
+}
+
+- (SignatureAlgorithmType)getCertificateAlgorithm:(SecCertificateRef) certificate {
+    if (!certificate) {
+        NSLog(@"Invalid certificate reference");
+        return nil;
+    }
+
+    CFDataRef certificateData = SecCertificateCopyData(certificate);
+    if (!certificateData) {
+        NSLog(@"Unable to extract certificate data");
+        return nil;
+    }
+
+    SecCertificateRef certificateRef = SecCertificateCreateWithData(NULL, certificateData);
+    CFRelease(certificateData);
+    
+    if (!certificateRef) {
+        NSLog(@"Unable to create certificate reference");
+        return nil;
+    }
+
+    SecKeyRef publicKey = SecCertificateCopyKey(certificateRef);
+    CFRelease(certificateRef);
+    
+    if (!publicKey) {
+        NSLog(@"Unable to extract public key from certificate");
+        return nil;
+    }
+
+    CFDictionaryRef keyAttributes = SecKeyCopyAttributes(publicKey);
+    CFRelease(publicKey);
+
+    if (!keyAttributes) {
+        NSLog(@"Unable to extract key attributes");
+        return nil;
+    }
+
+    CFStringRef keyType = CFDictionaryGetValue(keyAttributes, kSecAttrKeyType);
+    CFRelease(keyAttributes);
+
+    if (keyType) {
+        if (CFStringCompare(keyType, kSecAttrKeyTypeRSA, 0) == kCFCompareEqualTo) {
+            return SignatureAlgorithmTypeRSA;
+        } else if (CFStringCompare(keyType, kSecAttrKeyTypeEC, 0) == kCFCompareEqualTo) {
+            return SignatureAlgorithmTypeEC;
+        } else {
+            return nil;
+        }
+    }
+
+    return nil;
+}
+
+- (NSString *) getSignAlgorithm:(HashAlgorithmType)hashAlgorithmType
+                withCertificate:(SecCertificateRef)certificate {
+    SignatureAlgorithmType certificateAlgorithm = [self getCertificateAlgorithm:certificate];
+    return [self getSignAlgorithm:hashAlgorithmType withSignatureAlgorithmType:certificateAlgorithm];
+    
 }
 
 @end

@@ -2398,6 +2398,10 @@
 		83F13D8D2D09928A00FE5227 /* Times-Italic.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7C2D09928A00FE5227 /* Times-Italic.afm */; };
 		83F13D8E2D09928A00FE5227 /* Times-Roman.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7D2D09928A00FE5227 /* Times-Roman.afm */; };
 		83F13D8F2D09928A00FE5227 /* ZapfDingbats.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7E2D09928A00FE5227 /* ZapfDingbats.afm */; };
+		A0DD2BE12D5BA7DF0025138A /* HashAlgorithmType.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DD2BE02D5BA7DF0025138A /* HashAlgorithmType.m */; };
+		A0DD2BE22D5BEB4F0025138A /* HashAlgorithmType.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DD2BDF2D5BA6A10025138A /* HashAlgorithmType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A0DD2BE42D5BEF500025138A /* SignatureAlgorithmType.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DD2BE32D5BEF500025138A /* SignatureAlgorithmType.m */; };
+		A0DD2BE62D5BEF670025138A /* SignatureAlgorithmType.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DD2BE52D5BEF670025138A /* SignatureAlgorithmType.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -4793,6 +4797,10 @@
 		83F13D7C2D09928A00FE5227 /* Times-Italic.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Times-Italic.afm"; sourceTree = "<group>"; };
 		83F13D7D2D09928A00FE5227 /* Times-Roman.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Times-Roman.afm"; sourceTree = "<group>"; };
 		83F13D7E2D09928A00FE5227 /* ZapfDingbats.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ZapfDingbats.afm; sourceTree = "<group>"; };
+		A0DD2BDF2D5BA6A10025138A /* HashAlgorithmType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HashAlgorithmType.h; sourceTree = "<group>"; };
+		A0DD2BE02D5BA7DF0025138A /* HashAlgorithmType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HashAlgorithmType.m; sourceTree = "<group>"; };
+		A0DD2BE32D5BEF500025138A /* SignatureAlgorithmType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignatureAlgorithmType.m; sourceTree = "<group>"; };
+		A0DD2BE52D5BEF670025138A /* SignatureAlgorithmType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignatureAlgorithmType.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4837,6 +4845,10 @@
 				83EF820A2D534CAE0008920A /* PresignResponse.m */,
 				83EF820E2D534CD20008920A /* PostsignResponse.h */,
 				83EF820F2D534CDE0008920A /* PostsignResponse.m */,
+				A0DD2BDF2D5BA6A10025138A /* HashAlgorithmType.h */,
+				A0DD2BE02D5BA7DF0025138A /* HashAlgorithmType.m */,
+				A0DD2BE52D5BEF670025138A /* SignatureAlgorithmType.h */,
+				A0DD2BE32D5BEF500025138A /* SignatureAlgorithmType.m */,
 			);
 			path = PAdESSignature;
 			sourceTree = "<group>";
@@ -8380,6 +8392,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0DD2BE22D5BEB4F0025138A /* HashAlgorithmType.h in Headers */,
 				833547F92D09674D00865BB2 /* PdfTransition.h in Headers */,
 				833544932D09674B00865BB2 /* PKCS7ProcessableObject.h in Headers */,
 				833543F12D09674B00865BB2 /* SecP128R1Point.h in Headers */,
@@ -8860,6 +8873,7 @@
 				8335472E2D09674D00865BB2 /* PdfFont.h in Headers */,
 				833545002D09674B00865BB2 /* KeyUnwrapper.h in Headers */,
 				8335460A2D09674C00865BB2 /* RuntimeConfigNeededException.h in Headers */,
+				A0DD2BE62D5BEF670025138A /* SignatureAlgorithmType.h in Headers */,
 				8335425C2D09674A00865BB2 /* ProviderConfigurationPermission.h in Headers */,
 				833542642D09674A00865BB2 /* ECUtil.h in Headers */,
 				833542A72D09674A00865BB2 /* PrincipalUtils.h in Headers */,
@@ -9864,6 +9878,7 @@
 				8335446D2D09674B00865BB2 /* ProviderJcaJceExtHelper.m in Sources */,
 				833541722D09674A00865BB2 /* RevokedInfo.m in Sources */,
 				833548582D09674D00865BB2 /* PdfDictionary.m in Sources */,
+				A0DD2BE42D5BEF500025138A /* SignatureAlgorithmType.m in Sources */,
 				833545452D09674B00865BB2 /* Crossing.m in Sources */,
 				833548F42D09674E00865BB2 /* Chunk.m in Sources */,
 				8335437D2D09674A00865BB2 /* SecT131Field.m in Sources */,
@@ -10474,6 +10489,7 @@
 				833543192D09674A00865BB2 /* ECPoint.m in Sources */,
 				833542262D09674A00865BB2 /* SHA512Digest.m in Sources */,
 				833547D52D09674D00865BB2 /* ContentOperator.m in Sources */,
+				A0DD2BE12D5BA7DF0025138A /* HashAlgorithmType.m in Sources */,
 				833541EA2D09674A00865BB2 /* CipherIOException.m in Sources */,
 				833547202D09674D00865BB2 /* PdfEncryption.m in Sources */,
 				833545D22D09674C00865BB2 /* URLName.m in Sources */,
