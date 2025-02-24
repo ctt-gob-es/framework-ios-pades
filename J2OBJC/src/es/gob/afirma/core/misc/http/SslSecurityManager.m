@@ -566,7 +566,7 @@ void EsGobAfirmaCoreMiscHttpSslSecurityManager_configureAfirmaTrustManagers() {
   EsGobAfirmaCoreMiscHttpMultiX509TrustManager *trustManager = new_EsGobAfirmaCoreMiscHttpMultiX509TrustManager_initWithJavaxNetSslX509TrustManagerArray_(trustManagers);
   
 #line 271
-  [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaCoreMiscHttpSslSecurityManager_LOGGER)) infoWithNSString:@"Se configura el almacen de confianza de AutoFirma"];
+  [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaCoreMiscHttpSslSecurityManager_LOGGER)) infoWithNSString:@"Se configura el almacen de confianza de Autofirma"];
   
 #line 273
   JavaxNetSslSSLContext *sslContext = JavaxNetSslSSLContext_getInstanceWithNSString_(@"SSL");

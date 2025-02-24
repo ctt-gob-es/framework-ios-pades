@@ -139,13 +139,13 @@ inline EsGobAfirmaCoreLogManager_App *EsGobAfirmaCoreLogManager_App_get_APPLET(v
 J2OBJC_ENUM_CONSTANT(EsGobAfirmaCoreLogManager_App, APPLET)
 
 /*!
- @brief AutoFirma.
+ @brief Autofirma.
  */
 inline EsGobAfirmaCoreLogManager_App *EsGobAfirmaCoreLogManager_App_get_AUTOFIRMA(void);
 J2OBJC_ENUM_CONSTANT(EsGobAfirmaCoreLogManager_App, AUTOFIRMA)
 
 /*!
- @brief Configurador de la instalaci&oacute;n de AutoFirma.
+ @brief Configurador de la instalaci&oacute;n de Autofirma.
  */
 inline EsGobAfirmaCoreLogManager_App *EsGobAfirmaCoreLogManager_App_get_AUTOFIRMA_CONFIGURATOR(void);
 J2OBJC_ENUM_CONSTANT(EsGobAfirmaCoreLogManager_App, AUTOFIRMA_CONFIGURATOR)

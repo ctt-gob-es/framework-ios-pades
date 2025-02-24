@@ -51,16 +51,6 @@
                            withBoolean:(jboolean)obfuscate
                           withNSString:(NSString *)maskConfig;
 
-/*!
- @brief Ofusca de un texto las part&iacute;culas que pueden ser interpretables
-  como un identificador de usuario.
- @param text Texto del que ofuscar.
- @param mask Configuraci &oacute; n con la m &aacute; scara a aplicar.
- @return Texto ofuscado.
- */
-+ (NSString *)obfuscateWithNSString:(NSString *)text
-withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mask;
-
 #pragma mark Package-Private
 
 /*!
@@ -116,6 +106,20 @@ withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mas
  */
 + (jboolean)isVisibleSignatureWithJavaUtilProperties:(JavaUtilProperties *)extraParams;
 
+/*!
+ @brief Ofusca de un texto las part&iacute;culas que pueden ser interpretables
+  como un identificador de usuario.
+ @param text Texto del que ofuscar.
+ @param mask Configuraci &oacute; n con la m &aacute; scara a aplicar.
+ @return Texto ofuscado.
+ */
++ (NSString *)obfuscateIdsWithNSString:(NSString *)text
+withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mask;
+
+// Disallowed inherited constructors, do not use.
+
+- (instancetype)init NS_UNAVAILABLE;
+
 @end
 
 J2OBJC_STATIC_INIT(EsGobAfirmaSignersPadesPdfVisibleAreasUtils)
@@ -129,6 +133,26 @@ inline NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_get_LAYERTEXT_TAG_S
 /*! INTERNAL ONLY - Use accessor function from above. */
 FOUNDATION_EXPORT NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTCN;
 J2OBJC_STATIC_FIELD_OBJ_FINAL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, LAYERTEXT_TAG_SUBJECTCN, NSString *)
+
+inline NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_get_LAYERTEXT_TAG_PSEUDONYM(void);
+/*! INTERNAL ONLY - Use accessor function from above. */
+FOUNDATION_EXPORT NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_PSEUDONYM;
+J2OBJC_STATIC_FIELD_OBJ_FINAL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, LAYERTEXT_TAG_PSEUDONYM, NSString *)
+
+inline NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_get_LAYERTEXT_TAG_OU(void);
+/*! INTERNAL ONLY - Use accessor function from above. */
+FOUNDATION_EXPORT NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OU;
+J2OBJC_STATIC_FIELD_OBJ_FINAL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, LAYERTEXT_TAG_OU, NSString *)
+
+inline NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_get_LAYERTEXT_TAG_OUS(void);
+/*! INTERNAL ONLY - Use accessor function from above. */
+FOUNDATION_EXPORT NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OUS;
+J2OBJC_STATIC_FIELD_OBJ_FINAL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, LAYERTEXT_TAG_OUS, NSString *)
+
+inline NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_get_LAYERTEXT_TAG_TITLE(void);
+/*! INTERNAL ONLY - Use accessor function from above. */
+FOUNDATION_EXPORT NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_TITLE;
+J2OBJC_STATIC_FIELD_OBJ_FINAL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, LAYERTEXT_TAG_TITLE, NSString *)
 
 inline NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_get_LAYERTEXT_TAG_REASON(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
@@ -150,7 +174,7 @@ FOUNDATION_EXPORT ComAowagieTextRectangle *EsGobAfirmaSignersPadesPdfVisibleArea
 
 FOUNDATION_EXPORT jboolean EsGobAfirmaSignersPadesPdfVisibleAreasUtils_isVisibleSignatureWithJavaUtilProperties_(JavaUtilProperties *extraParams);
 
-FOUNDATION_EXPORT NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(NSString *text, EsGobAfirmaSignersPadesPdfTextMask *mask);
+FOUNDATION_EXPORT NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateIdsWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(NSString *text, EsGobAfirmaSignersPadesPdfTextMask *mask);
 
 J2OBJC_TYPE_LITERAL_HEADER(EsGobAfirmaSignersPadesPdfVisibleAreasUtils)
 

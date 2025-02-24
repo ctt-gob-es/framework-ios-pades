@@ -117,7 +117,7 @@ NSString *EsGobAfirmaSignersPadesCommonPdfExtraParams_CHECK_CERTIFICATES = @"che
 
 J2OBJC_IGNORE_DESIGNATED_BEGIN
 
-#line 821
+#line 820
 - (instancetype)init {
   EsGobAfirmaSignersPadesCommonPdfExtraParams_init(self);
   return self;
@@ -225,19 +225,19 @@ J2OBJC_IGNORE_DESIGNATED_END
 @end
 
 
-#line 821
+#line 820
 void EsGobAfirmaSignersPadesCommonPdfExtraParams_init(EsGobAfirmaSignersPadesCommonPdfExtraParams *self) {
   NSObject_init(self);
 }
 
 
-#line 821
+#line 820
 EsGobAfirmaSignersPadesCommonPdfExtraParams *new_EsGobAfirmaSignersPadesCommonPdfExtraParams_init() {
   J2OBJC_NEW_IMPL(EsGobAfirmaSignersPadesCommonPdfExtraParams, init)
 }
 
 
-#line 821
+#line 820
 EsGobAfirmaSignersPadesCommonPdfExtraParams *create_EsGobAfirmaSignersPadesCommonPdfExtraParams_init() {
   J2OBJC_CREATE_IMPL(EsGobAfirmaSignersPadesCommonPdfExtraParams, init)
 }

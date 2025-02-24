@@ -130,78 +130,84 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 223
+#line 222
++ (IOSObjectArray *)getOUSWithNSString:(NSString *)principal {
+  return EsGobAfirmaCoreMiscAOUtil_getOUSWithNSString_(principal);
+}
+
+
+#line 247
 + (NSString *)getRDNvalueFromLdapNameWithNSString:(NSString *)rdn
                                      withNSString:(NSString *)principal {
   return EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(rdn, principal);
 }
 
 
-#line 291
+#line 315
 + (jboolean)isPseudonymCertWithJavaSecurityCertX509Certificate:(JavaSecurityCertX509Certificate *)cert {
   return EsGobAfirmaCoreMiscAOUtil_isPseudonymCertWithJavaSecurityCertX509Certificate_(cert);
 }
 
 
-#line 312
+#line 336
 + (NSString *)hexifyWithByteArray:(IOSByteArray *)abyte0
                       withBoolean:(jboolean)separator {
   return EsGobAfirmaCoreMiscAOUtil_hexifyWithByteArray_withBoolean_(abyte0, separator);
 }
 
 
-#line 345
+#line 369
 + (NSString *)hexifyWithByteArray:(IOSByteArray *)abyte0
                      withNSString:(NSString *)separator {
   return EsGobAfirmaCoreMiscAOUtil_hexifyWithByteArray_withNSString_(abyte0, separator);
 }
 
 
-#line 364
+#line 388
 + (void)loadNativeLibraryWithNSString:(NSString *)path {
   EsGobAfirmaCoreMiscAOUtil_loadNativeLibraryWithNSString_(path);
 }
 
 
-#line 389
+#line 413
 + (void)copyFileWithJavaIoFile:(JavaIoFile *)source
                 withJavaIoFile:(JavaIoFile *)dest {
   EsGobAfirmaCoreMiscAOUtil_copyFileWithJavaIoFile_withJavaIoFile_(source, dest);
 }
 
 
-#line 419
+#line 443
 + (IOSObjectArray *)splitWithNSString:(NSString *)text
                          withNSString:(NSString *)sp {
   return EsGobAfirmaCoreMiscAOUtil_splitWithNSString_withNSString_(text, sp);
 }
 
 
-#line 447
+#line 471
 + (NSString *)properties2Base64WithJavaUtilProperties:(JavaUtilProperties *)p {
   return EsGobAfirmaCoreMiscAOUtil_properties2Base64WithJavaUtilProperties_(p);
 }
 
 
-#line 461
+#line 485
 + (JavaUtilProperties *)base642PropertiesWithNSString:(NSString *)base64 {
   return EsGobAfirmaCoreMiscAOUtil_base642PropertiesWithNSString_(base64);
 }
 
 
-#line 477
+#line 501
 + (NSString *)propertiesAsStringWithJavaUtilProperties:(JavaUtilProperties *)p {
   return EsGobAfirmaCoreMiscAOUtil_propertiesAsStringWithJavaUtilProperties_(p);
 }
 
 
-#line 491
+#line 515
 + (jboolean)isJava9orNewer {
   return EsGobAfirmaCoreMiscAOUtil_isJava9orNewer();
 }
 
 
-#line 525
+#line 549
 + (jboolean)isOnlyNumberWithNSString:(NSString *)value {
   return EsGobAfirmaCoreMiscAOUtil_isOnlyNumberWithNSString_(value);
 }
@@ -214,18 +220,19 @@ J2OBJC_IGNORE_DESIGNATED_END
     { NULL, "[B", 0x9, 6, 7, 5, -1, -1, -1 },
     { NULL, "LNSString;", 0x9, 8, 9, -1, -1, -1, -1 },
     { NULL, "LNSString;", 0x9, 8, 1, -1, -1, -1, -1 },
-    { NULL, "LNSString;", 0x9, 10, 11, -1, -1, -1, -1 },
-    { NULL, "Z", 0x9, 12, 9, -1, -1, -1, -1 },
-    { NULL, "LNSString;", 0x9, 13, 14, -1, -1, -1, -1 },
-    { NULL, "LNSString;", 0x9, 13, 15, -1, -1, -1, -1 },
-    { NULL, "V", 0x9, 16, 1, 5, -1, -1, -1 },
-    { NULL, "V", 0x9, 17, 18, 5, -1, -1, -1 },
-    { NULL, "[LNSString;", 0x9, 19, 11, -1, -1, -1, -1 },
-    { NULL, "LNSString;", 0x9, 20, 21, 5, -1, -1, -1 },
-    { NULL, "LJavaUtilProperties;", 0x9, 22, 1, 5, -1, -1, -1 },
-    { NULL, "LNSString;", 0x9, 23, 21, 5, -1, -1, -1 },
+    { NULL, "[LNSString;", 0x9, 10, 1, -1, -1, -1, -1 },
+    { NULL, "LNSString;", 0x9, 11, 12, -1, -1, -1, -1 },
+    { NULL, "Z", 0x9, 13, 9, -1, -1, -1, -1 },
+    { NULL, "LNSString;", 0x9, 14, 15, -1, -1, -1, -1 },
+    { NULL, "LNSString;", 0x9, 14, 16, -1, -1, -1, -1 },
+    { NULL, "V", 0x9, 17, 1, 5, -1, -1, -1 },
+    { NULL, "V", 0x9, 18, 19, 5, -1, -1, -1 },
+    { NULL, "[LNSString;", 0x9, 20, 12, -1, -1, -1, -1 },
+    { NULL, "LNSString;", 0x9, 21, 22, 5, -1, -1, -1 },
+    { NULL, "LJavaUtilProperties;", 0x9, 23, 1, 5, -1, -1, -1 },
+    { NULL, "LNSString;", 0x9, 24, 22, 5, -1, -1, -1 },
     { NULL, "Z", 0x9, -1, -1, -1, -1, -1, -1 },
-    { NULL, "Z", 0x9, 24, 1, -1, -1, -1, -1 },
+    { NULL, "Z", 0x9, 25, 1, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
@@ -236,28 +243,29 @@ J2OBJC_IGNORE_DESIGNATED_END
   methods[3].selector = @selector(getDataFromInputStreamWithJavaIoInputStream:);
   methods[4].selector = @selector(getCNWithJavaSecurityCertX509Certificate:);
   methods[5].selector = @selector(getCNWithNSString:);
-  methods[6].selector = @selector(getRDNvalueFromLdapNameWithNSString:withNSString:);
-  methods[7].selector = @selector(isPseudonymCertWithJavaSecurityCertX509Certificate:);
-  methods[8].selector = @selector(hexifyWithByteArray:withBoolean:);
-  methods[9].selector = @selector(hexifyWithByteArray:withNSString:);
-  methods[10].selector = @selector(loadNativeLibraryWithNSString:);
-  methods[11].selector = @selector(copyFileWithJavaIoFile:withJavaIoFile:);
-  methods[12].selector = @selector(splitWithNSString:withNSString:);
-  methods[13].selector = @selector(properties2Base64WithJavaUtilProperties:);
-  methods[14].selector = @selector(base642PropertiesWithNSString:);
-  methods[15].selector = @selector(propertiesAsStringWithJavaUtilProperties:);
-  methods[16].selector = @selector(isJava9orNewer);
-  methods[17].selector = @selector(isOnlyNumberWithNSString:);
+  methods[6].selector = @selector(getOUSWithNSString:);
+  methods[7].selector = @selector(getRDNvalueFromLdapNameWithNSString:withNSString:);
+  methods[8].selector = @selector(isPseudonymCertWithJavaSecurityCertX509Certificate:);
+  methods[9].selector = @selector(hexifyWithByteArray:withBoolean:);
+  methods[10].selector = @selector(hexifyWithByteArray:withNSString:);
+  methods[11].selector = @selector(loadNativeLibraryWithNSString:);
+  methods[12].selector = @selector(copyFileWithJavaIoFile:withJavaIoFile:);
+  methods[13].selector = @selector(splitWithNSString:withNSString:);
+  methods[14].selector = @selector(properties2Base64WithJavaUtilProperties:);
+  methods[15].selector = @selector(base642PropertiesWithNSString:);
+  methods[16].selector = @selector(propertiesAsStringWithJavaUtilProperties:);
+  methods[17].selector = @selector(isJava9orNewer);
+  methods[18].selector = @selector(isOnlyNumberWithNSString:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "BUFFER_SIZE", "I", .constantValue.asInt = EsGobAfirmaCoreMiscAOUtil_BUFFER_SIZE, 0x1a, -1, -1, -1, -1 },
-    { "LOGGER", "LJavaUtilLoggingLogger;", .constantValue.asLong = 0, 0x1a, -1, 25, -1, -1 },
-    { "SUPPORTED_URI_SCHEMES", "[LNSString;", .constantValue.asLong = 0, 0x1a, -1, 26, -1, -1 },
-    { "DEFAULT_ENCODING", "LJavaNioCharsetCharset;", .constantValue.asLong = 0, 0x1a, -1, 27, -1, -1 },
-    { "HEX_CHARS", "[C", .constantValue.asLong = 0, 0x1a, -1, 28, -1, -1 },
+    { "LOGGER", "LJavaUtilLoggingLogger;", .constantValue.asLong = 0, 0x1a, -1, 26, -1, -1 },
+    { "SUPPORTED_URI_SCHEMES", "[LNSString;", .constantValue.asLong = 0, 0x1a, -1, 27, -1, -1 },
+    { "DEFAULT_ENCODING", "LJavaNioCharsetCharset;", .constantValue.asLong = 0, 0x1a, -1, 28, -1, -1 },
+    { "HEX_CHARS", "[C", .constantValue.asLong = 0, 0x1a, -1, 29, -1, -1 },
   };
-  static const void *ptrTable[] = { "createURI", "LNSString;", "LJavaNetURISyntaxException;", "loadFile", "LJavaNetURI;", "LJavaIoIOException;", "getDataFromInputStream", "LJavaIoInputStream;", "getCN", "LJavaSecurityCertX509Certificate;", "getRDNvalueFromLdapName", "LNSString;LNSString;", "isPseudonymCert", "hexify", "[BZ", "[BLNSString;", "loadNativeLibrary", "copyFile", "LJavaIoFile;LJavaIoFile;", "split", "properties2Base64", "LJavaUtilProperties;", "base642Properties", "propertiesAsString", "isOnlyNumber", &EsGobAfirmaCoreMiscAOUtil_LOGGER, &EsGobAfirmaCoreMiscAOUtil_SUPPORTED_URI_SCHEMES, &EsGobAfirmaCoreMiscAOUtil_DEFAULT_ENCODING, &EsGobAfirmaCoreMiscAOUtil_HEX_CHARS };
-  static const J2ObjcClassInfo _EsGobAfirmaCoreMiscAOUtil = { "AOUtil", "es.gob.afirma.core.misc", ptrTable, methods, fields, 7, 0x11, 18, 5, -1, -1, -1, -1, -1 };
+  static const void *ptrTable[] = { "createURI", "LNSString;", "LJavaNetURISyntaxException;", "loadFile", "LJavaNetURI;", "LJavaIoIOException;", "getDataFromInputStream", "LJavaIoInputStream;", "getCN", "LJavaSecurityCertX509Certificate;", "getOUS", "getRDNvalueFromLdapName", "LNSString;LNSString;", "isPseudonymCert", "hexify", "[BZ", "[BLNSString;", "loadNativeLibrary", "copyFile", "LJavaIoFile;LJavaIoFile;", "split", "properties2Base64", "LJavaUtilProperties;", "base642Properties", "propertiesAsString", "isOnlyNumber", &EsGobAfirmaCoreMiscAOUtil_LOGGER, &EsGobAfirmaCoreMiscAOUtil_SUPPORTED_URI_SCHEMES, &EsGobAfirmaCoreMiscAOUtil_DEFAULT_ENCODING, &EsGobAfirmaCoreMiscAOUtil_HEX_CHARS };
+  static const J2ObjcClassInfo _EsGobAfirmaCoreMiscAOUtil = { "AOUtil", "es.gob.afirma.core.misc", ptrTable, methods, fields, 7, 0x11, 19, 5, -1, -1, -1, -1, -1 };
   return &_EsGobAfirmaCoreMiscAOUtil;
 }
 
@@ -271,7 +279,7 @@ J2OBJC_IGNORE_DESIGNATED_END
       @"http", @"https", @"file", @"urn" } count:4 type:NSString_class_()];
       EsGobAfirmaCoreMiscAOUtil_DEFAULT_ENCODING = JreLoadStatic(JavaNioCharsetStandardCharsets, UTF_8);
       EsGobAfirmaCoreMiscAOUtil_HEX_CHARS = [IOSCharArray newArrayWithChars:(jchar[]){
-#line 300
+#line 324
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } count:16];
         J2OBJC_SET_INITIALIZED(EsGobAfirmaCoreMiscAOUtil)
       }
@@ -470,45 +478,73 @@ NSString *EsGobAfirmaCoreMiscAOUtil_getCNWithNSString_(NSString *principal) {
   return principal;
 }
 
+
+#line 222
+IOSObjectArray *EsGobAfirmaCoreMiscAOUtil_getOUSWithNSString_(NSString *principal) {
+  EsGobAfirmaCoreMiscAOUtil_initialize();
+  
+#line 223
+  if (principal == nil) {
+    return nil;
+  }
+  
+#line 227
+  JavaUtilArrayList *ousList = new_JavaUtilArrayList_init();
+  
+#line 229
+  NSString *ou = EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(@"ou", principal);
+  NSString *principalAux = principal;
+  while (ou != nil) {
+    [ousList addWithId:ou];
+    principalAux = [((NSString *) nil_chk(principalAux)) java_replace:JreStrcat("$$", @"OU=", ou) withSequence:@""];
+    ou = EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(@"ou", principalAux);
+  }
+  
+#line 237
+  return [ousList toArrayWithNSObjectArray:[IOSObjectArray newArrayWithLength:0 type:NSString_class_()]];
+}
+
+
+#line 247
 NSString *EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(NSString *rdn, NSString *principal) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   jint offset1 = 0;
   while ((offset1 = [((NSString *) nil_chk([((NSString *) nil_chk(principal)) java_lowercaseStringWithJRELocale:JreLoadStatic(JavaUtilLocale, US)])) java_indexOfString:[((NSString *) nil_chk(rdn)) lowercaseString] fromIndex:offset1]) != -1) {
     
-#line 228
+#line 252
     if (offset1 > 0 && [principal charAtWithInt:offset1 - 1] != ',' && [principal charAtWithInt:offset1 - 1] != ' ') {
       offset1++;
       continue;
     }
     
-#line 233
+#line 257
     offset1 += [rdn java_length];
     while (offset1 < [principal java_length] && [principal charAtWithInt:offset1] == ' ') {
       offset1++;
     }
     
-#line 238
+#line 262
     if (offset1 >= [principal java_length]) {
       return nil;
     }
     
-#line 242
+#line 266
     if ([principal charAtWithInt:offset1] != '=') {
       continue;
     }
     
-#line 246
+#line 270
     offset1++;
     while (offset1 < [principal java_length] && [principal charAtWithInt:offset1] == ' ') {
       offset1++;
     }
     
-#line 251
+#line 275
     if (offset1 >= [principal java_length]) {
       return @"";
     }
     
-#line 255
+#line 279
     jint offset2;
     if ([principal charAtWithInt:offset1] == ',') {
       return @"";
@@ -519,7 +555,7 @@ NSString *EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSSt
         return @"";
       }
       
-#line 265
+#line 289
       offset2 = [principal java_indexOf:'"' fromIndex:offset1];
       if (offset2 == offset1) {
         return @"";
@@ -540,30 +576,30 @@ NSString *EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSSt
     }
   }
   
-#line 285
+#line 309
   return nil;
 }
 
 
-#line 291
+#line 315
 jboolean EsGobAfirmaCoreMiscAOUtil_isPseudonymCertWithJavaSecurityCertX509Certificate_(JavaSecurityCertX509Certificate *cert) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   return EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(@"2.5.4.65",
-#line 294
+#line 318
   [((JavaxSecurityAuthX500X500Principal *) nil_chk([((JavaSecurityCertX509Certificate *) nil_chk(cert)) getSubjectX500Principal])) getNameWithNSString:JavaxSecurityAuthX500X500Principal_RFC2253]) != nil;
 }
 
 
-#line 312
+#line 336
 NSString *EsGobAfirmaCoreMiscAOUtil_hexifyWithByteArray_withBoolean_(IOSByteArray *abyte0, jboolean separator) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 313
+#line 337
   if (abyte0 == nil) {
     return @"null";
   }
   
-#line 317
+#line 341
   JavaLangStringBuffer *stringbuffer = new_JavaLangStringBuffer_initWithInt_(256);
   jint i = 0;
   for (jint j = 0; j < abyte0->size_; j++) {
@@ -584,16 +620,16 @@ NSString *EsGobAfirmaCoreMiscAOUtil_hexifyWithByteArray_withBoolean_(IOSByteArra
 }
 
 
-#line 345
+#line 369
 NSString *EsGobAfirmaCoreMiscAOUtil_hexifyWithByteArray_withNSString_(IOSByteArray *abyte0, NSString *separator) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 346
+#line 370
   if (abyte0 == nil) {
     return @"null";
   }
   
-#line 350
+#line 374
   JavaLangStringBuffer *stringbuffer = new_JavaLangStringBuffer_initWithInt_(256);
   for (jint j = 0; j < abyte0->size_; j++) {
     if (separator != nil && j > 0) {
@@ -606,11 +642,11 @@ NSString *EsGobAfirmaCoreMiscAOUtil_hexifyWithByteArray_withNSString_(IOSByteArr
 }
 
 
-#line 364
+#line 388
 void EsGobAfirmaCoreMiscAOUtil_loadNativeLibraryWithNSString_(NSString *path) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 365
+#line 389
   if (path == nil) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaCoreMiscAOUtil_LOGGER)) warningWithNSString:@"No se puede cargar una biblioteca nula"];
     return;
@@ -618,28 +654,28 @@ void EsGobAfirmaCoreMiscAOUtil_loadNativeLibraryWithNSString_(NSString *path) {
   jint pos = [path java_lastIndexOf:'.'];
   JavaIoFile *file = new_JavaIoFile_initWithNSString_(path);
   JavaIoFile *tempLibrary = JavaIoFile_createTempFileWithNSString_withNSString_(
-#line 372
+#line 396
   pos < 1 ? [file getName] : [((NSString *) nil_chk([file getName])) java_substring:0 endIndex:[((NSString *) nil_chk([file getName])) java_indexOf:'.']],
-#line 373
+#line 397
   pos < 1 || pos == [path java_length] - 1 ? nil : [path java_substring:pos]);
   
-#line 376
+#line 400
   EsGobAfirmaCoreMiscAOUtil_copyFileWithJavaIoFile_withJavaIoFile_(file, tempLibrary);
   
-#line 379
+#line 403
   [((JavaIoFile *) nil_chk(tempLibrary)) deleteOnExit];
   
-#line 381
+#line 405
   [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaCoreMiscAOUtil_LOGGER)) infoWithNSString:JreStrcat("$$", @"Cargamos ", EsGobAfirmaCoreMiscLoggerUtil_getCleanUserHomePathWithNSString_([tempLibrary getAbsolutePath]))];
   JavaLangSystem_load__WithNSString_([tempLibrary getAbsolutePath]);
 }
 
 
-#line 389
+#line 413
 void EsGobAfirmaCoreMiscAOUtil_copyFileWithJavaIoFile_withJavaIoFile_(JavaIoFile *source, JavaIoFile *dest) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 390
+#line 414
   if (source == nil || dest == nil) {
     @throw new_JavaLangIllegalArgumentException_initWithNSString_(@"Ni origen ni destino de la copia pueden ser nulos");
   }
@@ -647,25 +683,25 @@ void EsGobAfirmaCoreMiscAOUtil_copyFileWithJavaIoFile_withJavaIoFile_(JavaIoFile
     JavaIoFileInputStream *is = new_JavaIoFileInputStream_initWithJavaIoFile_(source);
     JavaLangThrowable *__primaryException4 = nil;
     
-#line 393
+#line 417
     @try {
       JavaIoFileOutputStream *os = new_JavaIoFileOutputStream_initWithJavaIoFile_(
-#line 395
+#line 419
       dest);
       JavaLangThrowable *__primaryException3 = nil;
       @try {
         JavaNioChannelsFileChannel *in =
-#line 396
+#line 420
         [is getChannel];
         JavaLangThrowable *__primaryException2 = nil;
         @try {
           JavaNioChannelsFileChannel *out =
-#line 397
+#line 421
           [os getChannel];
           JavaLangThrowable *__primaryException1 = nil;
           @try {
             
-#line 399
+#line 423
             JavaNioMappedByteBuffer *buf = [((JavaNioChannelsFileChannel *) nil_chk(in)) mapWithJavaNioChannelsFileChannel_MapMode:JreLoadStatic(JavaNioChannelsFileChannel_MapMode, READ_ONLY) withLong:0 withLong:[in size]];
             [((JavaNioChannelsFileChannel *) nil_chk(out)) writeWithJavaNioByteBuffer:buf];
           }
@@ -752,7 +788,7 @@ void EsGobAfirmaCoreMiscAOUtil_copyFileWithJavaIoFile_withJavaIoFile_(JavaIoFile
 }
 
 
-#line 419
+#line 443
 IOSObjectArray *EsGobAfirmaCoreMiscAOUtil_splitWithNSString_withNSString_(NSString *text, NSString *sp) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   JavaUtilArrayList *parts = new_JavaUtilArrayList_init();
@@ -774,16 +810,16 @@ IOSObjectArray *EsGobAfirmaCoreMiscAOUtil_splitWithNSString_withNSString_(NSStri
     [parts addWithId:[text java_substring:i]];
   }
   
-#line 440
+#line 464
   return [parts toArrayWithNSObjectArray:[IOSObjectArray newArrayWithLength:0 type:NSString_class_()]];
 }
 
 
-#line 447
+#line 471
 NSString *EsGobAfirmaCoreMiscAOUtil_properties2Base64WithJavaUtilProperties_(JavaUtilProperties *p) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 448
+#line 472
   if (p == nil) {
     return @"";
   }
@@ -794,55 +830,55 @@ NSString *EsGobAfirmaCoreMiscAOUtil_properties2Base64WithJavaUtilProperties_(Jav
 }
 
 
-#line 461
+#line 485
 JavaUtilProperties *EsGobAfirmaCoreMiscAOUtil_base642PropertiesWithNSString_(NSString *base64) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 462
+#line 486
   JavaUtilProperties *p = new_JavaUtilProperties_init();
   if (base64 == nil || [base64 java_isEmpty]) {
     return p;
   }
   [p load__WithJavaIoReader:new_JavaIoInputStreamReader_initWithJavaIoInputStream_withJavaNioCharsetCharset_(new_JavaIoByteArrayInputStream_initWithByteArray_(EsGobAfirmaCoreMiscBase64_decodeWithNSString_(
-#line 467
+#line 491
   [((NSString *) nil_chk([base64 java_replace:'-' withChar:'+'])) java_replace:'_' withChar:'/'])), EsGobAfirmaCoreMiscAOUtil_DEFAULT_ENCODING)];
   
-#line 470
+#line 494
   return p;
 }
 
 NSString *EsGobAfirmaCoreMiscAOUtil_propertiesAsStringWithJavaUtilProperties_(JavaUtilProperties *p) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 478
+#line 502
   if (p == nil) {
     return @"";
   }
   JavaLangStringBuilder *buffer = new_JavaLangStringBuilder_init();
   {
     IOSObjectArray *a__ =
-#line 482
+#line 506
     [((id<JavaUtilSet>) nil_chk([p keySet])) toArrayWithNSObjectArray:[IOSObjectArray newArrayWithLength:0 type:NSString_class_()]];
     NSString * const *b__ = ((IOSObjectArray *) nil_chk(a__))->buffer_;
     NSString * const *e__ = b__ + a__->size_;
     while (b__ < e__) {
       NSString *k = *b__++;
       
-#line 483
+#line 507
       (void) [((JavaLangStringBuilder *) nil_chk([((JavaLangStringBuilder *) nil_chk([((JavaLangStringBuilder *) nil_chk([buffer appendWithNSString:k])) appendWithNSString:@"="])) appendWithNSString:[p getPropertyWithNSString:k]])) appendWithNSString:@"\n"];
     }
   }
   
-#line 485
+#line 509
   return [buffer description];
 }
 
 
-#line 491
+#line 515
 jboolean EsGobAfirmaCoreMiscAOUtil_isJava9orNewer() {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 492
+#line 516
   NSString *ver = JavaLangSystem_getPropertyWithNSString_(@"java.version");
   if (ver == nil || [ver java_isEmpty]) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaCoreMiscAOUtil_LOGGER)) warningWithNSString:@"No se ha podido determinar la version de Java"];
@@ -850,18 +886,18 @@ jboolean EsGobAfirmaCoreMiscAOUtil_isJava9orNewer() {
   }
   @try {
     
-#line 499
+#line 523
     if ([ver java_hasPrefix:@"1."]) {
       return JavaLangInteger_parseIntWithNSString_([ver java_substring:2 endIndex:3]) > 8;
     }
     
-#line 505
+#line 529
     NSString *majorVer = ver;
     if ([majorVer java_indexOfString:@"."] > -1) {
       majorVer = [majorVer java_substring:0 endIndex:[majorVer java_indexOfString:@"."]];
     }
     
-#line 510
+#line 534
     if (EsGobAfirmaCoreMiscAOUtil_isOnlyNumberWithNSString_(majorVer)) {
       return JavaLangInteger_parseIntWithNSString_(majorVer) > 8;
     }
@@ -873,11 +909,11 @@ jboolean EsGobAfirmaCoreMiscAOUtil_isJava9orNewer() {
 }
 
 
-#line 525
+#line 549
 jboolean EsGobAfirmaCoreMiscAOUtil_isOnlyNumberWithNSString_(NSString *value) {
   EsGobAfirmaCoreMiscAOUtil_initialize();
   
-#line 526
+#line 550
   if (value == nil || [value java_isEmpty]) {
     return false;
   }

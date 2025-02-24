@@ -21,10 +21,13 @@
 #include "com/aowagie/text/pdf/PdfPublicKeySecurityHandler.h"
 #include "com/aowagie/text/pdf/PdfWriter.h"
 #include "com/aowagie/text/pdf/StandardDecryption.h"
+#include "com/aowagie/text/pdf/bouncycastle/PAdESDefaultBufferedBlockCipher.h"
 #include "com/aowagie/text/pdf/crypto/ARCFOUREncryption.h"
 #include "com/aowagie/text/pdf/crypto/IVGenerator.h"
+#include "java/io/ByteArrayInputStream.h"
 #include "java/io/ByteArrayOutputStream.h"
 #include "java/io/IOException.h"
+#include "java/io/InputStream.h"
 #include "java/io/OutputStream.h"
 #include "java/lang/Exception.h"
 #include "java/lang/IllegalArgumentException.h"
@@ -36,9 +39,14 @@
 #include "java/security/MessageDigest.h"
 #include "java/security/cert/Certificate.h"
 #include "java/util/Arrays.h"
-#include "javax/crypto/Cipher.h"
-#include "javax/crypto/spec/IvParameterSpec.h"
-#include "javax/crypto/spec/SecretKeySpec.h"
+#include "org/spongycastle/crypto/BlockCipher.h"
+#include "org/spongycastle/crypto/BufferedBlockCipher.h"
+#include "org/spongycastle/crypto/engines/AESEngine.h"
+#include "org/spongycastle/crypto/modes/CBCBlockCipher.h"
+#include "org/spongycastle/crypto/paddings/BlockCipherPadding.h"
+#include "org/spongycastle/crypto/paddings/PaddedBufferedBlockCipher.h"
+#include "org/spongycastle/crypto/params/KeyParameter.h"
+#include "org/spongycastle/crypto/params/ParametersWithIV.h"
 
 #if !__has_feature(objc_arc)
 #error "com/aowagie/text/pdf/PdfEncryption must be compiled with ARC (-fobjc-arc)"
@@ -123,6 +131,12 @@
                        withByteArray:(IOSByteArray *)ownerKey
                              withInt:(jint)permissions;
 
++ (IOSByteArray *)doAesWithByteArray:(IOSByteArray *)data
+                       withByteArray:(IOSByteArray *)iv
+                       withByteArray:(IOSByteArray *)aesKey
+withOrgSpongycastleCryptoPaddingsBlockCipherPadding:(id<OrgSpongycastleCryptoPaddingsBlockCipherPadding>)padding
+                         withBoolean:(jboolean)forEncryption;
+
 @end
 
 J2OBJC_FIELD_SETTER(ComAowagieTextPdfPdfEncryption, key_, IOSByteArray *)
@@ -176,34 +190,36 @@ __attribute__((unused)) static void ComAowagieTextPdfPdfEncryption_setupByUserPa
 
 __attribute__((unused)) static void ComAowagieTextPdfPdfEncryption_setupByOwnerPadWithByteArray_withByteArray_withByteArray_withByteArray_withInt_(ComAowagieTextPdfPdfEncryption *self, IOSByteArray *documentID, IOSByteArray *ownerPad, IOSByteArray *userKey, IOSByteArray *ownerKey, jint permissions);
 
+__attribute__((unused)) static IOSByteArray *ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(IOSByteArray *data, IOSByteArray *iv, IOSByteArray *aesKey, id<OrgSpongycastleCryptoPaddingsBlockCipherPadding> padding, jboolean forEncryption);
+
 #line 1 "/Users/desarrolloabamobile/Documents/JAVA/pades-ios/src/main/java/com/aowagie/text/pdf/PdfEncryption.java"
 
 J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 
 
-#line 74
+#line 83
 @implementation ComAowagieTextPdfPdfEncryption
 
 
-#line 149
+#line 158
 - (instancetype)initPackagePrivate {
   ComAowagieTextPdfPdfEncryption_initPackagePrivate(self);
   return self;
 }
 
 
-#line 158
+#line 167
 - (instancetype)initPackagePrivateWithComAowagieTextPdfPdfEncryption:(ComAowagieTextPdfPdfEncryption *)enc {
   ComAowagieTextPdfPdfEncryption_initPackagePrivateWithComAowagieTextPdfPdfEncryption_(self, enc);
   return self;
 }
 
 
-#line 189
+#line 198
 - (void)setCryptoModeWithInt:(jint)mode
                      withInt:(jint)kl {
   
-#line 190
+#line 199
   self->cryptoMode_ = mode;
   self->encryptMetadata_ = ((mode & ComAowagieTextPdfPdfWriter_DO_NOT_ENCRYPT_METADATA) == 0);
   self->embeddedFilesOnly_ = ((mode & ComAowagieTextPdfPdfWriter_EMBEDDED_FILES_ONLY) != 0);
@@ -222,7 +238,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
     }
     else {
       
-#line 206
+#line 215
       self->keyLength_ = 128;
     }
     self->revision_ = ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_128;
@@ -242,7 +258,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 224
+#line 233
 - (jint)getCryptoMode {
   return self->cryptoMode_;
 }
@@ -252,7 +268,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 237
+#line 246
 - (jboolean)isEmbeddedFilesOnly {
   return self->embeddedFilesOnly_;
 }
@@ -262,14 +278,14 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 257
+#line 266
 - (IOSByteArray *)computeOwnerKeyWithByteArray:(IOSByteArray *)userPad
                                  withByteArray:(IOSByteArray *)ownerPad {
   return ComAowagieTextPdfPdfEncryption_computeOwnerKeyWithByteArray_withByteArray_(self, userPad, ownerPad);
 }
 
 
-#line 291
+#line 300
 - (void)setupGlobalEncryptionKeyWithByteArray:(IOSByteArray *)documentID
                                 withByteArray:(IOSByteArray *)userPad
                                 withByteArray:(IOSByteArray *)ownerKey
@@ -278,40 +294,40 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 335
+#line 344
 - (void)setupUserKey {
   ComAowagieTextPdfPdfEncryption_setupUserKey(self);
 }
 
 
-#line 358
+#line 367
 - (void)setupAllKeysWithByteArray:(IOSByteArray *)userPassword
                     withByteArray:(IOSByteArray *)ownerPassword
                           withInt:(jint)permissions {
   
-#line 360
+#line 369
   if (ownerPassword == nil || ownerPassword->size_ == 0) {
     ownerPassword = [((JavaSecurityMessageDigest *) nil_chk(self->md5_)) digestWithByteArray:ComAowagieTextPdfPdfEncryption_createDocumentId()];
   }
   permissions |= (self->revision_ == ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_128 || self->revision_ == ComAowagieTextPdfPdfEncryption_AES_128 ||
-#line 364
+#line 373
   self->revision_ == ComAowagieTextPdfPdfEncryption_AES_256_V3) ? (jint) 0xfffff0c0 : (jint) 0xffffffc0;
   permissions &= (jint) 0xfffffffc;
   self->permissions_ = permissions;
   self->documentID_ = ComAowagieTextPdfPdfEncryption_createDocumentId();
   if (self->revision_ < ComAowagieTextPdfPdfEncryption_AES_256_V3) {
     
-#line 371
+#line 380
     IOSByteArray *userPad = ComAowagieTextPdfPdfEncryption_padPasswordWithByteArray_(self, userPassword);
     IOSByteArray *ownerPad = ComAowagieTextPdfPdfEncryption_padPasswordWithByteArray_(self, ownerPassword);
     
-#line 374
+#line 383
     self->ownerKey_ = ComAowagieTextPdfPdfEncryption_computeOwnerKeyWithByteArray_withByteArray_(self, userPad, ownerPad);
     ComAowagieTextPdfPdfEncryption_setupByUserPadWithByteArray_withByteArray_withByteArray_withInt_(self, self->documentID_, userPad, self->ownerKey_, permissions);
   }
   else {
     
-#line 377
+#line 386
     @try {
       self->key_ = ComAowagieTextPdfCryptoIVGenerator_getIVWithInt_(32);
       self->keySize_ = 32;
@@ -320,7 +336,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
       [self computePermsAlg10WithInt:permissions];
     }
     @catch (
-#line 383
+#line 392
     JavaSecurityGeneralSecurityException *e) {
       @throw new_ComAowagieTextExceptionConverter_initWithJavaLangException_(e);
     }
@@ -328,21 +344,21 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 389
+#line 398
 + (IOSByteArray *)createDocumentId {
   return ComAowagieTextPdfPdfEncryption_createDocumentId();
 }
 
 
-#line 402
+#line 411
 - (void)setupByUserPasswordWithByteArray:(IOSByteArray *)documentID
                            withByteArray:(IOSByteArray *)userPassword
                            withByteArray:(IOSByteArray *)ownerKey
                                  withInt:(jint)permissions {
   
-#line 404
+#line 413
   ComAowagieTextPdfPdfEncryption_setupByUserPadWithByteArray_withByteArray_withByteArray_withInt_(self, documentID, ComAowagieTextPdfPdfEncryption_padPasswordWithByteArray_(self, userPassword), ownerKey,
-#line 405
+#line 414
   permissions);
 }
 
@@ -354,17 +370,18 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
                            withByteArray:(IOSByteArray *)oeValue
                                  withInt:(jint)permissions {
   
-#line 416
-  JavaxCryptoCipher *cipher = JavaxCryptoCipher_getInstanceWithNSString_(@"AES/CBC/NoPadding");
-  
-#line 418
+#line 426
   IOSByteArray *hashAlg2B = ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArray_withByteArray_(userPassword, JavaUtilArrays_copyOfRangeWithByteArray_withInt_withInt_(uValue, 40, 48), nil);
-  [((JavaxCryptoCipher *) nil_chk(cipher)) init__WithInt:JavaxCryptoCipher_DECRYPT_MODE withJavaSecurityKey:new_JavaxCryptoSpecSecretKeySpec_initWithByteArray_withNSString_(hashAlg2B, @"AES") withJavaSecuritySpecAlgorithmParameterSpec:new_JavaxCryptoSpecIvParameterSpec_initWithByteArray_([IOSByteArray newArrayWithLength:
-#line 420
-  16])];
-  self->key_ = [cipher updateWithByteArray:ueValue withInt:0 withInt:((IOSByteArray *) nil_chk(ueValue))->size_];
+  @try {
+    self->key_ = ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(ueValue, [IOSByteArray newArrayWithLength:16], hashAlg2B, nil, false);
+  }
+  @catch (
+#line 429
+  JavaLangException *e) {
+    @throw new_JavaSecurityGeneralSecurityException_initWithJavaLangThrowable_(e);
+  }
   
-#line 423
+#line 433
   self->ownerKey_ = oValue;
   self->userKey_ = uValue;
   self->documentID_ = documentID;
@@ -372,7 +389,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 429
+#line 439
 - (void)setupByUserPadWithByteArray:(IOSByteArray *)documentID
                       withByteArray:(IOSByteArray *)userPad
                       withByteArray:(IOSByteArray *)ownerKey
@@ -381,21 +398,21 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 435
+#line 445
 - (void)setupByOwnerPasswordWithByteArray:(IOSByteArray *)documentID
                             withByteArray:(IOSByteArray *)ownerPassword
                             withByteArray:(IOSByteArray *)userKey
                             withByteArray:(IOSByteArray *)ownerKey
                                   withInt:(jint)permissions {
   
-#line 437
+#line 447
   ComAowagieTextPdfPdfEncryption_setupByOwnerPadWithByteArray_withByteArray_withByteArray_withByteArray_withInt_(self, documentID, ComAowagieTextPdfPdfEncryption_padPasswordWithByteArray_(self, ownerPassword), userKey,
-#line 438
+#line 448
   ownerKey, permissions);
 }
 
 
-#line 445
+#line 455
 - (void)setupByOwnerPasswordWithByteArray:(IOSByteArray *)documentID
                             withByteArray:(IOSByteArray *)ownerPassword
                             withByteArray:(IOSByteArray *)uValue
@@ -404,19 +421,18 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
                             withByteArray:(IOSByteArray *)oeValue
                                   withInt:(jint)permissions {
   
-#line 448
-  JavaxCryptoCipher *cipher = JavaxCryptoCipher_getInstanceWithNSString_(@"AES/CBC/NoPadding");
-  
-#line 450
+#line 459
   IOSByteArray *hashAlg2B = ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArray_withByteArray_(ownerPassword, JavaUtilArrays_copyOfRangeWithByteArray_withInt_withInt_(oValue, 40, 48), uValue);
-  [((JavaxCryptoCipher *) nil_chk(cipher)) init__WithInt:JavaxCryptoCipher_DECRYPT_MODE withJavaSecurityKey:new_JavaxCryptoSpecSecretKeySpec_initWithByteArray_withNSString_(
-#line 452
-  hashAlg2B, @"AES") withJavaSecuritySpecAlgorithmParameterSpec:new_JavaxCryptoSpecIvParameterSpec_initWithByteArray_([IOSByteArray newArrayWithLength:
-#line 453
-  16])];
-  self->key_ = [cipher updateWithByteArray:oeValue withInt:0 withInt:((IOSByteArray *) nil_chk(oeValue))->size_];
+  @try {
+    self->key_ = ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(oeValue, [IOSByteArray newArrayWithLength:16], hashAlg2B, nil, false);
+  }
+  @catch (
+#line 462
+  JavaLangException *e) {
+    @throw new_JavaSecurityGeneralSecurityException_initWithJavaLangThrowable_(e);
+  }
   
-#line 456
+#line 466
   self->ownerKey_ = oValue;
   self->userKey_ = uValue;
   self->documentID_ = documentID;
@@ -424,7 +440,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 462
+#line 472
 - (void)setupByOwnerPadWithByteArray:(IOSByteArray *)documentID
                        withByteArray:(IOSByteArray *)ownerPad
                        withByteArray:(IOSByteArray *)userKey
@@ -434,47 +450,49 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 476
+#line 486
 - (jboolean)decryptAndCheckPermsWithByteArray:(IOSByteArray *)permsValue {
-  JavaxCryptoCipher *cipher = JavaxCryptoCipher_getInstanceWithNSString_(@"AES/CBC/NoPadding");
   
-#line 479
-  [((JavaxCryptoCipher *) nil_chk(cipher)) init__WithInt:JavaxCryptoCipher_DECRYPT_MODE withJavaSecurityKey:new_JavaxCryptoSpecSecretKeySpec_initWithByteArray_withNSString_(
-#line 480
-  self->key_, @"AES") withJavaSecuritySpecAlgorithmParameterSpec:new_JavaxCryptoSpecIvParameterSpec_initWithByteArray_([IOSByteArray newArrayWithLength:
-#line 481
-  16])];
-  IOSByteArray *decPerms = [cipher updateWithByteArray:permsValue withInt:0 withInt:((IOSByteArray *) nil_chk(permsValue))->size_];
+#line 488
+  IOSByteArray *decPerms;
+  @try {
+    decPerms = ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(permsValue, [IOSByteArray newArrayWithLength:16], self->key_, nil, false);
+  }
+  @catch (
+#line 491
+  JavaLangException *e) {
+    @throw new_JavaSecurityGeneralSecurityException_initWithJavaLangThrowable_(e);
+  }
   
-#line 484
+#line 495
   self->permissions_ = (IOSByteArray_Get(nil_chk(decPerms), 0) & (jint) 0xff) | (JreLShift32((IOSByteArray_Get(decPerms, 1) & (jint) 0xff), 8)) |
-#line 485
+#line 496
   (JreLShift32((IOSByteArray_Get(decPerms, 2) & (jint) 0xff), 16)) | (JreLShift32((IOSByteArray_Get(decPerms, 2) & (jint) 0xff), 24));
   self->encryptMetadata_ = (IOSByteArray_Get(decPerms, 8) == (jbyte) 'T');
   
-#line 488
+#line 499
   return IOSByteArray_Get(decPerms, 9) == (jbyte) 'a' && IOSByteArray_Get(decPerms, 10) == (jbyte) 'd' && IOSByteArray_Get(decPerms, 11) == (jbyte) 'b';
 }
 
 
-#line 491
+#line 502
 - (void)setupByEncryptionKeyWithByteArray:(IOSByteArray *)key
                                   withInt:(jint)keylength {
   
-#line 492
+#line 503
   self->mkey_ = [IOSByteArray newArrayWithLength:JreIntDiv(keylength, 8)];
   JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(key, 0, self->mkey_, 0, self->mkey_->size_);
 }
 
 
-#line 496
+#line 507
 - (void)setHashKeyWithInt:(jint)number
                   withInt:(jint)generation {
   if (self->revision_ >= ComAowagieTextPdfPdfEncryption_AES_256_V3) {
     return;
   }
   
-#line 502
+#line 513
   [((JavaSecurityMessageDigest *) nil_chk(self->md5_)) reset];
   *IOSByteArray_GetRef(nil_chk(self->extra_), 0) = (jbyte) number;
   *IOSByteArray_GetRef(self->extra_, 1) = (jbyte) (JreRShift32(number, 8));
@@ -494,42 +512,42 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 }
 
 
-#line 520
+#line 531
 + (ComAowagieTextPdfPdfObject *)createInfoIdWithByteArray:(IOSByteArray *)id_ {
   return ComAowagieTextPdfPdfEncryption_createInfoIdWithByteArray_(id_);
 }
 
 
-#line 535
+#line 546
 - (ComAowagieTextPdfPdfDictionary *)getEncryptionDictionary {
   ComAowagieTextPdfPdfDictionary *dic = new_ComAowagieTextPdfPdfDictionary_init();
   
-#line 538
+#line 549
   if ([((ComAowagieTextPdfPdfPublicKeySecurityHandler *) nil_chk(self->publicKeyHandler_)) getRecipientsSize] > 0) {
     ComAowagieTextPdfPdfArray *recipients = nil;
     
-#line 541
+#line 552
     [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, FILTER) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, PUBSEC)];
     [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, R) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(self->revision_)];
     
-#line 544
+#line 555
     @try {
       recipients = [((ComAowagieTextPdfPdfPublicKeySecurityHandler *) nil_chk(self->publicKeyHandler_)) getEncodedRecipients];
     }
     @catch (
-#line 546
+#line 557
     JavaLangException *f) {
       @throw new_ComAowagieTextExceptionConverter_initWithJavaLangException_(f);
     }
     
-#line 550
+#line 561
     if (self->revision_ == ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_40) {
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, V) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(1)];
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, SUBFILTER) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, ADBE_PKCS7_S4)];
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, RECIPIENTS) withComAowagieTextPdfPdfObject:recipients];
     }
     else
-#line 554
+#line 565
     if (self->revision_ == ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_128 && self->encryptMetadata_) {
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, V) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(2)];
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, LENGTH) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(128)];
@@ -537,7 +555,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, RECIPIENTS) withComAowagieTextPdfPdfObject:recipients];
     }
     else
-#line 559
+#line 570
     if (self->revision_ == ComAowagieTextPdfPdfEncryption_AES_256_V3) {
       if (!self->encryptMetadata_) {
         [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, ENCRYPTMETADATA) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfBoolean, PDFFALSE)];
@@ -557,7 +575,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
       }
       else {
         
-#line 576
+#line 587
         [stdcf putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, AUTHEVENT) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, DOCOPEN)];
         [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, STRF) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, STDCF)];
         [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, STMF) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, STDCF)];
@@ -569,32 +587,32 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
     }
     else {
       
-#line 585
+#line 596
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, R) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(ComAowagieTextPdfPdfEncryption_AES_128)];
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, V) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(4)];
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, SUBFILTER) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, ADBE_PKCS7_S5)];
       
-#line 589
+#line 600
       ComAowagieTextPdfPdfDictionary *stdcf = new_ComAowagieTextPdfPdfDictionary_init();
       [stdcf putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, RECIPIENTS) withComAowagieTextPdfPdfObject:recipients];
       if (!self->encryptMetadata_) {
         [stdcf putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, ENCRYPTMETADATA) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfBoolean, PDFFALSE)];
       }
       
-#line 595
+#line 606
       if (self->revision_ == ComAowagieTextPdfPdfEncryption_AES_128) {
         [stdcf putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, CFM) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, AESV2)];
       }
       else {
         
-#line 598
+#line 609
         [stdcf putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, CFM) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, V2)];
       }
       ComAowagieTextPdfPdfDictionary *cf = new_ComAowagieTextPdfPdfDictionary_init();
       [cf putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, DEFAULTCRYPTFILTER) withComAowagieTextPdfPdfObject:stdcf];
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, CF) withComAowagieTextPdfPdfObject:cf];
       
-#line 602
+#line 613
       if (self->embeddedFilesOnly_) {
         [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, EFF) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, DEFAULTCRYPTFILTER)];
         [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, STRF) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, IDENTITY)];
@@ -606,11 +624,11 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
       }
     }
     
-#line 613
+#line 624
     JavaSecurityMessageDigest *md = nil;
     IOSByteArray *encodedRecipient = nil;
     
-#line 616
+#line 627
     @try {
       md = JavaSecurityMessageDigest_getInstanceWithNSString_(@"SHA-1");
       [((JavaSecurityMessageDigest *) nil_chk(md)) updateWithByteArray:[((ComAowagieTextPdfPdfPublicKeySecurityHandler *) nil_chk(self->publicKeyHandler_)) getSeed]];
@@ -620,41 +638,41 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
       }
       if (!self->encryptMetadata_) {
         [md updateWithByteArray:[IOSByteArray newArrayWithBytes:(jbyte[]){ (jbyte) 255, (jbyte) 255, (jbyte) 255,
-#line 625
+#line 636
         (jbyte) 255 } count:4]];
       }
     }
     @catch (
-#line 627
+#line 638
     JavaLangException *f) {
       @throw new_ComAowagieTextExceptionConverter_initWithJavaLangException_(f);
     }
     
-#line 631
+#line 642
     IOSByteArray *mdResult = [((JavaSecurityMessageDigest *) nil_chk(md)) digest];
     
-#line 633
+#line 644
     [self setupByEncryptionKeyWithByteArray:mdResult withInt:self->keyLength_];
   }
   else {
     
-#line 635
+#line 646
     [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, FILTER) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, STANDARD)];
     [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, O) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfLiteral_initWithByteArray_(ComAowagieTextPdfPdfContentByte_escapeStringWithByteArray_(
-#line 637
+#line 648
     self->ownerKey_))];
     [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, U) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfLiteral_initWithByteArray_(ComAowagieTextPdfPdfContentByte_escapeStringWithByteArray_(
-#line 639
+#line 650
     self->userKey_))];
     [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, P) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(self->permissions_)];
     [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, R) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(self->revision_)];
     
-#line 643
+#line 654
     if (self->revision_ == ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_40) {
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, V) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(1)];
     }
     else
-#line 645
+#line 656
     if (self->revision_ == ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_128 && self->encryptMetadata_) {
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, V) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(2)];
       [dic putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, LENGTH) withComAowagieTextPdfPdfObject:new_ComAowagieTextPdfPdfNumber_initWithInt_(128)];
@@ -684,7 +702,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
       }
       else {
         
-#line 672
+#line 683
         [stdcf putWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, CFM) withComAowagieTextPdfPdfObject:JreLoadStatic(ComAowagieTextPdfPdfName, V2)];
       }
       ComAowagieTextPdfPdfDictionary *cf = new_ComAowagieTextPdfPdfDictionary_init();
@@ -693,12 +711,12 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
     }
   }
   
-#line 680
+#line 691
   return dic;
 }
 
 
-#line 683
+#line 694
 - (ComAowagieTextPdfPdfObject *)getFileID {
   return ComAowagieTextPdfPdfEncryption_createInfoIdWithByteArray_(self->documentID_);
 }
@@ -713,13 +731,13 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
   }
   else {
     
-#line 695
+#line 706
     return n;
   }
 }
 
 
-#line 699
+#line 710
 - (IOSByteArray *)encryptByteArrayWithByteArray:(IOSByteArray *)b {
   @try {
     JavaIoByteArrayOutputStream *ba = new_JavaIoByteArrayOutputStream_init();
@@ -729,14 +747,14 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
     return [ba toByteArray];
   }
   @catch (
-#line 706
+#line 717
   JavaIoIOException *ex) {
     @throw new_ComAowagieTextExceptionConverter_initWithJavaLangException_(ex);
   }
 }
 
 
-#line 711
+#line 722
 - (ComAowagieTextPdfStandardDecryption *)getDecryptor {
   return new_ComAowagieTextPdfStandardDecryption_initPackagePrivateWithByteArray_withInt_withInt_withInt_(self->key_, 0, self->keySize_, self->revision_);
 }
@@ -756,96 +774,101 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
     return [ba toByteArray];
   }
   @catch (
-#line 728
+#line 739
   JavaIoIOException *ex) {
     @throw new_ComAowagieTextExceptionConverter_initWithJavaLangException_(ex);
   }
 }
 
 
-#line 733
+#line 744
 - (void)addRecipientWithJavaSecurityCertCertificate:(JavaSecurityCertCertificate *)cert
                                             withInt:(jint)permission {
   
-#line 734
+#line 745
   self->documentID_ = ComAowagieTextPdfPdfEncryption_createDocumentId();
   [((ComAowagieTextPdfPdfPublicKeySecurityHandler *) nil_chk(self->publicKeyHandler_)) addRecipientWithComAowagieTextPdfPdfPublicKeyRecipient:new_ComAowagieTextPdfPdfPublicKeyRecipient_initPackagePrivateWithJavaSecurityCertCertificate_withInt_(cert,
-#line 736
+#line 747
   permission)];
 }
 
 - (void)computeUAndUeAlg8WithByteArray:(IOSByteArray *)userPassword {
-  JavaxCryptoCipher *cipher = JavaxCryptoCipher_getInstanceWithNSString_(@"AES/CBC/NoPadding");
   
-#line 746
+#line 756
   if (userPassword == nil) {
     userPassword = [IOSByteArray newArrayWithLength:0];
   }
   else
-#line 748
+#line 758
   if (userPassword->size_ > 127) {
     userPassword = JavaUtilArrays_copyOfWithByteArray_withInt_(userPassword, 127);
   }
   
-#line 752
+#line 762
   IOSByteArray *userSalts = ComAowagieTextPdfCryptoIVGenerator_getIVWithInt_(16);
   
-#line 754
+#line 764
   self->userKey_ = [IOSByteArray newArrayWithLength:48];
   JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(userSalts, 0, self->userKey_, 32, 16);
   IOSByteArray *hashAlg2B = ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArray_withByteArray_(userPassword, JavaUtilArrays_copyOfWithByteArray_withInt_(userSalts, 8), nil);
   JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(hashAlg2B, 0, self->userKey_, 0, 32);
   
-#line 759
+#line 769
   hashAlg2B = ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArray_withByteArray_(userPassword, JavaUtilArrays_copyOfRangeWithByteArray_withInt_withInt_(userSalts, 8, 16), nil);
-  [((JavaxCryptoCipher *) nil_chk(cipher)) init__WithInt:JavaxCryptoCipher_ENCRYPT_MODE withJavaSecurityKey:new_JavaxCryptoSpecSecretKeySpec_initWithByteArray_withNSString_(
-#line 761
-  hashAlg2B, @"AES") withJavaSecuritySpecAlgorithmParameterSpec:new_JavaxCryptoSpecIvParameterSpec_initWithByteArray_([IOSByteArray newArrayWithLength:
-#line 762
-  16])];
-  self->ueKey_ = [cipher updateWithByteArray:self->key_ withInt:0 withInt:self->keySize_];
+  
+#line 771
+  @try {
+    self->ueKey_ = ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(self->key_, [IOSByteArray newArrayWithLength:16], hashAlg2B, nil, true);
+  }
+  @catch (
+#line 773
+  JavaLangException *e) {
+    @throw new_JavaSecurityGeneralSecurityException_initWithJavaLangThrowable_(e);
+  }
 }
 
 
-#line 770
+#line 782
 - (void)computeOAndOeAlg9WithByteArray:(IOSByteArray *)ownerPassword {
-  JavaxCryptoCipher *cipher = JavaxCryptoCipher_getInstanceWithNSString_(@"AES/CBC/NoPadding");
   
-#line 773
+#line 784
   if (ownerPassword == nil) {
     ownerPassword = [IOSByteArray newArrayWithLength:0];
   }
   else
-#line 775
+#line 786
   if (ownerPassword->size_ > 127) {
     ownerPassword = JavaUtilArrays_copyOfWithByteArray_withInt_(ownerPassword, 127);
   }
   
-#line 779
+#line 790
   IOSByteArray *ownerSalts = ComAowagieTextPdfCryptoIVGenerator_getIVWithInt_(16);
   
-#line 781
+#line 792
   self->ownerKey_ = [IOSByteArray newArrayWithLength:48];
   JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(ownerSalts, 0, self->ownerKey_, 32, 16);
   IOSByteArray *hashAlg2B = ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArray_withByteArray_(ownerPassword, JavaUtilArrays_copyOfWithByteArray_withInt_(ownerSalts, 8), self->userKey_);
   JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(hashAlg2B, 0, self->ownerKey_, 0, 32);
   
-#line 786
+#line 797
   hashAlg2B = ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArray_withByteArray_(ownerPassword, JavaUtilArrays_copyOfRangeWithByteArray_withInt_withInt_(ownerSalts, 8, 16), self->userKey_);
-  [((JavaxCryptoCipher *) nil_chk(cipher)) init__WithInt:JavaxCryptoCipher_ENCRYPT_MODE withJavaSecurityKey:new_JavaxCryptoSpecSecretKeySpec_initWithByteArray_withNSString_(
-#line 788
-  hashAlg2B, @"AES") withJavaSecuritySpecAlgorithmParameterSpec:new_JavaxCryptoSpecIvParameterSpec_initWithByteArray_([IOSByteArray newArrayWithLength:
-#line 789
-  16])];
-  self->oeKey_ = [cipher updateWithByteArray:self->key_ withInt:0 withInt:self->keySize_];
+  
+#line 799
+  @try {
+    self->oeKey_ = ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(self->key_, [IOSByteArray newArrayWithLength:16], hashAlg2B, nil, true);
+  }
+  @catch (
+#line 801
+  JavaLangException *e) {
+    @throw new_JavaSecurityGeneralSecurityException_initWithJavaLangThrowable_(e);
+  }
 }
 
 
-#line 797
+#line 810
 - (void)computePermsAlg10WithInt:(jint)permissions {
-  JavaxCryptoCipher *cipher = JavaxCryptoCipher_getInstanceWithNSString_(@"AES/CBC/NoPadding");
   
-#line 800
+#line 812
   IOSByteArray *rawPerms = [IOSByteArray newArrayWithLength:16];
   *IOSByteArray_GetRef(rawPerms, 0) = (jbyte) (permissions & (jint) 0xff);
   *IOSByteArray_GetRef(rawPerms, 1) = (jbyte) (JreRShift32((permissions & (jint) 0xff00), 8));
@@ -861,21 +884,33 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
   *IOSByteArray_GetRef(rawPerms, 11) = (jbyte) 'b';
   JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(ComAowagieTextPdfCryptoIVGenerator_getIVWithInt_(4), 0, rawPerms, 12, 4);
   
-#line 815
-  [((JavaxCryptoCipher *) nil_chk(cipher)) init__WithInt:JavaxCryptoCipher_ENCRYPT_MODE withJavaSecurityKey:new_JavaxCryptoSpecSecretKeySpec_initWithByteArray_withNSString_(
-#line 816
-  self->key_, @"AES") withJavaSecuritySpecAlgorithmParameterSpec:new_JavaxCryptoSpecIvParameterSpec_initWithByteArray_([IOSByteArray newArrayWithLength:
-#line 817
-  16])];
-  self->perms_ = [cipher updateWithByteArray:rawPerms withInt:0 withInt:16];
+#line 827
+  @try {
+    self->perms_ = ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(rawPerms, [IOSByteArray newArrayWithLength:16], self->key_, nil, true);
+  }
+  @catch (
+#line 829
+  JavaLangException *e) {
+    @throw new_JavaSecurityGeneralSecurityException_initWithJavaLangThrowable_(e);
+  }
 }
 
 
-#line 824
+#line 837
 + (IOSByteArray *)hashAlg2BWithByteArray:(IOSByteArray *)input
                            withByteArray:(IOSByteArray *)salt
                            withByteArray:(IOSByteArray *)userKey {
   return ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArray_withByteArray_(input, salt, userKey);
+}
+
+
+#line 886
++ (IOSByteArray *)doAesWithByteArray:(IOSByteArray *)data
+                       withByteArray:(IOSByteArray *)iv
+                       withByteArray:(IOSByteArray *)aesKey
+withOrgSpongycastleCryptoPaddingsBlockCipherPadding:(id<OrgSpongycastleCryptoPaddingsBlockCipherPadding>)padding
+                         withBoolean:(jboolean)forEncryption {
+  return ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(data, iv, aesKey, padding, forEncryption);
 }
 
 + (const J2ObjcClassInfo *)__metadata {
@@ -914,6 +949,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
     { NULL, "V", 0x0, 32, 4, 13, -1, -1, -1 },
     { NULL, "V", 0x0, 33, 26, 13, -1, -1, -1 },
     { NULL, "[B", 0x8, 34, 35, 13, -1, -1, -1 },
+    { NULL, "[B", 0xa, 36, 37, 38, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
@@ -952,15 +988,16 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
   methods[31].selector = @selector(computeOAndOeAlg9WithByteArray:);
   methods[32].selector = @selector(computePermsAlg10WithInt:);
   methods[33].selector = @selector(hashAlg2BWithByteArray:withByteArray:withByteArray:);
+  methods[34].selector = @selector(doAesWithByteArray:withByteArray:withByteArray:withOrgSpongycastleCryptoPaddingsBlockCipherPadding:withBoolean:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
     { "STANDARD_ENCRYPTION_40", "I", .constantValue.asInt = ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_40, 0x1a, -1, -1, -1, -1 },
     { "STANDARD_ENCRYPTION_128", "I", .constantValue.asInt = ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_128, 0x1a, -1, -1, -1, -1 },
     { "AES_128", "I", .constantValue.asInt = ComAowagieTextPdfPdfEncryption_AES_128, 0x1a, -1, -1, -1, -1 },
     { "AES_256_V3", "I", .constantValue.asInt = ComAowagieTextPdfPdfEncryption_AES_256_V3, 0x19, -1, -1, -1, -1 },
-    { "pad", "[B", .constantValue.asLong = 0, 0x1a, -1, 36, -1, -1 },
-    { "salt", "[B", .constantValue.asLong = 0, 0x1a, -1, 37, -1, -1 },
-    { "metadataPad", "[B", .constantValue.asLong = 0, 0x1a, -1, 38, -1, -1 },
+    { "pad", "[B", .constantValue.asLong = 0, 0x1a, -1, 39, -1, -1 },
+    { "salt", "[B", .constantValue.asLong = 0, 0x1a, -1, 40, -1, -1 },
+    { "metadataPad", "[B", .constantValue.asLong = 0, 0x1a, -1, 41, -1, -1 },
     { "key_", "[B", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "keySize_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "mkey_", "[B", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -971,7 +1008,7 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
     { "publicKeyHandler_", "LComAowagieTextPdfPdfPublicKeySecurityHandler;", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "permissions_", "I", .constantValue.asLong = 0, 0x0, -1, -1, -1, -1 },
     { "documentID_", "[B", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
-    { "seq", "J", .constantValue.asLong = 0, 0xa, -1, 39, -1, -1 },
+    { "seq", "J", .constantValue.asLong = 0, 0xa, -1, 42, -1, -1 },
     { "revision_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "arcfour_", "LComAowagieTextPdfCryptoARCFOUREncryption;", .constantValue.asLong = 0, 0x12, -1, -1, -1, -1 },
     { "keyLength_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
@@ -982,37 +1019,37 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
     { "embeddedFilesOnly_", "Z", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
     { "cryptoMode_", "I", .constantValue.asLong = 0, 0x2, -1, -1, -1, -1 },
   };
-  static const void *ptrTable[] = { "LComAowagieTextPdfPdfEncryption;", "setCryptoMode", "II", "padPassword", "[B", "computeOwnerKey", "[B[B", "setupGlobalEncryptionKey", "[B[B[BI", "setupAllKeys", "[B[BI", "setupByUserPassword", "[B[B[B[B[B[BI", "LJavaSecurityGeneralSecurityException;", "setupByUserPad", "setupByOwnerPassword", "[B[B[B[BI", "setupByOwnerPad", "decryptAndCheckPerms", "setupByEncryptionKey", "[BI", "setHashKey", "createInfoId", "getEncryptionStream", "LJavaIoOutputStream;", "calculateStreamSize", "I", "encryptByteArray", "decryptByteArray", "addRecipient", "LJavaSecurityCertCertificate;I", "computeUAndUeAlg8", "computeOAndOeAlg9", "computePermsAlg10", "hashAlg2B", "[B[B[B", &ComAowagieTextPdfPdfEncryption_pad, &ComAowagieTextPdfPdfEncryption_salt, &ComAowagieTextPdfPdfEncryption_metadataPad, &ComAowagieTextPdfPdfEncryption_seq };
-  static const J2ObjcClassInfo _ComAowagieTextPdfPdfEncryption = { "PdfEncryption", "com.aowagie.text.pdf", ptrTable, methods, fields, 7, 0x0, 34, 27, -1, -1, -1, -1, -1 };
+  static const void *ptrTable[] = { "LComAowagieTextPdfPdfEncryption;", "setCryptoMode", "II", "padPassword", "[B", "computeOwnerKey", "[B[B", "setupGlobalEncryptionKey", "[B[B[BI", "setupAllKeys", "[B[BI", "setupByUserPassword", "[B[B[B[B[B[BI", "LJavaSecurityGeneralSecurityException;", "setupByUserPad", "setupByOwnerPassword", "[B[B[B[BI", "setupByOwnerPad", "decryptAndCheckPerms", "setupByEncryptionKey", "[BI", "setHashKey", "createInfoId", "getEncryptionStream", "LJavaIoOutputStream;", "calculateStreamSize", "I", "encryptByteArray", "decryptByteArray", "addRecipient", "LJavaSecurityCertCertificate;I", "computeUAndUeAlg8", "computeOAndOeAlg9", "computePermsAlg10", "hashAlg2B", "[B[B[B", "doAes", "[B[B[BLOrgSpongycastleCryptoPaddingsBlockCipherPadding;Z", "LJavaIoIOException;LOrgSpongycastleCryptoInvalidCipherTextException;", &ComAowagieTextPdfPdfEncryption_pad, &ComAowagieTextPdfPdfEncryption_salt, &ComAowagieTextPdfPdfEncryption_metadataPad, &ComAowagieTextPdfPdfEncryption_seq };
+  static const J2ObjcClassInfo _ComAowagieTextPdfPdfEncryption = { "PdfEncryption", "com.aowagie.text.pdf", ptrTable, methods, fields, 7, 0x0, 35, 27, -1, -1, -1, -1, -1 };
   return &_ComAowagieTextPdfPdfEncryption;
 }
 
 + (void)initialize {
   if (self == [ComAowagieTextPdfPdfEncryption class]) {
     ComAowagieTextPdfPdfEncryption_pad = [IOSByteArray newArrayWithBytes:(jbyte[]){
-#line 84
+#line 93
       (jbyte) (jint) 0x28, (jbyte) (jint) 0xBF, (jbyte) (jint) 0x4E,
-#line 85
+#line 94
       (jbyte) (jint) 0x5E, (jbyte) (jint) 0x4E, (jbyte) (jint) 0x75, (jbyte) (jint) 0x8A, (jbyte) (jint) 0x41,
-#line 86
+#line 95
       (jbyte) (jint) 0x64, (jbyte) (jint) 0x00, (jbyte) (jint) 0x4E, (jbyte) (jint) 0x56, (jbyte) (jint) 0xFF,
-#line 87
+#line 96
       (jbyte) (jint) 0xFA, (jbyte) (jint) 0x01, (jbyte) (jint) 0x08, (jbyte) (jint) 0x2E, (jbyte) (jint) 0x2E,
-#line 88
+#line 97
       (jbyte) (jint) 0x00, (jbyte) (jint) 0xB6, (jbyte) (jint) 0xD0, (jbyte) (jint) 0x68, (jbyte) (jint) 0x3E,
-#line 89
+#line 98
       (jbyte) (jint) 0x80, (jbyte) (jint) 0x2F, (jbyte) (jint) 0x0C, (jbyte) (jint) 0xA9, (jbyte) (jint) 0xFE,
-#line 90
+#line 99
       (jbyte) (jint) 0x64, (jbyte) (jint) 0x53, (jbyte) (jint) 0x69, (jbyte) (jint) 0x7A } count:32];
       ComAowagieTextPdfPdfEncryption_salt = [IOSByteArray newArrayWithBytes:(jbyte[]){
-#line 92
+#line 101
         (jbyte) (jint) 0x73, (jbyte) (jint) 0x41, (jbyte) (jint) 0x6c,
-#line 93
+#line 102
         (jbyte) (jint) 0x54 } count:4];
         ComAowagieTextPdfPdfEncryption_metadataPad = [IOSByteArray newArrayWithBytes:(jbyte[]){
-#line 95
+#line 104
           (jbyte) 255, (jbyte) 255,
-#line 96
+#line 105
           (jbyte) 255, (jbyte) 255 } count:4];
           ComAowagieTextPdfPdfEncryption_seq = JavaLangSystem_currentTimeMillis();
           J2OBJC_SET_INITIALIZED(ComAowagieTextPdfPdfEncryption)
@@ -1022,29 +1059,29 @@ J2OBJC_INITIALIZED_DEFN(ComAowagieTextPdfPdfEncryption)
 @end
 
 
-#line 149
+#line 158
 void ComAowagieTextPdfPdfEncryption_initPackagePrivate(ComAowagieTextPdfPdfEncryption *self) {
   NSObject_init(self);
   self->extra_ = [IOSByteArray newArrayWithLength:
-#line 108
+#line 117
   5];
   self->ownerKey_ = [IOSByteArray newArrayWithLength:
-#line 114
+#line 123
   32];
   self->userKey_ = [IOSByteArray newArrayWithLength:
-#line 117
+#line 126
   32];
   self->publicKeyHandler_ =
-#line 120
+#line 129
   nil;
   self->arcfour_ = new_ComAowagieTextPdfCryptoARCFOUREncryption_init();
   
-#line 150
+#line 159
   @try {
     self->md5_ = JavaSecurityMessageDigest_getInstanceWithNSString_(@"MD5");
   }
   @catch (
-#line 152
+#line 161
   JavaLangException *e) {
     @throw new_ComAowagieTextExceptionConverter_initWithJavaLangException_(e);
   }
@@ -1052,19 +1089,19 @@ void ComAowagieTextPdfPdfEncryption_initPackagePrivate(ComAowagieTextPdfPdfEncry
 }
 
 
-#line 149
+#line 158
 ComAowagieTextPdfPdfEncryption *new_ComAowagieTextPdfPdfEncryption_initPackagePrivate() {
   J2OBJC_NEW_IMPL(ComAowagieTextPdfPdfEncryption, initPackagePrivate)
 }
 
 
-#line 149
+#line 158
 ComAowagieTextPdfPdfEncryption *create_ComAowagieTextPdfPdfEncryption_initPackagePrivate() {
   J2OBJC_CREATE_IMPL(ComAowagieTextPdfPdfEncryption, initPackagePrivate)
 }
 
 
-#line 158
+#line 167
 void ComAowagieTextPdfPdfEncryption_initPackagePrivateWithComAowagieTextPdfPdfEncryption_(ComAowagieTextPdfPdfEncryption *self, ComAowagieTextPdfPdfEncryption *enc) {
   ComAowagieTextPdfPdfEncryption_initPackagePrivate(self);
   if (((ComAowagieTextPdfPdfEncryption *) nil_chk(enc))->mkey_ != nil) {
@@ -1097,19 +1134,19 @@ void ComAowagieTextPdfPdfEncryption_initPackagePrivateWithComAowagieTextPdfPdfEn
 }
 
 
-#line 158
+#line 167
 ComAowagieTextPdfPdfEncryption *new_ComAowagieTextPdfPdfEncryption_initPackagePrivateWithComAowagieTextPdfPdfEncryption_(ComAowagieTextPdfPdfEncryption *enc) {
   J2OBJC_NEW_IMPL(ComAowagieTextPdfPdfEncryption, initPackagePrivateWithComAowagieTextPdfPdfEncryption_, enc)
 }
 
 
-#line 158
+#line 167
 ComAowagieTextPdfPdfEncryption *create_ComAowagieTextPdfPdfEncryption_initPackagePrivateWithComAowagieTextPdfPdfEncryption_(ComAowagieTextPdfPdfEncryption *enc) {
   J2OBJC_CREATE_IMPL(ComAowagieTextPdfPdfEncryption, initPackagePrivateWithComAowagieTextPdfPdfEncryption_, enc)
 }
 
 
-#line 241
+#line 250
 IOSByteArray *ComAowagieTextPdfPdfEncryption_padPasswordWithByteArray_(ComAowagieTextPdfPdfEncryption *self, IOSByteArray *userPassword) {
   IOSByteArray *userPad = [IOSByteArray newArrayWithLength:32];
   if (userPassword == nil) {
@@ -1117,32 +1154,32 @@ IOSByteArray *ComAowagieTextPdfPdfEncryption_padPasswordWithByteArray_(ComAowagi
   }
   else {
     
-#line 246
+#line 255
     JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(userPassword, 0, userPad, 0, JavaLangMath_minWithInt_withInt_(
-#line 247
+#line 256
     userPassword->size_, 32));
     if (userPassword->size_ < 32) {
       JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(ComAowagieTextPdfPdfEncryption_pad, 0, userPad, userPassword->size_,
-#line 250
+#line 259
       32 - userPassword->size_);
     }
   }
   
-#line 254
+#line 263
   return userPad;
 }
 
 
-#line 257
+#line 266
 IOSByteArray *ComAowagieTextPdfPdfEncryption_computeOwnerKeyWithByteArray_withByteArray_(ComAowagieTextPdfPdfEncryption *self, IOSByteArray *userPad, IOSByteArray *ownerPad) {
   IOSByteArray *ownerKey = [IOSByteArray newArrayWithLength:32];
   
-#line 260
+#line 269
   IOSByteArray *digest = [((JavaSecurityMessageDigest *) nil_chk(self->md5_)) digestWithByteArray:ownerPad];
   if (self->revision_ == ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_128 || self->revision_ == ComAowagieTextPdfPdfEncryption_AES_128) {
     IOSByteArray *mkey = [IOSByteArray newArrayWithLength:JreIntDiv(self->keyLength_, 8)];
     
-#line 264
+#line 273
     for (jint k = 0; k < 50; ++k) {
       JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_([((JavaSecurityMessageDigest *) nil_chk(self->md5_)) digestWithByteArray:digest], 0, digest, 0, mkey->size_);
     }
@@ -1157,33 +1194,33 @@ IOSByteArray *ComAowagieTextPdfPdfEncryption_computeOwnerKeyWithByteArray_withBy
   }
   else {
     
-#line 276
+#line 285
     [((ComAowagieTextPdfCryptoARCFOUREncryption *) nil_chk(self->arcfour_)) prepareARCFOURKeyWithByteArray:digest withInt:0 withInt:5];
     [self->arcfour_ encryptARCFOURWithByteArray:userPad withByteArray:ownerKey];
   }
   
-#line 280
+#line 289
   return ownerKey;
 }
 
 
-#line 291
+#line 300
 void ComAowagieTextPdfPdfEncryption_setupGlobalEncryptionKeyWithByteArray_withByteArray_withByteArray_withInt_(ComAowagieTextPdfPdfEncryption *self, IOSByteArray *documentID, IOSByteArray *userPad, IOSByteArray *ownerKey, jint permissions) {
   
-#line 293
+#line 302
   self->documentID_ = documentID;
   self->ownerKey_ = ownerKey;
   self->permissions_ = permissions;
   
-#line 297
+#line 306
   self->mkey_ = [IOSByteArray newArrayWithLength:JreIntDiv(self->keyLength_, 8)];
   
-#line 300
+#line 309
   [((JavaSecurityMessageDigest *) nil_chk(self->md5_)) reset];
   [((JavaSecurityMessageDigest *) nil_chk(self->md5_)) updateWithByteArray:userPad];
   [((JavaSecurityMessageDigest *) nil_chk(self->md5_)) updateWithByteArray:ownerKey];
   
-#line 304
+#line 313
   IOSByteArray *ext = [IOSByteArray newArrayWithLength:4];
   *IOSByteArray_GetRef(ext, 0) = (jbyte) permissions;
   *IOSByteArray_GetRef(ext, 1) = (jbyte) (JreRShift32(permissions, 8));
@@ -1197,18 +1234,18 @@ void ComAowagieTextPdfPdfEncryption_setupGlobalEncryptionKeyWithByteArray_withBy
     [((JavaSecurityMessageDigest *) nil_chk(self->md5_)) updateWithByteArray:ComAowagieTextPdfPdfEncryption_metadataPad];
   }
   
-#line 317
+#line 326
   IOSByteArray *digest = [IOSByteArray newArrayWithLength:((IOSByteArray *) nil_chk(self->mkey_))->size_];
   JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_([((JavaSecurityMessageDigest *) nil_chk(self->md5_)) digest], 0, digest, 0, ((IOSByteArray *) nil_chk(self->mkey_))->size_);
   
-#line 321
+#line 330
   if (self->revision_ == ComAowagieTextPdfPdfEncryption_STANDARD_ENCRYPTION_128 || self->revision_ == ComAowagieTextPdfPdfEncryption_AES_128) {
     for (jint k = 0; k < 50; ++k) {
       JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_([((JavaSecurityMessageDigest *) nil_chk(self->md5_)) digestWithByteArray:digest], 0, digest, 0, ((IOSByteArray *) nil_chk(self->mkey_))->size_);
     }
   }
   
-#line 327
+#line 336
   JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(digest, 0, self->mkey_, 0, ((IOSByteArray *) nil_chk(self->mkey_))->size_);
 }
 
@@ -1230,24 +1267,24 @@ void ComAowagieTextPdfPdfEncryption_setupUserKey(ComAowagieTextPdfPdfEncryption 
   }
   else {
     
-#line 351
+#line 360
     [((ComAowagieTextPdfCryptoARCFOUREncryption *) nil_chk(self->arcfour_)) prepareARCFOURKeyWithByteArray:self->mkey_];
     [self->arcfour_ encryptARCFOURWithByteArray:ComAowagieTextPdfPdfEncryption_pad withByteArray:self->userKey_];
   }
 }
 
 
-#line 389
+#line 398
 IOSByteArray *ComAowagieTextPdfPdfEncryption_createDocumentId() {
   ComAowagieTextPdfPdfEncryption_initialize();
   
-#line 390
+#line 399
   JavaSecurityMessageDigest *md5;
   @try {
     md5 = JavaSecurityMessageDigest_getInstanceWithNSString_(@"MD5");
   }
   @catch (
-#line 393
+#line 402
   JavaLangException *e) {
     @throw new_ComAowagieTextExceptionConverter_initWithJavaLangException_(e);
   }
@@ -1258,34 +1295,34 @@ IOSByteArray *ComAowagieTextPdfPdfEncryption_createDocumentId() {
 }
 
 
-#line 429
+#line 439
 void ComAowagieTextPdfPdfEncryption_setupByUserPadWithByteArray_withByteArray_withByteArray_withInt_(ComAowagieTextPdfPdfEncryption *self, IOSByteArray *documentID, IOSByteArray *userPad, IOSByteArray *ownerKey, jint permissions) {
   
-#line 431
+#line 441
   ComAowagieTextPdfPdfEncryption_setupGlobalEncryptionKeyWithByteArray_withByteArray_withByteArray_withInt_(self, documentID, userPad, ownerKey, permissions);
   ComAowagieTextPdfPdfEncryption_setupUserKey(self);
 }
 
 
-#line 462
+#line 472
 void ComAowagieTextPdfPdfEncryption_setupByOwnerPadWithByteArray_withByteArray_withByteArray_withByteArray_withInt_(ComAowagieTextPdfPdfEncryption *self, IOSByteArray *documentID, IOSByteArray *ownerPad, IOSByteArray *userKey, IOSByteArray *ownerKey, jint permissions) {
   
-#line 464
+#line 474
   IOSByteArray *userPad = ComAowagieTextPdfPdfEncryption_computeOwnerKeyWithByteArray_withByteArray_(self, ownerKey, ownerPad);
   
-#line 467
+#line 477
   ComAowagieTextPdfPdfEncryption_setupGlobalEncryptionKeyWithByteArray_withByteArray_withByteArray_withInt_(self, documentID, userPad, ownerKey, permissions);
   
-#line 469
+#line 479
   ComAowagieTextPdfPdfEncryption_setupUserKey(self);
 }
 
 
-#line 520
+#line 531
 ComAowagieTextPdfPdfObject *ComAowagieTextPdfPdfEncryption_createInfoIdWithByteArray_(IOSByteArray *id_) {
   ComAowagieTextPdfPdfEncryption_initialize();
   
-#line 521
+#line 532
   ComAowagieTextPdfByteBuffer *buf = new_ComAowagieTextPdfByteBuffer_initWithInt_(90);
   (void) [((ComAowagieTextPdfByteBuffer *) nil_chk([buf appendWithChar:'['])) appendWithChar:'<'];
   for (jint k = 0; k < 16; ++k) {
@@ -1301,28 +1338,27 @@ ComAowagieTextPdfPdfObject *ComAowagieTextPdfPdfEncryption_createInfoIdWithByteA
 }
 
 
-#line 824
+#line 837
 IOSByteArray *ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArray_withByteArray_(IOSByteArray *input, IOSByteArray *salt, IOSByteArray *userKey) {
   ComAowagieTextPdfPdfEncryption_initialize();
   
-#line 825
+#line 838
   JavaSecurityMessageDigest *sha256 = JavaSecurityMessageDigest_getInstanceWithNSString_(@"SHA-256");
   JavaSecurityMessageDigest *sha384 = JavaSecurityMessageDigest_getInstanceWithNSString_(@"SHA-384");
   JavaSecurityMessageDigest *sha512 = JavaSecurityMessageDigest_getInstanceWithNSString_(@"SHA-512");
-  JavaxCryptoCipher *cipher = JavaxCryptoCipher_getInstanceWithNSString_(@"AES/CBC/NoPadding");
   
-#line 830
+#line 842
   if (userKey == nil) {
     userKey = [IOSByteArray newArrayWithLength:0];
   }
   
-#line 834
+#line 846
   [((JavaSecurityMessageDigest *) nil_chk(sha256)) updateWithByteArray:input];
   [sha256 updateWithByteArray:salt];
   [sha256 updateWithByteArray:userKey];
   IOSByteArray *k = [sha256 digest];
   
-#line 839
+#line 851
   for (jint round = 0, lastEByte = 0; round < 64 || lastEByte > round - 32; round++) {
     jint singleSequenceSize = ((IOSByteArray *) nil_chk(input))->size_ + ((IOSByteArray *) nil_chk(k))->size_ + userKey->size_;
     IOSByteArray *k1 = [IOSByteArray newArrayWithLength:singleSequenceSize * 64];
@@ -1333,16 +1369,21 @@ IOSByteArray *ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArra
       JavaLangSystem_arraycopyWithId_withInt_withId_withInt_withInt_(k1, 0, k1, singleSequenceSize * i, singleSequenceSize);
     }
     
-#line 849
-    [((JavaxCryptoCipher *) nil_chk(cipher)) init__WithInt:JavaxCryptoCipher_ENCRYPT_MODE withJavaSecurityKey:new_JavaxCryptoSpecSecretKeySpec_initWithByteArray_withNSString_(JavaUtilArrays_copyOfWithByteArray_withInt_(
-#line 850
-    k, 16), @"AES") withJavaSecuritySpecAlgorithmParameterSpec:new_JavaxCryptoSpecIvParameterSpec_initWithByteArray_(JavaUtilArrays_copyOfRangeWithByteArray_withInt_withInt_(
-#line 851
-    k, 16, 32))];
-    IOSByteArray *e = [cipher updateWithByteArray:k1 withInt:0 withInt:k1->size_];
+#line 861
+    IOSByteArray *e;
+    @try {
+      e = ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(k1, JavaUtilArrays_copyOfRangeWithByteArray_withInt_withInt_(k, 16, 32), JavaUtilArrays_copyOfWithByteArray_withInt_(k, 16), nil, true);
+    }
+    @catch (
+#line 864
+    JavaLangException *ex) {
+      @throw new_JavaSecurityGeneralSecurityException_initWithJavaLangThrowable_(ex);
+    }
+    
+#line 868
     lastEByte = IOSByteArray_Get(e, ((IOSByteArray *) nil_chk(e))->size_ - 1) & (jint) 0xFF;
     
-#line 855
+#line 870
     switch ([((JavaMathBigInteger *) nil_chk([new_JavaMathBigInteger_initWithInt_withByteArray_(1, JavaUtilArrays_copyOfWithByteArray_withInt_(e, 16)) remainderWithJavaMathBigInteger:JavaMathBigInteger_valueOfWithLong_(3)])) intValue]) {
       case 0:
       k = [sha256 digestWithByteArray:e];
@@ -1356,8 +1397,96 @@ IOSByteArray *ComAowagieTextPdfPdfEncryption_hashAlg2BWithByteArray_withByteArra
     }
   }
   
-#line 868
+#line 883
   return JavaUtilArrays_copyOfWithByteArray_withInt_(k, 32);
+}
+
+
+#line 886
+IOSByteArray *ComAowagieTextPdfPdfEncryption_doAesWithByteArray_withByteArray_withByteArray_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_withBoolean_(IOSByteArray *data, IOSByteArray *iv, IOSByteArray *aesKey, id<OrgSpongycastleCryptoPaddingsBlockCipherPadding> padding, jboolean forEncryption) {
+  ComAowagieTextPdfPdfEncryption_initialize();
+  
+#line 892
+  id<OrgSpongycastleCryptoBlockCipher> engine = new_OrgSpongycastleCryptoEnginesAESEngine_init();
+  
+#line 895
+  IOSByteArray *ivector;
+  if (iv == nil) {
+    ivector = nil;
+  }
+  else if (iv->size_ == 0) {
+    ivector = [IOSByteArray newArrayWithLength:[engine getBlockSize]];
+  }
+  else {
+    ivector = iv;
+  }
+  
+#line 907
+  OrgSpongycastleCryptoParamsParametersWithIV *parameterIV = new_OrgSpongycastleCryptoParamsParametersWithIV_initWithOrgSpongycastleCryptoCipherParameters_withByteArray_(new_OrgSpongycastleCryptoParamsKeyParameter_initWithByteArray_(
+#line 908
+  aesKey),
+#line 909
+  ivector);
+  
+#line 912
+  jint noBytesRead;
+  jint noBytesProcessed = 0;
+  
+#line 916
+  OrgSpongycastleCryptoBufferedBlockCipher *aesCipher =
+#line 917
+  padding != nil ? new_OrgSpongycastleCryptoPaddingsPaddedBufferedBlockCipher_initWithOrgSpongycastleCryptoBlockCipher_withOrgSpongycastleCryptoPaddingsBlockCipherPadding_(new_OrgSpongycastleCryptoModesCBCBlockCipher_initWithOrgSpongycastleCryptoBlockCipher_(new_OrgSpongycastleCryptoEnginesAESEngine_init()),
+#line 921
+  padding) : (id) new_ComAowagieTextPdfBouncycastlePAdESDefaultBufferedBlockCipher_initWithOrgSpongycastleCryptoBlockCipher_(new_OrgSpongycastleCryptoModesCBCBlockCipher_initWithOrgSpongycastleCryptoBlockCipher_(
+#line 923
+  engine));
+  
+#line 926
+  [aesCipher init__WithBoolean:forEncryption withOrgSpongycastleCryptoCipherParameters:parameterIV];
+  
+#line 929
+  IOSByteArray *buf = [IOSByteArray newArrayWithLength:16];
+  IOSByteArray *obuf = [IOSByteArray newArrayWithLength:512];
+  
+#line 932
+  JavaIoInputStream *bin = new_JavaIoByteArrayInputStream_initWithByteArray_(data);
+  JavaIoByteArrayOutputStream *bout = new_JavaIoByteArrayOutputStream_init();
+  @try {
+    while ((noBytesRead = [bin readWithByteArray:buf]) >= 0) {
+      noBytesProcessed = [aesCipher processBytesWithByteArray:buf withInt:0 withInt:noBytesRead withByteArray:obuf withInt:0];
+      [bout writeWithByteArray:obuf withInt:0 withInt:noBytesProcessed];
+    }
+    
+#line 940
+    noBytesProcessed = [aesCipher doFinalWithByteArray:obuf withInt:0];
+    [bout writeWithByteArray:obuf withInt:0 withInt:noBytesProcessed];
+    [bout flush];
+    
+#line 944
+    return [bout toByteArray];
+  }
+  @finally {
+    @try {
+      
+#line 947
+      [bin close];
+    }
+    @catch (
+#line 947
+    JavaLangException *e) {
+    }
+    
+#line 948
+    @try {
+      
+#line 948
+      [bout close];
+    }
+    @catch (
+#line 948
+    JavaLangException *e) {
+    }
+  }
 }
 
 J2OBJC_CLASS_TYPE_LITERAL_SOURCE(ComAowagieTextPdfPdfEncryption)

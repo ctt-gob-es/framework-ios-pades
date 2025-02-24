@@ -219,53 +219,53 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 213
+#line 221
 + (void)enableLtvWithComAowagieTextPdfPdfStamper:(ComAowagieTextPdfPdfStamper *)stp {
   EsGobAfirmaSignersPadesPdfUtil_enableLtvWithComAowagieTextPdfPdfStamper_(stp);
 }
 
 
-#line 224
+#line 232
 + (jboolean)getAppendModeWithJavaUtilProperties:(JavaUtilProperties *)extraParams
                  withComAowagieTextPdfPdfReader:(ComAowagieTextPdfPdfReader *)pdfReader {
   return EsGobAfirmaSignersPadesPdfUtil_getAppendModeWithJavaUtilProperties_withComAowagieTextPdfPdfReader_(extraParams, pdfReader);
 }
 
 
-#line 232
+#line 240
 + (jboolean)pdfHasUnregisteredSignaturesWithByteArray:(IOSByteArray *)pdf
                                withJavaUtilProperties:(JavaUtilProperties *)xParams {
   return EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithByteArray_withJavaUtilProperties_(pdf, xParams);
 }
 
 
-#line 251
+#line 259
 + (NSString *)getFirstSupportedSignSubFilterWithByteArray:(IOSByteArray *)pdf
                                    withJavaUtilProperties:(JavaUtilProperties *)xParams {
   return EsGobAfirmaSignersPadesPdfUtil_getFirstSupportedSignSubFilterWithByteArray_withJavaUtilProperties_(pdf, xParams);
 }
 
 
-#line 287
+#line 295
 + (jboolean)pdfHasUnregisteredSignaturesWithComAowagieTextPdfPdfReader:(ComAowagieTextPdfPdfReader *)pdfReader {
   return EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithComAowagieTextPdfPdfReader_(pdfReader);
 }
 
 
-#line 407
+#line 415
 + (id<JavaUtilList>)getPdfEmptySignatureFieldsWithByteArray:(IOSByteArray *)pdf {
   return EsGobAfirmaSignersPadesPdfUtil_getPdfEmptySignatureFieldsWithByteArray_(pdf);
 }
 
 
-#line 454
+#line 462
 + (ComAowagieTextRectangle *)getPositionOnPageWithJavaUtilProperties:(JavaUtilProperties *)extraParams
                                                         withNSString:(NSString *)prefix {
   return EsGobAfirmaSignersPadesPdfUtil_getPositionOnPageWithJavaUtilProperties_withNSString_(extraParams, prefix);
 }
 
 
-#line 495
+#line 503
 + (void)getPagesRangeWithNSString:(NSString *)pageStr
                           withInt:(jint)totalPages
                  withJavaUtilList:(id<JavaUtilList>)pagesList {
@@ -273,14 +273,14 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 528
+#line 536
 + (jint)normalizePageWithNSString:(NSString *)pageStr
                           withInt:(jint)totalPages {
   return EsGobAfirmaSignersPadesPdfUtil_normalizePageWithNSString_withInt_(pageStr, totalPages);
 }
 
 
-#line 552
+#line 560
 + (void)addPageToResultWithInt:(jint)page
                        withInt:(jint)totalPages
               withJavaUtilList:(id<JavaUtilList>)pagesList {
@@ -288,7 +288,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 564
+#line 572
 + (void)addRangeToResultWithNSString:(NSString *)range
                              withInt:(jint)totalPages
                     withJavaUtilList:(id<JavaUtilList>)pagesList {
@@ -296,7 +296,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 599
+#line 607
 + (void)correctPositionSignatureWithComAowagieTextPdfPdfReader:(ComAowagieTextPdfPdfReader *)pdfReader
                                               withJavaUtilList:(id<JavaUtilList>)pagesList
                                    withComAowagieTextRectangle:(ComAowagieTextRectangle *)signaturePosition {
@@ -304,13 +304,13 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 632
+#line 640
 + (jboolean)checkPagesRangeInputFormatWithNSString:(NSString *)rangeInput {
   return EsGobAfirmaSignersPadesPdfUtil_checkPagesRangeInputFormatWithNSString_(rangeInput);
 }
 
 
-#line 688
+#line 696
 + (id<JavaUtilList>)getPagesWithJavaUtilProperties:(JavaUtilProperties *)extraParams
                                            withInt:(jint)totalPages {
   return EsGobAfirmaSignersPadesPdfUtil_getPagesWithJavaUtilProperties_withInt_(extraParams, totalPages);
@@ -537,35 +537,43 @@ ComAowagieTextPdfPdfReader *EsGobAfirmaSignersPadesPdfUtil_getPdfReaderWithByteA
 void EsGobAfirmaSignersPadesPdfUtil_checkPdfCertificationWithInt_withJavaUtilProperties_(jint pdfCertificationLevel, JavaUtilProperties *extraParams) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 202
-  if (pdfCertificationLevel != ComAowagieTextPdfPdfSignatureAppearance_NOT_CERTIFIED) {
-    NSString *allow = [((JavaUtilProperties *) nil_chk(extraParams)) getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_ALLOW_SIGNING_CERTIFIED_PDFS];
-    if (allow == nil || [((NSString *) nil_chk([allow java_trim])) java_isEmpty]) {
+#line 201
+  NSString *forceSignature = [((JavaUtilProperties *) nil_chk(extraParams)) getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_ALLOW_SIGNING_CERTIFIED_PDFS];
+  if (forceSignature != nil && JavaLangBoolean_parseBooleanWithNSString_(forceSignature)) {
+    return;
+  }
+  
+#line 207
+  jboolean signAllowed = pdfCertificationLevel != ComAowagieTextPdfPdfSignatureAppearance_CERTIFIED_NO_CHANGES_ALLOWED;
+  
+#line 213
+  if (!signAllowed) {
+    if (forceSignature == nil) {
       @throw new_EsGobAfirmaSignersPadesCommonPdfIsCertifiedException_initWithNSString_(@"El PDF esta certificado");
     }
-    if (!JavaLangBoolean_parseBooleanWithNSString_(allow)) {
-      @throw new_EsGobAfirmaCoreAOException_initWithNSString_(@"El PDF esta certificado y se configuro que no se admitia su firma");
-    }
+    @throw new_EsGobAfirmaCoreAOException_initWithNSString_(@"El PDF esta certificado y se configuro que no se admitia su firma");
   }
 }
 
+
+#line 221
 void EsGobAfirmaSignersPadesPdfUtil_enableLtvWithComAowagieTextPdfPdfStamper_(ComAowagieTextPdfPdfStamper *stp) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   [((ComAowagieTextPdfPdfWriter *) nil_chk([((ComAowagieTextPdfPdfStamper *) nil_chk(stp)) getWriter])) addDeveloperExtensionWithComAowagieTextPdfPdfDeveloperExtension:new_ComAowagieTextPdfPdfDeveloperExtension_initWithComAowagieTextPdfPdfName_withComAowagieTextPdfPdfName_withInt_(new_ComAowagieTextPdfPdfName_initWithNSString_(
-#line 217
+#line 225
   @"ESIC"), JreLoadStatic(ComAowagieTextPdfPdfWriter, PDF_VERSION_1_7),
-#line 219
+#line 227
   1)];
 }
 
 
-#line 224
+#line 232
 jboolean EsGobAfirmaSignersPadesPdfUtil_getAppendModeWithJavaUtilProperties_withComAowagieTextPdfPdfReader_(JavaUtilProperties *extraParams, ComAowagieTextPdfPdfReader *pdfReader) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 225
+#line 233
   if ([((JavaUtilProperties *) nil_chk(extraParams)) getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_OWNER_PASSWORD_STRING] != nil ||
-#line 226
+#line 234
   [extraParams getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_USER_PASSWORD_STRING] != nil) {
     return true;
   }
@@ -573,57 +581,57 @@ jboolean EsGobAfirmaSignersPadesPdfUtil_getAppendModeWithJavaUtilProperties_with
 }
 
 
-#line 232
+#line 240
 jboolean EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithByteArray_withJavaUtilProperties_(IOSByteArray *pdf, JavaUtilProperties *xParams) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   JavaUtilProperties *extraParams = xParams != nil ? xParams : new_JavaUtilProperties_init();
   ComAowagieTextPdfPdfReader *pdfReader = EsGobAfirmaSignersPadesPdfUtil_getPdfReaderWithByteArray_withJavaUtilProperties_withBoolean_(
-#line 236
+#line 244
   pdf,
-#line 237
+#line 245
   extraParams, JavaLangBoolean_parseBooleanWithNSString_(
-#line 238
+#line 246
   [extraParams getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_HEADLESS]));
   
-#line 240
+#line 248
   return EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithComAowagieTextPdfPdfReader_(pdfReader);
 }
 
 
-#line 251
+#line 259
 NSString *EsGobAfirmaSignersPadesPdfUtil_getFirstSupportedSignSubFilterWithByteArray_withJavaUtilProperties_(IOSByteArray *pdf, JavaUtilProperties *xParams) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 255
+#line 263
   if (pdf == nil) {
     @throw new_JavaLangIllegalArgumentException_initWithNSString_(@"El PDF de entrada no puede ser nulo");
   }
   
-#line 259
+#line 267
   JavaUtilProperties *extraParams = xParams != nil ? xParams : new_JavaUtilProperties_init();
   
-#line 261
+#line 269
   ComAowagieTextPdfPdfReader *pdfReader = EsGobAfirmaSignersPadesPdfUtil_getPdfReaderWithByteArray_withJavaUtilProperties_withBoolean_(
-#line 262
+#line 270
   pdf,
-#line 263
+#line 271
   extraParams, JavaLangBoolean_parseBooleanWithNSString_(
-#line 264
+#line 272
   [extraParams getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_HEADLESS]));
   
-#line 267
+#line 275
   for (jint i = 0; i < [((ComAowagieTextPdfPdfReader *) nil_chk(pdfReader)) getXrefSize]; i++) {
     ComAowagieTextPdfPdfObject *pdfobj = [pdfReader getPdfObjectWithInt:i];
     if (pdfobj != nil && [pdfobj isDictionary]) {
       ComAowagieTextPdfPdfDictionary *d = (ComAowagieTextPdfPdfDictionary *) cast_chk(pdfobj, [ComAowagieTextPdfPdfDictionary class]);
       if ([((ComAowagieTextPdfPdfName *) nil_chk(JreLoadStatic(ComAowagieTextPdfPdfName, SIG))) isEqual:[d getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, TYPE)]]) {
         
-#line 273
+#line 281
         NSString *subFilter = [d getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, SUBFILTER)] != nil ?
-#line 274
+#line 282
         [((ComAowagieTextPdfPdfObject *) nil_chk([d getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, SUBFILTER)])) description] : nil;
         
-#line 276
+#line 284
         if ([((id<JavaUtilSet>) nil_chk(EsGobAfirmaSignersPadesPdfUtil_SUPPORTED_SUBFILTERS)) containsWithId:subFilter]) {
           return subFilter;
         }
@@ -631,13 +639,13 @@ NSString *EsGobAfirmaSignersPadesPdfUtil_getFirstSupportedSignSubFilterWithByteA
     }
   }
   
-#line 283
+#line 291
   [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_LOGGER)) infoWithNSString:@"No se ha encontrado ningun filtro de firma soportado, se devolvera null"];
   return nil;
 }
 
 
-#line 287
+#line 295
 jboolean EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithComAowagieTextPdfPdfReader_(ComAowagieTextPdfPdfReader *pdfReader) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   jboolean ret = false;
@@ -647,12 +655,12 @@ jboolean EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithComAowag
       ComAowagieTextPdfPdfDictionary *d = (ComAowagieTextPdfPdfDictionary *) cast_chk(pdfobj, [ComAowagieTextPdfPdfDictionary class]);
       if ([((ComAowagieTextPdfPdfName *) nil_chk(JreLoadStatic(ComAowagieTextPdfPdfName, SIG))) isEqual:[d getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, TYPE)]]) {
         
-#line 296
+#line 304
         NSString *subFilter = [d getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, SUBFILTER)] != nil ?
-#line 297
+#line 305
         [((ComAowagieTextPdfPdfObject *) nil_chk([d getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, SUBFILTER)])) description] : nil;
         
-#line 299
+#line 307
         if (subFilter == nil || ![((id<JavaUtilSet>) nil_chk(EsGobAfirmaSignersPadesPdfUtil_SUPPORTED_SUBFILTERS)) containsWithId:subFilter]) {
           ret = true;
           @try {
@@ -665,18 +673,18 @@ jboolean EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithComAowag
               data = [((ComAowagieTextPdfPdfString *) nil_chk(((ComAowagieTextPdfPdfString *) cast_chk([((JavaUtilArrayList *) nil_chk([((ComAowagieTextPdfPdfArray *) nil_chk(((ComAowagieTextPdfPdfArray *) cast_chk([d getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, CERT)], [ComAowagieTextPdfPdfArray class])))) getArrayList])) getWithInt:0], [ComAowagieTextPdfPdfString class])))) getOriginalBytes];
             }
             
-#line 311
+#line 319
             JavaSecurityCertX509Certificate *cert = (JavaSecurityCertX509Certificate *) cast_chk([((JavaSecurityCertCertificateFactory *) nil_chk(JavaSecurityCertCertificateFactory_getInstanceWithNSString_(@"X.509"))) generateCertificateWithJavaIoInputStream:new_JavaIoByteArrayInputStream_initWithByteArray_(
-#line 313
+#line 321
             data)], [JavaSecurityCertX509Certificate class]);
             
-#line 316
+#line 324
             [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_LOGGER)) infoWithNSString:JreStrcat("$$", @"Encontrada firma no registrada, hecha con certificado emitido por: ",
-#line 317
+#line 325
             [((JavaxSecurityAuthX500X500Principal *) nil_chk([((JavaSecurityCertX509Certificate *) nil_chk(cert)) getIssuerX500Principal])) description])];
           }
           @catch (
-#line 320
+#line 328
           JavaLangException *e) {
             [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_LOGGER)) warningWithNSString:JreStrcat("$$$@", @"No se ha podido comprobar la identidad de una firma no registrada con el subfiltro: ", subFilter, @": ", e)];
           }
@@ -688,11 +696,11 @@ jboolean EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithComAowag
 }
 
 
-#line 407
+#line 415
 id<JavaUtilList> EsGobAfirmaSignersPadesPdfUtil_getPdfEmptySignatureFieldsWithByteArray_(IOSByteArray *pdf) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 408
+#line 416
   if (pdf == nil) {
     return new_JavaUtilArrayList_initWithInt_(0);
   }
@@ -702,10 +710,10 @@ id<JavaUtilList> EsGobAfirmaSignersPadesPdfUtil_getPdfEmptySignatureFieldsWithBy
   }
   @catch (JavaLangException *e) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_LOGGER)) severeWithNSString:JreStrcat("$@", @"Error leyendo el PDF de entrada: ",
-#line 417
+#line 425
     e)];
     
-#line 419
+#line 427
     return new_JavaUtilArrayList_initWithInt_(0);
   }
   ComAowagieTextPdfAcroFields *fields = [((ComAowagieTextPdfPdfReader *) nil_chk(reader)) getAcroFields];
@@ -719,21 +727,21 @@ id<JavaUtilList> EsGobAfirmaSignersPadesPdfUtil_getPdfEmptySignatureFieldsWithBy
           continue;
         }
         [ret addWithId:new_EsGobAfirmaSignersPadesPdfUtil_SignatureField_initWithInt_withInt_withInt_withInt_withInt_withNSString_(JavaLangMath_roundWithFloat_(IOSFloatArray_Get(
-#line 433
+#line 441
         positions, 0)), JavaLangMath_roundWithFloat_(IOSFloatArray_Get(
-#line 434
+#line 442
         positions, 1)), JavaLangMath_roundWithFloat_(IOSFloatArray_Get(
-#line 435
+#line 443
         positions, 2)), JavaLangMath_roundWithFloat_(IOSFloatArray_Get(
-#line 436
+#line 444
         positions, 3)), JavaLangMath_roundWithFloat_(IOSFloatArray_Get(
-#line 437
+#line 445
         positions, 4)),
-#line 438
+#line 446
         signame)];
       }
       
-#line 442
+#line 450
       return ret;
     }
   }
@@ -741,66 +749,66 @@ id<JavaUtilList> EsGobAfirmaSignersPadesPdfUtil_getPdfEmptySignatureFieldsWithBy
 }
 
 
-#line 454
+#line 462
 ComAowagieTextRectangle *EsGobAfirmaSignersPadesPdfUtil_getPositionOnPageWithJavaUtilProperties_withNSString_(JavaUtilProperties *extraParams, NSString *prefix) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 455
+#line 463
   if (extraParams == nil || prefix == nil) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_LOGGER)) severeWithNSString:@"Se ha pedido una posicion para un elemento grafico nulo"];
     return nil;
   }
   if ([extraParams getPropertyWithNSString:JreStrcat("$$", prefix, @"PositionOnPageLowerLeftX")] != nil &&
-#line 460
+#line 468
   [extraParams getPropertyWithNSString:JreStrcat("$$", prefix, @"PositionOnPageLowerLeftY")] != nil &&
-#line 461
+#line 469
   [extraParams getPropertyWithNSString:JreStrcat("$$", prefix, @"PositionOnPageUpperRightX")] != nil &&
-#line 462
+#line 470
   [extraParams getPropertyWithNSString:JreStrcat("$$", prefix, @"PositionOnPageUpperRightY")] != nil) {
     @try {
       return new_ComAowagieTextRectangle_initWithFloat_withFloat_withFloat_withFloat_(JavaLangInteger_parseIntWithNSString_(
-#line 465
+#line 473
       [((NSString *) nil_chk([extraParams getPropertyWithNSString:JreStrcat("$$", prefix, @"PositionOnPageLowerLeftX")])) java_trim]), JavaLangInteger_parseIntWithNSString_(
-#line 466
+#line 474
       [((NSString *) nil_chk([extraParams getPropertyWithNSString:JreStrcat("$$", prefix, @"PositionOnPageLowerLeftY")])) java_trim]), JavaLangInteger_parseIntWithNSString_(
-#line 467
+#line 475
       [((NSString *) nil_chk([extraParams getPropertyWithNSString:JreStrcat("$$", prefix, @"PositionOnPageUpperRightX")])) java_trim]), JavaLangInteger_parseIntWithNSString_(
-#line 468
+#line 476
       [((NSString *) nil_chk([extraParams getPropertyWithNSString:JreStrcat("$$", prefix, @"PositionOnPageUpperRightY")])) java_trim]));
     }
     @catch (
-#line 471
+#line 479
     JavaLangException *e) {
       [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_LOGGER)) severeWithNSString:JreStrcat("$$$@", @"Se ha indicado una posicion invalida para el elemento grafico '",
-#line 473
+#line 481
       prefix, @"': ", e)];
     }
   }
   
-#line 477
+#line 485
   return nil;
 }
 
 
-#line 495
+#line 503
 void EsGobAfirmaSignersPadesPdfUtil_getPagesRangeWithNSString_withInt_withJavaUtilList_(NSString *pageStr, jint totalPages, id<JavaUtilList> pagesList) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 498
+#line 506
   NSString *range = [((NSString *) nil_chk([((NSString *) nil_chk(pageStr)) java_trim])) java_replace:@" " withSequence:@""];
   
-#line 502
+#line 510
   jint page;
   @try {
     page = EsGobAfirmaSignersPadesPdfUtil_normalizePageWithNSString_withInt_(range, totalPages);
   }
   @catch (
-#line 505
+#line 513
   JavaLangNumberFormatException *nfe) {
     page = -1;
   }
   
-#line 509
+#line 517
   if (page > 0) {
     EsGobAfirmaSignersPadesPdfUtil_addPageToResultWithInt_withInt_withJavaUtilList_(page, totalPages, pagesList);
   }
@@ -810,24 +818,24 @@ void EsGobAfirmaSignersPadesPdfUtil_getPagesRangeWithNSString_withInt_withJavaUt
 }
 
 
-#line 528
+#line 536
 jint EsGobAfirmaSignersPadesPdfUtil_normalizePageWithNSString_withInt_(NSString *pageStr, jint totalPages) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 529
+#line 537
   jint page = JavaLangInteger_parseIntWithNSString_(pageStr);
   
-#line 531
+#line 539
   if (page < 0) {
     page = page + totalPages + 1;
   }
   
-#line 535
+#line 543
   if (page <= 0) {
     page = 1;
   }
   
-#line 539
+#line 547
   if (page > totalPages) {
     page = totalPages;
   }
@@ -835,27 +843,27 @@ jint EsGobAfirmaSignersPadesPdfUtil_normalizePageWithNSString_withInt_(NSString 
 }
 
 
-#line 552
+#line 560
 void EsGobAfirmaSignersPadesPdfUtil_addPageToResultWithInt_withInt_withJavaUtilList_(jint page, jint totalPages, id<JavaUtilList> pagesList) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 553
+#line 561
   if (page <= totalPages && ![((id<JavaUtilList>) nil_chk(pagesList)) containsWithId:JavaLangInteger_valueOfWithInt_(page)]) {
     [((id<JavaUtilList>) nil_chk(pagesList)) addWithId:JavaLangInteger_valueOfWithInt_(page)];
   }
 }
 
 
-#line 564
+#line 572
 void EsGobAfirmaSignersPadesPdfUtil_addRangeToResultWithNSString_withInt_withJavaUtilList_(NSString *range, jint totalPages, id<JavaUtilList> pagesList) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   jint firstNumber;
   jint limitNumber;
   @try {
     
-#line 571
+#line 579
     jint sepIdx = [((NSString *) nil_chk(range)) java_hasPrefix:EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR] ?
-#line 572
+#line 580
     [range java_indexOfString:EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR fromIndex:1] : [range java_indexOfString:EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR];
     firstNumber = EsGobAfirmaSignersPadesPdfUtil_normalizePageWithNSString_withInt_([range java_substring:0 endIndex:sepIdx], totalPages);
     limitNumber = EsGobAfirmaSignersPadesPdfUtil_normalizePageWithNSString_withInt_([range java_substring:sepIdx + [((NSString *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR)) java_length]], totalPages);
@@ -865,35 +873,35 @@ void EsGobAfirmaSignersPadesPdfUtil_addRangeToResultWithNSString_withInt_withJav
     @throw new_EsGobAfirmaSignersPadesIncorrectPageException_initWithNSString_(JreStrcat("$$", @"La cadena introducida no se corresponde con un rango de paginas: ", cleanedText));
   }
   
-#line 581
+#line 589
   if (limitNumber < firstNumber) {
     NSString *cleanedText = [range java_length] > 12 ? JreStrcat("$$", [range java_substring:0 endIndex:12], @"...") : range;
     @throw new_EsGobAfirmaSignersPadesIncorrectPageException_initWithNSString_(JreStrcat("$$", @"Se ha indicado un rango incorrecto: ", cleanedText));
   }
   
-#line 586
+#line 594
   for (jint i = firstNumber; i <= limitNumber; i++) {
     EsGobAfirmaSignersPadesPdfUtil_addPageToResultWithInt_withInt_withJavaUtilList_(i, totalPages, pagesList);
   }
 }
 
 
-#line 599
+#line 607
 void EsGobAfirmaSignersPadesPdfUtil_correctPositionSignatureWithComAowagieTextPdfPdfReader_withJavaUtilList_withComAowagieTextRectangle_(ComAowagieTextPdfPdfReader *pdfReader, id<JavaUtilList> pagesList, ComAowagieTextRectangle *signaturePosition) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 602
+#line 610
   IOSObjectArray *pages = [((id<JavaUtilList>) nil_chk(pagesList)) toArrayWithNSObjectArray:[IOSObjectArray newArrayWithLength:0 type:JavaLangInteger_class_()]];
   {
     IOSObjectArray *a__ =
-#line 603
+#line 611
     pages;
     JavaLangInteger * const *b__ = ((IOSObjectArray *) nil_chk(a__))->buffer_;
     JavaLangInteger * const *e__ = b__ + a__->size_;
     while (b__ < e__) {
       JavaLangInteger *page = *b__++;
       
-#line 605
+#line 613
       ComAowagieTextRectangle *pageSize = [((ComAowagieTextPdfPdfReader *) nil_chk(pdfReader)) getPageSizeWithRotationWithInt:[((JavaLangInteger *) nil_chk(page)) intValue]];
       if ([((ComAowagieTextRectangle *) nil_chk(pageSize)) getWidth] <= [((ComAowagieTextRectangle *) nil_chk(signaturePosition)) getLeft] || [pageSize getHeight] <= [signaturePosition getBottom]) {
         [pagesList removeWithId:page];
@@ -902,11 +910,11 @@ void EsGobAfirmaSignersPadesPdfUtil_correctPositionSignatureWithComAowagieTextPd
   }
   if ([pagesList isEmpty]) {
     @throw new_EsGobAfirmaSignersPadesInvalidSignaturePositionException_initWithNSString_(
-#line 613
+#line 621
     @"La posicion proporcionada no se encuentra en el rango de ninguna de las paginas a estampar del documento");
   }
   
-#line 617
+#line 625
   jint firstPage = [((JavaLangInteger *) nil_chk([pagesList getWithInt:0])) intValue];
   ComAowagieTextRectangle *firstPageSize = [((ComAowagieTextPdfPdfReader *) nil_chk(pdfReader)) getPageSizeWithRotationWithInt:firstPage];
   if ([((ComAowagieTextRectangle *) nil_chk(signaturePosition)) getTop] > [((ComAowagieTextRectangle *) nil_chk(firstPageSize)) getTop]) {
@@ -918,66 +926,66 @@ void EsGobAfirmaSignersPadesPdfUtil_correctPositionSignatureWithComAowagieTextPd
 }
 
 
-#line 632
+#line 640
 jboolean EsGobAfirmaSignersPadesPdfUtil_checkPagesRangeInputFormatWithNSString_(NSString *rangeInput) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 633
+#line 641
   if (![((NSString *) nil_chk(rangeInput)) java_isEmpty]) {
     
-#line 635
+#line 643
     NSString *rangeChars = @"0123456789-,";
     
-#line 637
+#line 645
     if ([((NSString *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_RANGE_SEPARATOR)) isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:[rangeInput java_length] - 1])] || (
-#line 638
+#line 646
     [rangeInput java_length] == 1 && [EsGobAfirmaSignersPadesPdfUtil_RANGE_SEPARATOR isEqual:rangeInput])) {
       return false;
     }
     
-#line 642
+#line 650
     for (jint i = 0; i < [rangeInput java_length]; i++) {
       
-#line 644
-      if (![rangeChars java_contains:NSString_java_valueOfChar_([rangeInput charAtWithInt:i])] || (
-#line 646
-      i + 2 < [rangeInput java_length] &&
-#line 647
-      [((NSString *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR)) isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:i])] &&
-#line 648
-      [EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:i + 1])] &&
-#line 649
-      [EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:i + 2])]) || (
-#line 651
-      i + 1 < [rangeInput java_length] &&
 #line 652
+      if (![rangeChars java_contains:NSString_java_valueOfChar_([rangeInput charAtWithInt:i])] || (
+#line 654
+      i + 2 < [rangeInput java_length] &&
+#line 655
+      [((NSString *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR)) isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:i])] &&
+#line 656
+      [EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:i + 1])] &&
+#line 657
+      [EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:i + 2])]) || (
+#line 659
+      i + 1 < [rangeInput java_length] &&
+#line 660
       [EsGobAfirmaSignersPadesPdfUtil_RANGE_SEPARATOR isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:i])] &&
-#line 653
+#line 661
       [EsGobAfirmaSignersPadesPdfUtil_RANGE_SEPARATOR isEqual:NSString_java_valueOfChar_([rangeInput charAtWithInt:i + 1])])) {
         return false;
       }
     }
     
-#line 658
+#line 666
     IOSObjectArray *rangesArray = [rangeInput java_split:EsGobAfirmaSignersPadesPdfUtil_RANGE_SEPARATOR];
     {
       IOSObjectArray *a__ =
-#line 659
+#line 667
       rangesArray;
       NSString * const *b__ = ((IOSObjectArray *) nil_chk(a__))->buffer_;
       NSString * const *e__ = b__ + a__->size_;
       while (b__ < e__) {
         NSString *range = *b__++;
         
-#line 661
+#line 669
         if ([((NSString *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR)) isEqual:NSString_java_valueOfChar_([((NSString *) nil_chk(range)) charAtWithInt:[range java_length] - 1])] || (
-#line 663
+#line 671
         [range java_length] >= 2 &&
-#line 664
+#line 672
         [EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR isEqual:NSString_java_valueOfChar_([range charAtWithInt:0])] &&
-#line 665
+#line 673
         [EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR isEqual:NSString_java_valueOfChar_([range charAtWithInt:1])]) || (
-#line 667
+#line 675
         [range java_length] == 1 && [EsGobAfirmaSignersPadesPdfUtil_RANGE_INDICATOR isEqual:range])) {
           return false;
         }
@@ -986,37 +994,37 @@ jboolean EsGobAfirmaSignersPadesPdfUtil_checkPagesRangeInputFormatWithNSString_(
   }
   else {
     
-#line 672
+#line 680
     return false;
   }
   return true;
 }
 
 
-#line 688
+#line 696
 id<JavaUtilList> EsGobAfirmaSignersPadesPdfUtil_getPagesWithJavaUtilProperties_withInt_(JavaUtilProperties *extraParams, jint totalPages) {
   EsGobAfirmaSignersPadesPdfUtil_initialize();
   
-#line 691
+#line 699
   IOSObjectArray *pagesStr = [((JavaUtilProperties *) nil_chk(extraParams)) containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_PAGES] ?
-#line 692
+#line 700
   [((NSString *) nil_chk([extraParams getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_PAGES])) java_split:EsGobAfirmaSignersPadesPdfUtil_RANGE_SEPARATOR] :
-#line 693
+#line 701
   [extraParams containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_PAGE] ?
-#line 694
+#line 702
   [((NSString *) nil_chk([extraParams getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_PAGE])) java_split:EsGobAfirmaSignersPadesPdfUtil_RANGE_SEPARATOR] : [IOSObjectArray newArrayWithLength:
-#line 695
+#line 703
   0 type:NSString_class_()];
   
-#line 697
+#line 705
   id<JavaUtilList> pages = new_JavaUtilArrayList_init();
   
-#line 700
+#line 708
   if (pagesStr->size_ == 0) {
     [pages addWithId:JavaLangInteger_valueOfWithInt_(totalPages)];
   }
   else
-#line 704
+#line 712
   if ([((NSString *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_APPEND_PAGE)) java_equalsIgnoreCase:[((NSString *) nil_chk(IOSObjectArray_Get(pagesStr, 0))) java_trim]]) {
     [pages addWithId:JavaLangInteger_valueOfWithInt_(EsGobAfirmaSignersPadesPdfUtil_NEW_PAGE)];
   }
@@ -1033,12 +1041,12 @@ id<JavaUtilList> EsGobAfirmaSignersPadesPdfUtil_getPagesWithJavaUtilProperties_w
       while (b__ < e__) {
         NSString *pageStr = *b__++;
         
-#line 715
+#line 723
         @try {
           EsGobAfirmaSignersPadesPdfUtil_getPagesRangeWithNSString_withInt_withJavaUtilList_(pageStr, totalPages, pages);
         }
         @catch (
-#line 717
+#line 725
         EsGobAfirmaSignersPadesIncorrectPageException *e) {
           [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfUtil_LOGGER)) logWithJavaUtilLoggingLevel:JreLoadStatic(JavaUtilLoggingLevel, WARNING) withNSString:@"Se ha indicado un numero o rango de paginas invalido. Se ignorara." withJavaLangThrowable:e];
         }
@@ -1046,15 +1054,15 @@ id<JavaUtilList> EsGobAfirmaSignersPadesPdfUtil_getPagesWithJavaUtilProperties_w
     }
   }
   
-#line 724
+#line 732
   JavaUtilCollections_sortWithJavaUtilList_(pages);
   
-#line 728
+#line 736
   if ([pages isEmpty]) {
     [pages addWithId:JavaLangInteger_valueOfWithInt_(totalPages)];
   }
   
-#line 732
+#line 740
   return pages;
 }
 
@@ -1063,11 +1071,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(EsGobAfirmaSignersPadesPdfUtil)
 #line 1 "/Users/desarrolloabamobile/Documents/JAVA/pades-ios/src/main/java/es/gob/afirma/signers/pades/PdfUtil.java"
 
 
-#line 331
+#line 339
 @implementation EsGobAfirmaSignersPadesPdfUtil_SignatureField
 
 
-#line 347
+#line 355
 - (instancetype)initWithInt:(jint)pg
                     withInt:(jint)llx
                     withInt:(jint)lly
@@ -1079,45 +1087,45 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(EsGobAfirmaSignersPadesPdfUtil)
 }
 
 
-#line 361
+#line 369
 - (NSString *)description {
   
-#line 363
+#line 371
   return self->name_;
 }
 
 
-#line 368
+#line 376
 - (NSString *)getName {
   return self->name_;
 }
 
 
-#line 374
+#line 382
 - (jint)getPage {
   return self->page_;
 }
 
 
-#line 380
+#line 388
 - (jint)getSignaturePositionOnPageUpperRightX {
   return self->signaturePositionOnPageUpperRightX_;
 }
 
 
-#line 386
+#line 394
 - (jint)getSignaturePositionOnPageUpperRightY {
   return self->signaturePositionOnPageUpperRightY_;
 }
 
 
-#line 392
+#line 400
 - (jint)getSignaturePositionOnPageLowerLeftY {
   return self->signaturePositionOnPageLowerLeftY_;
 }
 
 
-#line 398
+#line 406
 - (jint)getSignaturePositionOnPageLowerLeftX {
   return self->signaturePositionOnPageLowerLeftX_;
 }
@@ -1161,18 +1169,18 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(EsGobAfirmaSignersPadesPdfUtil)
 @end
 
 
-#line 347
+#line 355
 void EsGobAfirmaSignersPadesPdfUtil_SignatureField_initWithInt_withInt_withInt_withInt_withInt_withNSString_(EsGobAfirmaSignersPadesPdfUtil_SignatureField *self, jint pg, jint llx, jint lly, jint urx, jint ury, NSString *n) {
   NSObject_init(self);
   
-#line 348
+#line 356
   if (n == nil) {
     @throw new_JavaLangIllegalArgumentException_initWithNSString_(
-#line 350
+#line 358
     @"El campo de firma debe tener un nombre no nulo");
   }
   
-#line 353
+#line 361
   self->signaturePositionOnPageLowerLeftX_ = llx;
   self->signaturePositionOnPageLowerLeftY_ = lly;
   self->signaturePositionOnPageUpperRightX_ = urx;
@@ -1182,13 +1190,13 @@ void EsGobAfirmaSignersPadesPdfUtil_SignatureField_initWithInt_withInt_withInt_w
 }
 
 
-#line 347
+#line 355
 EsGobAfirmaSignersPadesPdfUtil_SignatureField *new_EsGobAfirmaSignersPadesPdfUtil_SignatureField_initWithInt_withInt_withInt_withInt_withInt_withNSString_(jint pg, jint llx, jint lly, jint urx, jint ury, NSString *n) {
   J2OBJC_NEW_IMPL(EsGobAfirmaSignersPadesPdfUtil_SignatureField, initWithInt_withInt_withInt_withInt_withInt_withNSString_, pg, llx, lly, urx, ury, n)
 }
 
 
-#line 347
+#line 355
 EsGobAfirmaSignersPadesPdfUtil_SignatureField *create_EsGobAfirmaSignersPadesPdfUtil_SignatureField_initWithInt_withInt_withInt_withInt_withInt_withNSString_(jint pg, jint llx, jint lly, jint urx, jint ury, NSString *n) {
   J2OBJC_CREATE_IMPL(EsGobAfirmaSignersPadesPdfUtil_SignatureField, initWithInt_withInt_withInt_withInt_withInt_withNSString_, pg, llx, lly, urx, ury, n)
 }

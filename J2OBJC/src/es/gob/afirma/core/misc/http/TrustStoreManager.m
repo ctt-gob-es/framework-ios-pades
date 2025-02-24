@@ -363,9 +363,9 @@ void EsGobAfirmaCoreMiscHttpTrustStoreManager_initWithId_(EsGobAfirmaCoreMiscHtt
 #line 77
       parent, EsGobAfirmaCoreUiCoreMessages_getStringWithNSString_(
 #line 78
-      @"AutoFirmaTrustStore.0"), EsGobAfirmaCoreUiCoreMessages_getStringWithNSString_(
+      @"AutofirmaTrustStore.0"), EsGobAfirmaCoreUiCoreMessages_getStringWithNSString_(
 #line 79
-      @"AutoFirmaTrustStore.1"), JreLoadStatic(EsGobAfirmaCoreUiAOUIFactory, YES_NO_OPTION), JreLoadStatic(EsGobAfirmaCoreUiAOUIFactory, WARNING_MESSAGE));
+      @"AutofirmaTrustStore.1"), JreLoadStatic(EsGobAfirmaCoreUiAOUIFactory, YES_NO_OPTION), JreLoadStatic(EsGobAfirmaCoreUiAOUIFactory, WARNING_MESSAGE));
       
 #line 82
       if (result == JreLoadStatic(EsGobAfirmaCoreUiAOUIFactory, OK_OPTION)) {

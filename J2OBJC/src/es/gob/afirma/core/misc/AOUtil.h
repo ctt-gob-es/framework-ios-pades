@@ -89,6 +89,16 @@
 + (IOSByteArray *)getDataFromInputStreamWithJavaIoInputStream:(JavaIoInputStream *)input;
 
 /*!
+ @brief Obtiene las unidades organizativas(Organizational Unit, OU) de un <i>Principal</i>
+  X&#46;400.
+ @param principal <i> Principal </i>  del cual queremos obtener el nombre
+          com &uacute; n
+ @return Unidad organizativa (Organizational Unit, OU) de un <i>Principal</i>
+          X&#46;400
+ */
++ (IOSObjectArray *)getOUSWithNSString:(NSString *)principal;
+
+/*!
  @brief Recupera el valor de un RDN (<i>Relative Distinguished Name</i>) de un principal.El valor de retorno no incluye
   el nombre del RDN, el igual, ni las posibles comillas que envuelvan el valor.
  La funci&oacute;n no es sensible a la capitalizaci&oacute;n del RDN. Si no se
@@ -209,6 +219,8 @@ FOUNDATION_EXPORT IOSByteArray *EsGobAfirmaCoreMiscAOUtil_getDataFromInputStream
 FOUNDATION_EXPORT NSString *EsGobAfirmaCoreMiscAOUtil_getCNWithJavaSecurityCertX509Certificate_(JavaSecurityCertX509Certificate *c);
 
 FOUNDATION_EXPORT NSString *EsGobAfirmaCoreMiscAOUtil_getCNWithNSString_(NSString *principal);
+
+FOUNDATION_EXPORT IOSObjectArray *EsGobAfirmaCoreMiscAOUtil_getOUSWithNSString_(NSString *principal);
 
 FOUNDATION_EXPORT NSString *EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(NSString *rdn, NSString *principal);
 

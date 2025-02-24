@@ -125,12 +125,12 @@ ComAowagieTextPdfPdfName *EsGobAfirmaSignersPadesAOPDFSigner_PDFNAME_ETSI_RFC316
 ComAowagieTextPdfPdfName *EsGobAfirmaSignersPadesAOPDFSigner_PDFNAME_DOCTIMESTAMP;
 
 
-#line 68
+#line 79
 @implementation EsGobAfirmaSignersPadesAOPDFSigner
 
 J2OBJC_IGNORE_DESIGNATED_BEGIN
 
-#line 68
+#line 79
 - (instancetype)init {
   EsGobAfirmaSignersPadesAOPDFSigner_init(self);
   return self;
@@ -138,85 +138,85 @@ J2OBJC_IGNORE_DESIGNATED_BEGIN
 J2OBJC_IGNORE_DESIGNATED_END
 
 
-#line 133
+#line 144
 + (id<EsGobAfirmaCoreSignersSignEnhancer>)getSignEnhancer {
   return EsGobAfirmaSignersPadesAOPDFSigner_getSignEnhancer();
 }
 
 
-#line 139
+#line 150
 + (JavaUtilProperties *)getSignEnhancerConfig {
   return EsGobAfirmaSignersPadesAOPDFSigner_getSignEnhancerConfig();
 }
 
 
-#line 169
+#line 180
 - (IOSByteArray *)signWithByteArray:(IOSByteArray *)inPDF
                        withNSString:(NSString *)signAlgorithm
          withJavaSecurityPrivateKey:(id<JavaSecurityPrivateKey>)key
 withJavaSecurityCertCertificateArray:(IOSObjectArray *)certChain
              withJavaUtilProperties:(JavaUtilProperties *)xParams {
   
-#line 177
+#line 188
   NSString *algorithm = signAlgorithm != nil ? signAlgorithm : EsGobAfirmaCoreSignersAOSignConstants_DEFAULT_SIGN_ALGO;
   JavaUtilProperties *extraParams = EsGobAfirmaSignersPadesAOPDFSigner_getExtraParamsWithJavaUtilProperties_(xParams);
   
-#line 180
+#line 191
   EsGobAfirmaSignersPadesAOPDFSigner_checkParamsWithNSString_withJavaUtilProperties_(algorithm, extraParams);
   
-#line 182
+#line 193
   IOSObjectArray *certificateChain = JavaLangBoolean_parseBooleanWithNSString_([((JavaUtilProperties *) nil_chk(extraParams)) getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_INCLUDE_ONLY_SIGNNING_CERTIFICATE withNSString:[((JavaLangBoolean *) nil_chk(JreLoadStatic(JavaLangBoolean, FALSE))) description]]) ? [IOSObjectArray newArrayWithObjects:(id[]){
-#line 183
+#line 194
     (JavaSecurityCertX509Certificate *) cast_chk(IOSObjectArray_Get(nil_chk(certChain), 0), [JavaSecurityCertX509Certificate class]) } count:1 type:JavaSecurityCertX509Certificate_class_()] :
-#line 184
+#line 195
     certChain;
     
-#line 186
+#line 197
     JavaUtilGregorianCalendar *signTime = EsGobAfirmaSignersPadesPdfUtil_getSignTimeWithNSString_([extraParams getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGN_TIME]);
     
-#line 188
+#line 199
     IOSByteArray *data = inPDF;
     
-#line 191
+#line 202
     EsGobAfirmaSignersPadesPdfSignResult *pre;
     @try {
       pre = EsGobAfirmaSignersPadesPAdESTriPhaseSigner_preSignWithNSString_withByteArray_withJavaSecurityCertCertificateArray_withJavaUtilGregorianCalendar_withJavaUtilProperties_withBoolean_(
-#line 194
+#line 205
       algorithm,
-#line 195
+#line 206
       data,
-#line 196
+#line 207
       certificateChain,
-#line 197
+#line 208
       signTime,
-#line 198
+#line 209
       extraParams,
-#line 199
+#line 210
       false);
     }
     @catch (
-#line 202
+#line 213
     EsGobAfirmaSignersPadesInvalidPdfException *e) {
       @throw e;
     }
     
-#line 207
+#line 218
     IOSByteArray *interSign;
     @try {
       interSign = [new_EsGobAfirmaCoreSignersAOPkcs1Signer_init() signWithByteArray:
-#line 210
+#line 221
       [((EsGobAfirmaSignersPadesPdfSignResult *) nil_chk(pre)) getSign] withNSString:
-#line 211
+#line 222
       algorithm withJavaSecurityPrivateKey:
-#line 212
+#line 223
       key withJavaSecurityCertCertificateArray:
-#line 213
+#line 224
       certificateChain withJavaUtilProperties:
-#line 214
+#line 225
       extraParams];
     }
     @catch (
-#line 217
+#line 228
     EsGobAfirmaCoreAOCancelledOperationException *e) {
       @throw e;
     }
@@ -224,31 +224,31 @@ withJavaSecurityCertCertificateArray:(IOSObjectArray *)certChain
       @throw new_EsGobAfirmaCoreAOException_initWithNSString_withJavaLangThrowable_(JreStrcat("$@", @"Error al generar la firma PKCS#1 de la firma PAdES: ", e), e);
     }
     
-#line 225
+#line 236
     @try {
       return EsGobAfirmaSignersPadesPAdESTriPhaseSigner_postSignWithNSString_withByteArray_withJavaSecurityCertCertificateArray_withByteArray_withEsGobAfirmaSignersPadesPdfSignResult_withEsGobAfirmaCoreSignersSignEnhancer_withJavaUtilProperties_withBoolean_(
-#line 227
+#line 238
       algorithm,
-#line 228
+#line 239
       data,
-#line 229
+#line 240
       certificateChain,
-#line 230
+#line 241
       interSign,
-#line 231
+#line 242
       pre, EsGobAfirmaSignersPadesAOPDFSigner_getSignEnhancer(), EsGobAfirmaSignersPadesAOPDFSigner_getSignEnhancerConfig(),
-#line 234
+#line 245
       self->secureMode_);
     }
     @catch (
-#line 237
+#line 248
     JavaSecurityNoSuchAlgorithmException *e) {
       @throw new_EsGobAfirmaCoreAOException_initWithNSString_withJavaLangThrowable_(JreStrcat("$@", @"Error el en algoritmo de firma: ", e), e);
     }
   }
 
 
-#line 273
+#line 284
 - (IOSByteArray *)cosignWithByteArray:(IOSByteArray *)data
                         withByteArray:(IOSByteArray *)sign
                          withNSString:(NSString *)algorithm
@@ -256,19 +256,19 @@ withJavaSecurityCertCertificateArray:(IOSObjectArray *)certChain
  withJavaSecurityCertCertificateArray:(IOSObjectArray *)certChain
                withJavaUtilProperties:(JavaUtilProperties *)extraParams {
   
-#line 280
+#line 291
   return [self signWithByteArray:sign withNSString:algorithm withJavaSecurityPrivateKey:key withJavaSecurityCertCertificateArray:certChain withJavaUtilProperties:extraParams];
 }
 
 
-#line 312
+#line 323
 - (IOSByteArray *)cosignWithByteArray:(IOSByteArray *)sign
                          withNSString:(NSString *)algorithm
            withJavaSecurityPrivateKey:(id<JavaSecurityPrivateKey>)key
  withJavaSecurityCertCertificateArray:(IOSObjectArray *)certChain
                withJavaUtilProperties:(JavaUtilProperties *)extraParams {
   
-#line 318
+#line 329
   return [self signWithByteArray:sign withNSString:algorithm withJavaSecurityPrivateKey:key withJavaSecurityCertCertificateArray:certChain withJavaUtilProperties:extraParams];
 }
 
@@ -280,12 +280,12 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
       withJavaSecurityCertCertificateArray:(IOSObjectArray *)certChain
                     withJavaUtilProperties:(JavaUtilProperties *)extraParams {
   
-#line 330
+#line 341
   @throw new_JavaLangUnsupportedOperationException_initWithNSString_(@"No es posible realizar contrafirmas de ficheros PDF");
 }
 
 
-#line 341
+#line 352
 - (NSString *)getSignedNameWithNSString:(NSString *)originalName
                            withNSString:(NSString *)inText {
   NSString *inTextInt = inText != nil ? inText : @"";
@@ -299,27 +299,27 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
 }
 
 
-#line 368
+#line 379
 - (EsGobAfirmaCoreUtilTreeAOTreeModel *)getSignersStructureWithByteArray:(IOSByteArray *)sign
                                                              withBoolean:(jboolean)asSimpleSignInfo {
   
-#line 371
+#line 382
   return [self getSignersStructureWithByteArray:sign withJavaUtilProperties:nil withBoolean:asSimpleSignInfo];
 }
 
 
-#line 390
+#line 401
 - (EsGobAfirmaCoreUtilTreeAOTreeModel *)getSignersStructureWithByteArray:(IOSByteArray *)sign
                                                   withJavaUtilProperties:(JavaUtilProperties *)params
                                                              withBoolean:(jboolean)asSimpleSignInfo {
   EsGobAfirmaCoreUtilTreeAOTreeNode *root = new_EsGobAfirmaCoreUtilTreeAOTreeNode_initWithId_(@"Datos");
   
-#line 395
+#line 406
   if (!EsGobAfirmaSignersPadesAOPDFSigner_isPdfFileWithByteArray_(sign)) {
     return new_EsGobAfirmaCoreUtilTreeAOTreeModel_initWithEsGobAfirmaCoreUtilTreeAOTreeNode_(root);
   }
   
-#line 399
+#line 410
   ComAowagieTextPdfPdfReader *pdfReader;
   jboolean headLessProp = false;
   @try {
@@ -330,18 +330,18 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
   }
   @catch (ComAowagieTextExceptionsBadPasswordException *e) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) infoWithNSString:JreStrcat("$@", @"El PDF necesita contrasena. Se devolvera el arbol vacio: ",
-#line 409
+#line 420
     e)];
     
-#line 411
+#line 422
     return new_EsGobAfirmaCoreUtilTreeAOTreeModel_initWithEsGobAfirmaCoreUtilTreeAOTreeNode_(root);
   }
   @catch (EsGobAfirmaSignersPadesCommonPdfIsPasswordProtectedException *e) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) infoWithNSString:JreStrcat("$@", @"El PDF necesita contrasena.",
-#line 415
+#line 426
     e)];
     
-#line 417
+#line 428
     return new_EsGobAfirmaCoreUtilTreeAOTreeModel_initWithEsGobAfirmaCoreUtilTreeAOTreeNode_(root);
   }
   @catch (JavaLangException *e) {
@@ -349,7 +349,7 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
     return new_EsGobAfirmaCoreUtilTreeAOTreeModel_initWithEsGobAfirmaCoreUtilTreeAOTreeNode_(root);
   }
   
-#line 424
+#line 435
   ComAowagieTextPdfAcroFields *af;
   @try {
     af = [((ComAowagieTextPdfPdfReader *) nil_chk(pdfReader)) getAcroFields];
@@ -359,65 +359,65 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
     return new_EsGobAfirmaCoreUtilTreeAOTreeModel_initWithEsGobAfirmaCoreUtilTreeAOTreeNode_(root);
   }
   
-#line 433
+#line 444
   id<JavaUtilList> names = [((ComAowagieTextPdfAcroFields *) nil_chk(af)) getSignatureNames];
   for (NSString * __strong signatureName in nil_chk(names)) {
     
-#line 437
+#line 448
     ComAowagieTextPdfPdfDictionary *pdfDictionary = [af getSignatureDictionaryWithNSString:signatureName];
     if ([((ComAowagieTextPdfPdfName *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_PDFNAME_ETSI_RFC3161)) isEqual:[((ComAowagieTextPdfPdfDictionary *) nil_chk(pdfDictionary)) getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, SUBFILTER)]] || [((ComAowagieTextPdfPdfName *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_PDFNAME_DOCTIMESTAMP)) isEqual:[pdfDictionary getWithComAowagieTextPdfPdfName:JreLoadStatic(ComAowagieTextPdfPdfName, SUBFILTER)]]) {
       
-#line 440
+#line 451
       continue;
     }
     
-#line 443
+#line 454
     ComAowagieTextPdfPdfPKCS7 *pkcs7;
     @try {
       pkcs7 = [af verifySignatureWithNSString:signatureName];
     }
     @catch (JavaLangException *e) {
       [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) logWithJavaUtilLoggingLevel:JreLoadStatic(JavaUtilLoggingLevel, SEVERE) withNSString:JreStrcat("$$$@", @"El PDF contiene una firma corrupta o con un formato desconocido (",
-#line 451
+#line 462
       signatureName, @"), se continua con las siguientes si las hubiese: ",
-#line 452
+#line 463
       e) withJavaLangThrowable:
-#line 453
+#line 464
       e];
       
-#line 455
+#line 466
       continue;
     }
     
-#line 458
+#line 469
     if (asSimpleSignInfo) {
       
-#line 460
+#line 471
       IOSObjectArray *certChain = [IOSObjectArray newArrayWithLength:((IOSObjectArray *) nil_chk([((ComAowagieTextPdfPdfPKCS7 *) nil_chk(pkcs7)) getSignCertificateChain]))->size_ type:JavaSecurityCertX509Certificate_class_()];
       for (jint j = 0; j < certChain->size_; j++) {
         (void) IOSObjectArray_Set(certChain, j, (JavaSecurityCertX509Certificate *) cast_chk(IOSObjectArray_Get(nil_chk([pkcs7 getSignCertificateChain]), j), [JavaSecurityCertX509Certificate class]));
       }
       
-#line 465
+#line 476
       EsGobAfirmaCoreSignersAOSimpleSignInfo *ssi = new_EsGobAfirmaCoreSignersAOSimpleSignInfo_initWithJavaSecurityCertX509CertificateArray_withJavaUtilDate_(
-#line 466
+#line 477
       certChain,
-#line 467
+#line 478
       [pkcs7 getSignDate] != nil ? [((JavaUtilCalendar *) nil_chk([pkcs7 getSignDate])) getTime] : nil);
       
-#line 471
+#line 482
       IOSByteArray *pkcs1 = [pkcs7 getPkcs1];
       if (pkcs1 != nil) {
         [ssi setPkcs1WithByteArray:pkcs1];
       }
       
-#line 477
+#line 488
       NSString *digestAlgorithm = [pkcs7 getDigestAlgorithm];
       if (digestAlgorithm != nil) {
         [ssi setSignAlgorithmWithNSString:digestAlgorithm];
       }
       
-#line 482
+#line 493
       [root addWithEsGobAfirmaCoreUtilTreeAOTreeNode:new_EsGobAfirmaCoreUtilTreeAOTreeNode_initWithId_(ssi)];
     }
     else {
@@ -425,20 +425,20 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
     }
   }
   
-#line 489
+#line 500
   return new_EsGobAfirmaCoreUtilTreeAOTreeModel_initWithEsGobAfirmaCoreUtilTreeAOTreeNode_(root);
 }
 
 
-#line 496
+#line 507
 - (jboolean)isSignWithByteArray:(IOSByteArray *)data {
   
-#line 498
+#line 509
   return [self isSignWithByteArray:data withJavaUtilProperties:nil];
 }
 
 
-#line 506
+#line 517
 - (jboolean)isSignWithByteArray:(IOSByteArray *)data
          withJavaUtilProperties:(JavaUtilProperties *)params {
   if (data == nil) {
@@ -451,16 +451,16 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
   id root = [((EsGobAfirmaCoreUtilTreeAOTreeModel *) nil_chk([self getSignersStructureWithByteArray:data withJavaUtilProperties:params withBoolean:false])) getRoot];
   if ([root isKindOfClass:[EsGobAfirmaCoreUtilTreeAOTreeNode class]]) {
     
-#line 518
+#line 529
     if (EsGobAfirmaCoreUtilTreeAOTreeModel_getChildCountWithId_(root) > 0) {
       return true;
     }
     
-#line 523
+#line 534
     JavaUtilProperties *extraParams = JavaLangSystem_getProperties();
     @try {
       if (EsGobAfirmaSignersPadesPdfUtil_pdfHasUnregisteredSignaturesWithByteArray_withJavaUtilProperties_(data, extraParams) &&
-#line 526
+#line 537
       [((NSString *) nil_chk([((JavaLangBoolean *) nil_chk(JreLoadStatic(JavaLangBoolean, TRUE))) description])) java_equalsIgnoreCase:[((JavaUtilProperties *) nil_chk(extraParams)) getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_ALLOW_COSIGNING_UNREGISTERED_SIGNATURES]]) {
         return true;
       }
@@ -473,16 +473,16 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
 }
 
 
-#line 537
+#line 548
 + (jboolean)isPdfFileWithByteArray:(IOSByteArray *)data {
   return EsGobAfirmaSignersPadesAOPDFSigner_isPdfFileWithByteArray_(data);
 }
 
 
-#line 575
+#line 586
 - (jboolean)isValidDataFileWithByteArray:(IOSByteArray *)data {
   
-#line 577
+#line 588
   if (data == nil) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) warningWithNSString:@"Se han introducido datos nulos para su comprobacion"];
     return false;
@@ -491,96 +491,96 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
 }
 
 
-#line 591
+#line 602
 + (NSString *)getSignedNameWithNSString:(NSString *)originalName {
   return EsGobAfirmaSignersPadesAOPDFSigner_getSignedNameWithNSString_(originalName);
 }
 
 
-#line 609
+#line 620
 - (IOSByteArray *)getDataWithByteArray:(IOSByteArray *)sign
                 withJavaUtilProperties:(JavaUtilProperties *)params {
   
-#line 612
+#line 623
   if (![self isSignWithByteArray:sign withJavaUtilProperties:params]) {
     @throw new_EsGobAfirmaCoreAOInvalidFormatException_initWithNSString_(@"El documento introducido no contiene una firma valida");
   }
   
-#line 617
+#line 628
   return sign;
 }
 
 
-#line 625
+#line 636
 - (IOSByteArray *)getDataWithByteArray:(IOSByteArray *)sign {
   
-#line 629
+#line 640
   if (![self isSignWithByteArray:sign]) {
     @throw new_EsGobAfirmaCoreAOInvalidFormatException_initWithNSString_(@"El documento introducido no contiene una firma valida");
   }
   
-#line 634
+#line 645
   return sign;
 }
 
 
-#line 642
+#line 653
 - (EsGobAfirmaCoreSignersAOSignInfo *)getSignInfoWithByteArray:(IOSByteArray *)data {
   
-#line 645
+#line 656
   return [self getSignInfoWithByteArray:data withJavaUtilProperties:nil];
 }
 
 
-#line 654
+#line 665
 - (EsGobAfirmaCoreSignersAOSignInfo *)getSignInfoWithByteArray:(IOSByteArray *)data
                                         withJavaUtilProperties:(JavaUtilProperties *)params {
   if (data == nil) {
     @throw new_JavaLangIllegalArgumentException_initWithNSString_(@"No se han introducido datos para analizar");
   }
   
-#line 660
+#line 671
   if (![self isSignWithByteArray:data withJavaUtilProperties:params]) {
     @throw new_EsGobAfirmaCoreAOInvalidFormatException_initWithNSString_(@"Los datos introducidos no se corresponden con un objeto de firma");
   }
   
-#line 667
+#line 678
   return new_EsGobAfirmaCoreSignersAOSignInfo_initWithNSString_(EsGobAfirmaCoreSignersAOSignConstants_SIGN_FORMAT_PDF);
 }
 
 
-#line 674
+#line 685
 + (void)configureRespectfulPropertiesWithByteArray:(IOSByteArray *)data
                             withJavaUtilProperties:(JavaUtilProperties *)config {
   EsGobAfirmaSignersPadesAOPDFSigner_configureRespectfulPropertiesWithByteArray_withJavaUtilProperties_(data, config);
 }
 
 
-#line 692
+#line 703
 + (JavaUtilProperties *)getExtraParamsWithJavaUtilProperties:(JavaUtilProperties *)extraParams {
   return EsGobAfirmaSignersPadesAOPDFSigner_getExtraParamsWithJavaUtilProperties_(extraParams);
 }
 
 
-#line 699
+#line 710
 + (void)checkParamsWithNSString:(NSString *)algorithm
          withJavaUtilProperties:(JavaUtilProperties *)extraParams {
   EsGobAfirmaSignersPadesAOPDFSigner_checkParamsWithNSString_withJavaUtilProperties_(algorithm, extraParams);
 }
 
 
-#line 750
+#line 761
 - (void)setSecureModeWithBoolean:(jboolean)secure {
   
-#line 752
+#line 763
   self->secureMode_ = secure;
 }
 
 
-#line 755
+#line 766
 - (jboolean)isSecureMode {
   
-#line 757
+#line 768
   return self->secureMode_;
 }
 
@@ -658,25 +658,25 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
 + (void)initialize {
   if (self == [EsGobAfirmaSignersPadesAOPDFSigner class]) {
     EsGobAfirmaSignersPadesAOPDFSigner_LOGGER = JavaUtilLoggingLogger_getLoggerWithNSString_(
-#line 73
+#line 84
     @"es.gob.afirma");
     EsGobAfirmaSignersPadesAOPDFSigner_PDFNAME_ETSI_RFC3161 = new_ComAowagieTextPdfPdfName_initWithNSString_(
-#line 75
+#line 86
     @"ETSI.RFC3161");
     EsGobAfirmaSignersPadesAOPDFSigner_PDFNAME_DOCTIMESTAMP = new_ComAowagieTextPdfPdfName_initWithNSString_(
-#line 76
+#line 87
     @"DocTimeStamp");
     {
       
-#line 94
+#line 105
       EsGobAfirmaSignersPadesAOPDFSigner_enhancerConfig = new_JavaUtilProperties_init();
       NSString *enhancerClassName = nil;
       @try {
         [EsGobAfirmaSignersPadesAOPDFSigner_enhancerConfig load__WithJavaIoInputStream:
-#line 98
+#line 109
         [EsGobAfirmaSignersPadesAOPDFSigner_class_() getResourceAsStream:@"/enhancer.properties"]];
         
-#line 100
+#line 111
         enhancerClassName = [((JavaUtilProperties *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_enhancerConfig)) getPropertyWithNSString:@"enhancerClassFile"];
         if (enhancerClassName != nil) {
           EsGobAfirmaSignersPadesAOPDFSigner_enhancer = (id<EsGobAfirmaCoreSignersSignEnhancer>) cast_check([((JavaLangReflectConstructor *) nil_chk([((IOSClass *) nil_chk(IOSClass_forName_(enhancerClassName))) getConstructor:[IOSObjectArray newArrayWithLength:0 type:IOSClass_class_()]])) newInstanceWithNSObjectArray:[IOSObjectArray newArrayWithLength:0 type:NSObject_class_()]], EsGobAfirmaCoreSignersSignEnhancer_class_());
@@ -685,29 +685,29 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
       }
       @catch (JavaLangClassNotFoundException *e) {
         [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) warningWithNSString:JreStrcat("$$$@", @"Se ha configurado la clase de mejora '",
-#line 108
+#line 119
         enhancerClassName, @"', pero esta no se encuentra: ", e)];
       }
       @catch (
-#line 111
+#line 122
       JavaLangException *e) {
         [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) infoWithNSString:JreStrcat("$@", @"No hay un mejorador de firmas correctamente instalado: ", e)];
       }
     }
     {
       
-#line 119
+#line 130
       IOSObjectArray *providers = [IOSObjectArray newArrayWithObjects:(id[]){ @"SunEC", @"BC", @"SC" } count:3 type:NSString_class_()];
       {
         IOSObjectArray *a__ =
-#line 120
+#line 131
         providers;
         NSString * const *b__ = a__->buffer_;
         NSString * const *e__ = b__ + a__->size_;
         while (b__ < e__) {
           NSString *providerName = *b__++;
           
-#line 121
+#line 132
           JavaSecurityProvider *p = JavaSecuritySecurity_getProviderWithNSString_(providerName);
           if (p != nil) {
             (void) [p putWithId:@"Alg.Alias.Signature.SHA224with1.2.840.10045.4.3.2" withId:@"SHA224withECDSA"];
@@ -725,50 +725,50 @@ withEsGobAfirmaCoreSignersCounterSignTarget:(EsGobAfirmaCoreSignersCounterSignTa
 @end
 
 
-#line 68
+#line 79
 void EsGobAfirmaSignersPadesAOPDFSigner_init(EsGobAfirmaSignersPadesAOPDFSigner *self) {
   NSObject_init(self);
   self->secureMode_ =
-#line 88
+#line 99
   true;
 }
 
 
-#line 68
+#line 79
 EsGobAfirmaSignersPadesAOPDFSigner *new_EsGobAfirmaSignersPadesAOPDFSigner_init() {
   J2OBJC_NEW_IMPL(EsGobAfirmaSignersPadesAOPDFSigner, init)
 }
 
 
-#line 68
+#line 79
 EsGobAfirmaSignersPadesAOPDFSigner *create_EsGobAfirmaSignersPadesAOPDFSigner_init() {
   J2OBJC_CREATE_IMPL(EsGobAfirmaSignersPadesAOPDFSigner, init)
 }
 
 
-#line 133
+#line 144
 id<EsGobAfirmaCoreSignersSignEnhancer> EsGobAfirmaSignersPadesAOPDFSigner_getSignEnhancer() {
   EsGobAfirmaSignersPadesAOPDFSigner_initialize();
   
-#line 134
+#line 145
   return EsGobAfirmaSignersPadesAOPDFSigner_enhancer;
 }
 
 
-#line 139
+#line 150
 JavaUtilProperties *EsGobAfirmaSignersPadesAOPDFSigner_getSignEnhancerConfig() {
   EsGobAfirmaSignersPadesAOPDFSigner_initialize();
   
-#line 140
+#line 151
   return EsGobAfirmaSignersPadesAOPDFSigner_enhancerConfig != nil ? (JavaUtilProperties *) cast_chk([EsGobAfirmaSignersPadesAOPDFSigner_enhancerConfig java_clone], [JavaUtilProperties class]) : nil;
 }
 
 
-#line 537
+#line 548
 jboolean EsGobAfirmaSignersPadesAOPDFSigner_isPdfFileWithByteArray_(IOSByteArray *data) {
   EsGobAfirmaSignersPadesAOPDFSigner_initialize();
   
-#line 538
+#line 549
   if (data == nil || data->size_ < EsGobAfirmaSignersPadesAOPDFSigner_PDF_MIN_FILE_SIZE) {
     return false;
   }
@@ -778,22 +778,22 @@ jboolean EsGobAfirmaSignersPadesAOPDFSigner_isPdfFileWithByteArray_(IOSByteArray
   }
   @catch (JavaLangException *e) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) warningWithNSString:JreStrcat("$@", @"El contenido parece corrupto o truncado: ",
-#line 547
+#line 558
     e)];
     
-#line 549
+#line 560
     return false;
   }
   
-#line 553
+#line 564
   if (![EsGobAfirmaSignersPadesAOPDFSigner_PDF_FILE_HEADER isEqual:[NSString java_stringWithBytes:buffer]]) {
     return false;
   }
   
-#line 557
+#line 568
   @try {
     
-#line 559
+#line 570
     (void) new_ComAowagieTextPdfPdfReader_initWithByteArray_(data);
   }
   @catch (ComAowagieTextExceptionsBadPasswordException *e) {
@@ -804,16 +804,16 @@ jboolean EsGobAfirmaSignersPadesAOPDFSigner_isPdfFileWithByteArray_(IOSByteArray
     return false;
   }
   
-#line 569
+#line 580
   return true;
 }
 
 
-#line 591
+#line 602
 NSString *EsGobAfirmaSignersPadesAOPDFSigner_getSignedNameWithNSString_(NSString *originalName) {
   EsGobAfirmaSignersPadesAOPDFSigner_initialize();
   
-#line 592
+#line 603
   if (originalName == nil) {
     return @"signed.pdf";
   }
@@ -827,7 +827,7 @@ NSString *EsGobAfirmaSignersPadesAOPDFSigner_getSignedNameWithNSString_(NSString
 }
 
 
-#line 674
+#line 685
 void EsGobAfirmaSignersPadesAOPDFSigner_configureRespectfulPropertiesWithByteArray_withJavaUtilProperties_(IOSByteArray *data, JavaUtilProperties *config) {
   EsGobAfirmaSignersPadesAOPDFSigner_initialize();
   if (config != nil && ![config containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_SUBFILTER]) {
@@ -840,7 +840,7 @@ void EsGobAfirmaSignersPadesAOPDFSigner_configureRespectfulPropertiesWithByteArr
       return;
     }
     
-#line 686
+#line 697
     if (filter != nil) {
       (void) [config setPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_SUBFILTER withNSString:[filter java_substring:[filter java_indexOf:'/'] + 1]];
     }
@@ -848,68 +848,68 @@ void EsGobAfirmaSignersPadesAOPDFSigner_configureRespectfulPropertiesWithByteArr
 }
 
 
-#line 692
+#line 703
 JavaUtilProperties *EsGobAfirmaSignersPadesAOPDFSigner_getExtraParamsWithJavaUtilProperties_(JavaUtilProperties *extraParams) {
   EsGobAfirmaSignersPadesAOPDFSigner_initialize();
   
-#line 693
+#line 704
   JavaUtilProperties *newExtraParams = extraParams != nil ?
-#line 694
+#line 705
   (JavaUtilProperties *) cast_chk([extraParams java_clone], [JavaUtilProperties class]) : new_JavaUtilProperties_init();
   
-#line 696
+#line 707
   return newExtraParams;
 }
 
 
-#line 699
+#line 710
 void EsGobAfirmaSignersPadesAOPDFSigner_checkParamsWithNSString_withJavaUtilProperties_(NSString *algorithm, JavaUtilProperties *extraParams) {
   EsGobAfirmaSignersPadesAOPDFSigner_initialize();
   if ([((NSString *) nil_chk([((NSString *) nil_chk(algorithm)) java_uppercaseStringWithJRELocale:JreLoadStatic(JavaUtilLocale, US)])) java_hasPrefix:@"MD"]) {
     @throw new_JavaLangIllegalArgumentException_initWithNSString_(@"PAdES no permite huellas digitales MD2 o MD5 (Decision 130/2011 CE)");
   }
   
-#line 705
+#line 716
   NSString *profile = [((JavaUtilProperties *) nil_chk(extraParams)) getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_PROFILE];
   
-#line 708
+#line 719
   if ([((NSString *) nil_chk(EsGobAfirmaCoreSignersAOSignConstants_SIGN_PROFILE_BASELINE)) java_equalsIgnoreCase:profile]) {
     if (EsGobAfirmaCoreSignersAOSignConstants_isSHA1SignatureAlgorithmWithNSString_(algorithm)) {
       [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) warningWithNSString:JreStrcat("$$$", @"El algoritmo '", algorithm, @"' no esta recomendado para su uso en las firmas baseline")];
     }
     
-#line 713
+#line 724
     if ([extraParams containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_SUBFILTER]) {
       [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) warningWithNSString:JreStrcat("$$$$", @"Se ignorara el valor establecido en el parametro '",
-#line 715
+#line 726
       EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_SUBFILTER, @"' ya que en las firmas baseline el subfiltro siempre sera ",
-#line 717
+#line 728
       EsGobAfirmaCoreSignersAOSignConstants_PADES_SUBFILTER_BES)];
       (void) [extraParams removeWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_SUBFILTER];
     }
   }
   
-#line 724
+#line 735
   if ([extraParams containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_COMMITMENT_TYPE_INDICATIONS] &&
-#line 725
+#line 736
   ![EsGobAfirmaCoreSignersAOSignConstants_SIGN_PROFILE_BASELINE java_equalsIgnoreCase:profile] &&
-#line 726
+#line 737
   ![extraParams containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_POLICY_IDENTIFIER]) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) warningWithNSString:@"Se ignoraran los commitment type indications establecidos por no estar permitidos en las firmas PAdES-EPES"];
     (void) [extraParams removeWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_COMMITMENT_TYPE_INDICATIONS];
   }
   
-#line 733
+#line 744
   if ([extraParams containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGN_REASON] &&
-#line 734
+#line 745
   [extraParams containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_POLICY_IDENTIFIER]) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) warningWithNSString:@"Se ignorara la razon de firma establecida por haberse indicado una politica de firma"];
     (void) [extraParams removeWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGN_REASON];
   }
   
-#line 743
+#line 754
   if ([extraParams containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGN_REASON] &&
-#line 744
+#line 755
   [extraParams containsKeyWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_COMMITMENT_TYPE_INDICATIONS]) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesAOPDFSigner_LOGGER)) warningWithNSString:@"Se ignoraran los commitment type indications establecidos por haberse indicado una razon de firma"];
     (void) [extraParams removeWithId:EsGobAfirmaSignersPadesCommonPdfExtraParams_COMMITMENT_TYPE_INDICATIONS];

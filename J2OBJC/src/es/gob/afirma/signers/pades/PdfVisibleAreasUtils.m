@@ -52,7 +52,7 @@
 
 @interface EsGobAfirmaSignersPadesPdfVisibleAreasUtils ()
 
-- (instancetype)init;
+- (instancetype)initPackagePrivate;
 
 + (ComAowagieTextPdfBaseFont *)getBaseFontWithInt:(jint)fontFamily
                                       withBoolean:(jboolean)pdfa;
@@ -79,7 +79,7 @@
  @brief Genera una mascara de ofuscacion si se solicita ofuscar.
  @param obfuscate Indica si se debe ofuscar texto o no.
  @param maskConfig Configuraci &oacute; n de la mascara a aplicar o <code>null</code>  si se quiere usar la por defecto.
- @return M&aacute;scara de ofuscaci&oacute;n.
+ @return M&aacute;scara de ofuscaci&oacute;n o <code>null</code> si no se desea ofuscar.
  */
 + (EsGobAfirmaSignersPadesPdfTextMask *)prepareMaskWithBoolean:(jboolean)obfuscate
                                                   withNSString:(NSString *)maskConfig;
@@ -208,11 +208,11 @@ inline id<JavaUtilMap> EsGobAfirmaSignersPadesPdfVisibleAreasUtils_get_COLORS(vo
 static id<JavaUtilMap> EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS;
 J2OBJC_STATIC_FIELD_OBJ_FINAL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, COLORS, id<JavaUtilMap>)
 
-__attribute__((unused)) static void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_init(EsGobAfirmaSignersPadesPdfVisibleAreasUtils *self);
+__attribute__((unused)) static void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initPackagePrivate(EsGobAfirmaSignersPadesPdfVisibleAreasUtils *self);
 
-__attribute__((unused)) static EsGobAfirmaSignersPadesPdfVisibleAreasUtils *new_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_init(void) NS_RETURNS_RETAINED;
+__attribute__((unused)) static EsGobAfirmaSignersPadesPdfVisibleAreasUtils *new_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initPackagePrivate(void) NS_RETURNS_RETAINED;
 
-__attribute__((unused)) static EsGobAfirmaSignersPadesPdfVisibleAreasUtils *create_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_init(void);
+__attribute__((unused)) static EsGobAfirmaSignersPadesPdfVisibleAreasUtils *create_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initPackagePrivate(void);
 
 __attribute__((unused)) static ComAowagieTextPdfBaseFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getBaseFontWithInt_withBoolean_(jint fontFamily, jboolean pdfa);
 
@@ -267,6 +267,10 @@ J2OBJC_INITIALIZED_DEFN(EsGobAfirmaSignersPadesPdfVisibleAreasUtils)
 
 NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_PREFIX = @"$$SIGNDATE";
 NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTCN = @"$$SUBJECTCN$$";
+NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_PSEUDONYM = @"$$PSEUDONYM$$";
+NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OU = @"$$OU$$";
+NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OUS = @"$$OUS$$";
+NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_TITLE = @"$$TITLE$$";
 NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_REASON = @"$$REASON$$";
 NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_LOCATION = @"$$LOCATION$$";
 
@@ -274,17 +278,15 @@ NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_LOCATION = @
 #line 43
 @implementation EsGobAfirmaSignersPadesPdfVisibleAreasUtils
 
-J2OBJC_IGNORE_DESIGNATED_BEGIN
 
-#line 79
-- (instancetype)init {
-  EsGobAfirmaSignersPadesPdfVisibleAreasUtils_init(self);
+#line 83
+- (instancetype)initPackagePrivate {
+  EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initPackagePrivate(self);
   return self;
 }
-J2OBJC_IGNORE_DESIGNATED_END
 
 
-#line 94
+#line 98
 + (ComAowagieTextFont *)getFontWithInt:(jint)fontFamily
                                withInt:(jint)fontSize
                                withInt:(jint)fontStyle
@@ -294,26 +296,26 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 154
+#line 158
 + (ComAowagieTextPdfBaseFont *)getBaseFontWithInt:(jint)fontFamily
                                       withBoolean:(jboolean)pdfa {
   return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getBaseFontWithInt_withBoolean_(fontFamily, pdfa);
 }
 
 
-#line 186
+#line 190
 + (ComAowagieTextPdfBaseFont *)loadFontToEmbedWithInt:(jint)fontFamily {
   return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_loadFontToEmbedWithInt_(fontFamily);
 }
 
 
-#line 210
+#line 214
 + (ComAowagieTextPdfBaseFont *)loadInternalFontWithInt:(jint)fontFamily {
   return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_loadInternalFontWithInt_(fontFamily);
 }
 
 
-#line 240
+#line 244
 + (NSString *)getLayerTextWithNSString:(NSString *)txt
    withJavaSecurityCertX509Certificate:(JavaSecurityCertX509Certificate *)cert
                   withJavaUtilCalendar:(JavaUtilCalendar *)signDate
@@ -326,14 +328,14 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 337
+#line 363
 + (EsGobAfirmaSignersPadesPdfTextMask *)prepareMaskWithBoolean:(jboolean)obfuscate
                                                   withNSString:(NSString *)maskConfig {
   return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_prepareMaskWithBoolean_withNSString_(obfuscate, maskConfig);
 }
 
 
-#line 392
+#line 418
 + (ComAowagieTextImage *)buildRotatedSignatureImageWithComAowagieTextPdfPdfStamper:(ComAowagieTextPdfPdfStamper *)stamper
                                        withComAowagieTextPdfPdfSignatureAppearance:(ComAowagieTextPdfPdfSignatureAppearance *)appearance
                                                        withComAowagieTextRectangle:(ComAowagieTextRectangle *)rubricRect
@@ -343,7 +345,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 509
+#line 535
 + (void)printTextWithComAowagieTextPdfPdfTemplate:(ComAowagieTextPdfPdfTemplate *)template_
                                      withNSString:(NSString *)text
                            withComAowagieTextFont:(ComAowagieTextFont *)font
@@ -352,7 +354,7 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 531
+#line 557
 + (jfloat)fitTextWithComAowagieTextFont:(ComAowagieTextFont *)font
                            withNSString:(NSString *)text
             withComAowagieTextRectangle:(ComAowagieTextRectangle *)rect
@@ -362,26 +364,26 @@ J2OBJC_IGNORE_DESIGNATED_END
 }
 
 
-#line 593
+#line 619
 + (ComAowagieTextRectangle *)getSignaturePositionOnPageWithJavaUtilProperties:(JavaUtilProperties *)extraParams {
   return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getSignaturePositionOnPageWithJavaUtilProperties_(extraParams);
 }
 
 
-#line 606
+#line 632
 + (jboolean)isVisibleSignatureWithJavaUtilProperties:(JavaUtilProperties *)extraParams {
   return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_isVisibleSignatureWithJavaUtilProperties_(extraParams);
 }
 
 
-#line 634
-+ (NSString *)obfuscateWithNSString:(NSString *)text
+#line 660
++ (NSString *)obfuscateIdsWithNSString:(NSString *)text
 withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mask {
-  return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(text, mask);
+  return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateIdsWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(text, mask);
 }
 
 
-#line 679
+#line 705
 + (void)obfuscateWithCharArray:(IOSCharArray *)text
                        withInt:(jint)pos
                        withInt:(jint)length
@@ -390,13 +392,13 @@ withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mas
 }
 
 
-#line 746
+#line 772
 + (jint)countPlainPositionsWithBooleanArray:(IOSBooleanArray *)positions {
   return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_countPlainPositionsWithBooleanArray_(positions);
 }
 
 
-#line 761
+#line 787
 + (jint)countDigitsWithCharArray:(IOSCharArray *)text {
   return EsGobAfirmaSignersPadesPdfVisibleAreasUtils_countDigitsWithCharArray_(text);
 }
@@ -415,15 +417,15 @@ withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mas
     { NULL, "F", 0xa, 17, 18, -1, -1, -1, -1 },
     { NULL, "LComAowagieTextRectangle;", 0x8, 19, 20, -1, -1, -1, -1 },
     { NULL, "Z", 0x8, 21, 20, -1, -1, -1, -1 },
-    { NULL, "LNSString;", 0x9, 22, 23, -1, -1, -1, -1 },
-    { NULL, "V", 0xa, 22, 24, -1, -1, -1, -1 },
-    { NULL, "I", 0xa, 25, 26, -1, -1, -1, -1 },
-    { NULL, "I", 0xa, 27, 28, -1, -1, -1, -1 },
+    { NULL, "LNSString;", 0x8, 22, 23, -1, -1, -1, -1 },
+    { NULL, "V", 0xa, 24, 25, -1, -1, -1, -1 },
+    { NULL, "I", 0xa, 26, 27, -1, -1, -1, -1 },
+    { NULL, "I", 0xa, 28, 29, -1, -1, -1, -1 },
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
   #pragma clang diagnostic ignored "-Wundeclared-selector"
-  methods[0].selector = @selector(init);
+  methods[0].selector = @selector(initPackagePrivate);
   methods[1].selector = @selector(getFontWithInt:withInt:withInt:withNSString:withBoolean:);
   methods[2].selector = @selector(getBaseFontWithInt:withBoolean:);
   methods[3].selector = @selector(loadFontToEmbedWithInt:);
@@ -435,34 +437,38 @@ withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mas
   methods[9].selector = @selector(fitTextWithComAowagieTextFont:withNSString:withComAowagieTextRectangle:withFloat:withInt:);
   methods[10].selector = @selector(getSignaturePositionOnPageWithJavaUtilProperties:);
   methods[11].selector = @selector(isVisibleSignatureWithJavaUtilProperties:);
-  methods[12].selector = @selector(obfuscateWithNSString:withEsGobAfirmaSignersPadesPdfTextMask:);
+  methods[12].selector = @selector(obfuscateIdsWithNSString:withEsGobAfirmaSignersPadesPdfTextMask:);
   methods[13].selector = @selector(obfuscateWithCharArray:withInt:withInt:withEsGobAfirmaSignersPadesPdfTextMask:);
   methods[14].selector = @selector(countPlainPositionsWithBooleanArray:);
   methods[15].selector = @selector(countDigitsWithCharArray:);
   #pragma clang diagnostic pop
   static const J2ObjcFieldInfo fields[] = {
-    { "LOGGER", "LJavaUtilLoggingLogger;", .constantValue.asLong = 0, 0x1a, -1, 29, -1, -1 },
+    { "LOGGER", "LJavaUtilLoggingLogger;", .constantValue.asLong = 0, 0x1a, -1, 30, -1, -1 },
     { "DEFAULT_LAYER_2_FONT_SIZE", "I", .constantValue.asInt = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_DEFAULT_LAYER_2_FONT_SIZE, 0x1a, -1, -1, -1, -1 },
     { "UNDEFINED", "I", .constantValue.asInt = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_UNDEFINED, 0x1a, -1, -1, -1, -1 },
-    { "BLACK", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 30, -1, -1 },
-    { "LAYERTEXT_TAG_DELIMITER", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 31, -1, -1 },
-    { "LAYERTEXT_TAG_DATE_PREFIX", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 32, -1, -1 },
-    { "LAYERTEXT_TAG_DATE_DELIMITER", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 33, -1, -1 },
-    { "LAYERTEXT_TAG_SUBJECTCN", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 34, -1, -1 },
-    { "LAYERTEXT_TAG_SUBJECTDN", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 35, -1, -1 },
-    { "LAYERTEXT_TAG_ISSUERCN", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 36, -1, -1 },
-    { "LAYERTEXT_TAG_CERTSERIAL", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 37, -1, -1 },
-    { "LAYERTEXT_TAG_GIVENNAME", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 38, -1, -1 },
-    { "LAYERTEXT_TAG_SURNAME", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 39, -1, -1 },
-    { "LAYERTEXT_TAG_ORGANIZATION", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 40, -1, -1 },
-    { "LAYERTEXT_TAG_REASON", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 41, -1, -1 },
-    { "LAYERTEXT_TAG_LOCATION", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 42, -1, -1 },
-    { "LAYERTEXT_TAG_CONTACT", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 43, -1, -1 },
+    { "BLACK", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 31, -1, -1 },
+    { "LAYERTEXT_TAG_DELIMITER", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 32, -1, -1 },
+    { "LAYERTEXT_TAG_DATE_PREFIX", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 33, -1, -1 },
+    { "LAYERTEXT_TAG_DATE_DELIMITER", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 34, -1, -1 },
+    { "LAYERTEXT_TAG_SUBJECTCN", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 35, -1, -1 },
+    { "LAYERTEXT_TAG_PSEUDONYM", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 36, -1, -1 },
+    { "LAYERTEXT_TAG_OU", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 37, -1, -1 },
+    { "LAYERTEXT_TAG_OUS", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 38, -1, -1 },
+    { "LAYERTEXT_TAG_TITLE", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 39, -1, -1 },
+    { "LAYERTEXT_TAG_SUBJECTDN", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 40, -1, -1 },
+    { "LAYERTEXT_TAG_ISSUERCN", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 41, -1, -1 },
+    { "LAYERTEXT_TAG_CERTSERIAL", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 42, -1, -1 },
+    { "LAYERTEXT_TAG_GIVENNAME", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 43, -1, -1 },
+    { "LAYERTEXT_TAG_SURNAME", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 44, -1, -1 },
+    { "LAYERTEXT_TAG_ORGANIZATION", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 45, -1, -1 },
+    { "LAYERTEXT_TAG_REASON", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 46, -1, -1 },
+    { "LAYERTEXT_TAG_LOCATION", "LNSString;", .constantValue.asLong = 0, 0x18, -1, 47, -1, -1 },
+    { "LAYERTEXT_TAG_CONTACT", "LNSString;", .constantValue.asLong = 0, 0x1a, -1, 48, -1, -1 },
     { "MARGIN", "F", .constantValue.asFloat = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_MARGIN, 0x1a, -1, -1, -1, -1 },
-    { "COLORS", "LJavaUtilMap;", .constantValue.asLong = 0, 0x1a, -1, 44, 45, -1 },
+    { "COLORS", "LJavaUtilMap;", .constantValue.asLong = 0, 0x1a, -1, 49, 50, -1 },
   };
-  static const void *ptrTable[] = { "getFont", "IIILNSString;Z", "getBaseFont", "IZ", "LComAowagieTextDocumentException;LJavaIoIOException;", "loadFontToEmbed", "I", "loadInternalFont", "getLayerText", "LNSString;LJavaSecurityCertX509Certificate;LJavaUtilCalendar;LNSString;LNSString;LNSString;ZLNSString;", "prepareMask", "ZLNSString;", "buildRotatedSignatureImage", "LComAowagieTextPdfPdfStamper;LComAowagieTextPdfPdfSignatureAppearance;LComAowagieTextRectangle;ILComAowagieTextImage;", "printText", "LComAowagieTextPdfPdfTemplate;LNSString;LComAowagieTextFont;LComAowagieTextRectangle;", "LComAowagieTextDocumentException;", "fitText", "LComAowagieTextFont;LNSString;LComAowagieTextRectangle;FI", "getSignaturePositionOnPage", "LJavaUtilProperties;", "isVisibleSignature", "obfuscate", "LNSString;LEsGobAfirmaSignersPadesPdfTextMask;", "[CIILEsGobAfirmaSignersPadesPdfTextMask;", "countPlainPositions", "[Z", "countDigits", "[C", &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LOGGER, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_BLACK, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DELIMITER, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_PREFIX, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_DELIMITER, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTCN, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTDN, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_ISSUERCN, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_CERTSERIAL, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_GIVENNAME, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SURNAME, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_ORGANIZATION, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_REASON, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_LOCATION, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_CONTACT, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS, "Ljava/util/Map<Ljava/lang/String;Les/gob/afirma/signers/pades/PdfVisibleAreasUtils$ColorValues;>;", "LEsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues;" };
-  static const J2ObjcClassInfo _EsGobAfirmaSignersPadesPdfVisibleAreasUtils = { "PdfVisibleAreasUtils", "es.gob.afirma.signers.pades", ptrTable, methods, fields, 7, 0x11, 16, 19, -1, 46, -1, -1, -1 };
+  static const void *ptrTable[] = { "getFont", "IIILNSString;Z", "getBaseFont", "IZ", "LComAowagieTextDocumentException;LJavaIoIOException;", "loadFontToEmbed", "I", "loadInternalFont", "getLayerText", "LNSString;LJavaSecurityCertX509Certificate;LJavaUtilCalendar;LNSString;LNSString;LNSString;ZLNSString;", "prepareMask", "ZLNSString;", "buildRotatedSignatureImage", "LComAowagieTextPdfPdfStamper;LComAowagieTextPdfPdfSignatureAppearance;LComAowagieTextRectangle;ILComAowagieTextImage;", "printText", "LComAowagieTextPdfPdfTemplate;LNSString;LComAowagieTextFont;LComAowagieTextRectangle;", "LComAowagieTextDocumentException;", "fitText", "LComAowagieTextFont;LNSString;LComAowagieTextRectangle;FI", "getSignaturePositionOnPage", "LJavaUtilProperties;", "isVisibleSignature", "obfuscateIds", "LNSString;LEsGobAfirmaSignersPadesPdfTextMask;", "obfuscate", "[CIILEsGobAfirmaSignersPadesPdfTextMask;", "countPlainPositions", "[Z", "countDigits", "[C", &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LOGGER, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_BLACK, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DELIMITER, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_PREFIX, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_DELIMITER, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTCN, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_PSEUDONYM, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OU, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OUS, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_TITLE, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTDN, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_ISSUERCN, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_CERTSERIAL, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_GIVENNAME, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SURNAME, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_ORGANIZATION, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_REASON, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_LOCATION, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_CONTACT, &EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS, "Ljava/util/Map<Ljava/lang/String;Les/gob/afirma/signers/pades/PdfVisibleAreasUtils$ColorValues;>;", "LEsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues;" };
+  static const J2ObjcClassInfo _EsGobAfirmaSignersPadesPdfVisibleAreasUtils = { "PdfVisibleAreasUtils", "es.gob.afirma.signers.pades", ptrTable, methods, fields, 7, 0x10, 16, 23, -1, 51, -1, -1, -1 };
   return &_EsGobAfirmaSignersPadesPdfVisibleAreasUtils;
 }
 
@@ -472,11 +478,11 @@ withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mas
 #line 45
     @"es.gob.afirma");
     EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS = new_JavaUtilHashMap_initWithInt_(
-#line 68
+#line 72
     7);
     {
       
-#line 70
+#line 74
       (void) [EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS putWithId:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_BLACK withId:new_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues_initWithInt_withInt_withInt_(0, 0, 0)];
       (void) [EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS putWithId:@"white" withId:new_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues_initWithInt_withInt_withInt_(255, 255, 255)];
       (void) [EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS putWithId:@"lightGray" withId:new_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues_initWithInt_withInt_withInt_(192, 192, 192)];
@@ -492,52 +498,52 @@ withEsGobAfirmaSignersPadesPdfTextMask:(EsGobAfirmaSignersPadesPdfTextMask *)mas
 @end
 
 
-#line 79
-void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_init(EsGobAfirmaSignersPadesPdfVisibleAreasUtils *self) {
+#line 83
+void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initPackagePrivate(EsGobAfirmaSignersPadesPdfVisibleAreasUtils *self) {
   NSObject_init(self);
 }
 
 
-#line 79
-EsGobAfirmaSignersPadesPdfVisibleAreasUtils *new_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_init() {
-  J2OBJC_NEW_IMPL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, init)
+#line 83
+EsGobAfirmaSignersPadesPdfVisibleAreasUtils *new_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initPackagePrivate() {
+  J2OBJC_NEW_IMPL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, initPackagePrivate)
 }
 
 
-#line 79
-EsGobAfirmaSignersPadesPdfVisibleAreasUtils *create_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_init() {
-  J2OBJC_CREATE_IMPL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, init)
+#line 83
+EsGobAfirmaSignersPadesPdfVisibleAreasUtils *create_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initPackagePrivate() {
+  J2OBJC_CREATE_IMPL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils, initPackagePrivate)
 }
 
 
-#line 94
+#line 98
 ComAowagieTextFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getFontWithInt_withInt_withInt_withNSString_withBoolean_(jint fontFamily, jint fontSize, jint fontStyle, NSString *fontColor, jboolean pdfa) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 100
+#line 104
   jint family = fontFamily == EsGobAfirmaSignersPadesPdfVisibleAreasUtils_UNDEFINED ? ComAowagieTextFont_COURIER : fontFamily;
   jint size = fontSize == EsGobAfirmaSignersPadesPdfVisibleAreasUtils_UNDEFINED ? EsGobAfirmaSignersPadesPdfVisibleAreasUtils_DEFAULT_LAYER_2_FONT_SIZE : fontSize;
   jint style = fontStyle == EsGobAfirmaSignersPadesPdfVisibleAreasUtils_UNDEFINED ? ComAowagieTextFont_NORMAL : fontStyle;
   
-#line 104
+#line 108
   ComAowagieTextPdfBaseFont *baseFont;
   @try {
     baseFont = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getBaseFontWithInt_withBoolean_(fontFamily, pdfa);
   }
   @catch (JavaLangException *e) {
     [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LOGGER)) warningWithNSString:JreStrcat("$@", @"Error construyendo la fuente de letra para la firma visible PDF, se usara la por defecto y el PDF no sera compatible PDF/A: ",
-#line 110
+#line 114
     e)];
     
-#line 113
+#line 117
     return new_ComAowagieTextFont_initWithInt_withFloat_withInt_withHarmonyJavaAwtColor_(family, size, style, nil);
   }
   
-#line 116
+#line 120
   NSString *colorName = fontColor != nil ? [fontColor lowercaseString] : EsGobAfirmaSignersPadesPdfVisibleAreasUtils_BLACK;
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues *cv = [((id<JavaUtilMap>) nil_chk(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS)) getWithId:colorName] != nil ? [EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS getWithId:colorName] : [EsGobAfirmaSignersPadesPdfVisibleAreasUtils_COLORS getWithId:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_BLACK];
   
-#line 119
+#line 123
   @try {
     IOSClass *colorClass;
     if (EsGobAfirmaCoreMiscPlatform_getOS() == JreLoadEnum(EsGobAfirmaCoreMiscPlatform_OS, ANDROID) || EsGobAfirmaCoreMiscPlatform_getOS() == JreLoadEnum(EsGobAfirmaCoreMiscPlatform_OS, OTHER)) {
@@ -547,25 +553,25 @@ ComAowagieTextFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getFontWithInt_w
       colorClass = IOSClass_forName_(@"java.awt.Color");
     }
     id color = [((JavaLangReflectConstructor *) nil_chk(([((IOSClass *) nil_chk(colorClass)) getConstructor:[IOSObjectArray newArrayWithObjects:(id[]){ JreLoadStatic(JavaLangInteger, TYPE), JreLoadStatic(JavaLangInteger, TYPE), JreLoadStatic(JavaLangInteger, TYPE) } count:3 type:IOSClass_class_()]]))) newInstanceWithNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){ JavaLangInteger_valueOfWithInt_(
-#line 132
+#line 136
     [cv getR]), JavaLangInteger_valueOfWithInt_(
-#line 133
+#line 137
     [cv getG]), JavaLangInteger_valueOfWithInt_(
-#line 134
+#line 138
     [cv getB]) } count:3 type:NSObject_class_()]];
     
-#line 140
-    return [((JavaLangReflectConstructor *) nil_chk(([ComAowagieTextFont_class_() getConstructor:[IOSObjectArray newArrayWithObjects:(id[]){
-#line 141
-      ComAowagieTextPdfBaseFont_class_(), JreLoadStatic(JavaLangFloat, TYPE), JreLoadStatic(JavaLangInteger, TYPE),
 #line 144
-      colorClass } count:4 type:IOSClass_class_()]]))) newInstanceWithNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){
+    return [((JavaLangReflectConstructor *) nil_chk(([ComAowagieTextFont_class_() getConstructor:[IOSObjectArray newArrayWithObjects:(id[]){
 #line 145
+      ComAowagieTextPdfBaseFont_class_(), JreLoadStatic(JavaLangFloat, TYPE), JreLoadStatic(JavaLangInteger, TYPE),
+#line 148
+      colorClass } count:4 type:IOSClass_class_()]]))) newInstanceWithNSObjectArray:[IOSObjectArray newArrayWithObjects:(id[]){
+#line 149
         baseFont, JavaLangFloat_valueOfWithFloat_(size), JavaLangInteger_valueOfWithInt_(style), color } count:4 type:NSObject_class_()]];
       }
       @catch (JavaLangException *e) {
         [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LOGGER)) warningWithNSString:JreStrcat("$@", @"Error estableciendo el color del tipo de letra para la firma visible PDF, se usara el por defecto: ",
-#line 149
+#line 153
         e)];
         return new_ComAowagieTextFont_initWithComAowagieTextPdfBaseFont_withFloat_withInt_withHarmonyJavaAwtColor_(baseFont, size, style, nil);
       }
@@ -575,18 +581,18 @@ ComAowagieTextPdfBaseFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getBaseFo
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   ComAowagieTextPdfBaseFont *font;
   
-#line 160
+#line 164
   if (pdfa) {
     @try {
       font = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_loadFontToEmbedWithInt_(fontFamily);
     }
     @catch (
-#line 166
+#line 170
     JavaLangThrowable *e) {
       [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LOGGER)) logWithJavaUtilLoggingLevel:JreLoadStatic(JavaUtilLoggingLevel, WARNING) withNSString:
-#line 168
+#line 172
       @"No se ha podido cargar la fuente de letra para incrustar. Puede que el resultado no sea un PDF/A" withJavaLangThrowable:
-#line 169
+#line 173
       e];
       font = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_loadInternalFontWithInt_(fontFamily);
     }
@@ -598,11 +604,11 @@ ComAowagieTextPdfBaseFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getBaseFo
 }
 
 
-#line 186
+#line 190
 ComAowagieTextPdfBaseFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_loadFontToEmbedWithInt_(jint fontFamily) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 187
+#line 191
   ComAowagieTextPdfBaseFont *font;
   switch (fontFamily) {
     case ComAowagieTextFont_HELVETICA:
@@ -620,11 +626,11 @@ ComAowagieTextPdfBaseFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_loadFontT
 }
 
 
-#line 210
+#line 214
 ComAowagieTextPdfBaseFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_loadInternalFontWithInt_(jint fontFamily) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 211
+#line 215
   ComAowagieTextPdfBaseFont *font;
   switch (fontFamily) {
     case ComAowagieTextFont_HELVETICA:
@@ -641,109 +647,137 @@ ComAowagieTextPdfBaseFont *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_loadInter
 }
 
 
-#line 240
+#line 244
 NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getLayerTextWithNSString_withJavaSecurityCertX509Certificate_withJavaUtilCalendar_withNSString_withNSString_withNSString_withBoolean_withNSString_(NSString *txt, JavaSecurityCertX509Certificate *cert, JavaUtilCalendar *signDate, NSString *reason, NSString *signatureProductionCity, NSString *signerContact, jboolean obfuscate, NSString *maskConfig) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 249
+#line 253
   if (txt == nil) {
     return nil;
   }
   
-#line 253
+#line 257
   NSString *ret = txt;
   
-#line 256
+#line 260
   if (cert != nil) {
     
-#line 258
+#line 262
     EsGobAfirmaSignersPadesPdfTextMask *mask = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_prepareMaskWithBoolean_withNSString_(obfuscate, maskConfig);
     NSString *cn = EsGobAfirmaCoreMiscAOUtil_getCNWithJavaSecurityCertX509Certificate_(cert);
+    
+#line 265
     if (cn != nil && mask != nil) {
-      cn = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(cn, mask);
+      cn = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateIdsWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(cn, mask);
     }
     ret = [((NSString *) nil_chk([((NSString *) nil_chk([ret java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTCN withSequence:cn])) java_replace:
-#line 264
+#line 269
     EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_ISSUERCN withSequence:EsGobAfirmaCoreMiscAOUtil_getCNWithNSString_([((JavaxSecurityAuthX500X500Principal *) nil_chk([cert getIssuerX500Principal])) getName])])) java_replace:
-#line 265
+#line 270
     EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_CERTSERIAL withSequence:[((JavaMathBigInteger *) nil_chk([cert getSerialNumber])) description]];
     
-#line 268
+#line 273
     NSString *subjectPrincipal = [((JavaxSecurityAuthX500X500Principal *) nil_chk([cert getSubjectX500Principal])) description];
-    if (subjectPrincipal != nil && mask != nil) {
-      subjectPrincipal = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(subjectPrincipal, mask);
-    }
-    ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTDN withSequence:subjectPrincipal];
     
 #line 275
+    NSString *pseudonym = EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(@"OID.2.5.4.65", subjectPrincipal);
+    if (pseudonym != nil) {
+      ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_PSEUDONYM withSequence:pseudonym];
+    }
+    
+#line 280
+    IOSObjectArray *ous = EsGobAfirmaCoreMiscAOUtil_getOUSWithNSString_(subjectPrincipal);
+    if (((IOSObjectArray *) nil_chk(ous))->size_ > 0) {
+      ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OU withSequence:IOSObjectArray_Get(ous, 0)];
+      NSString *ousResult = IOSObjectArray_Get(ous, 0);
+      for (jint i = 1; i < ous->size_; i++) {
+        (void) JreStrAppendStrong(&ousResult, "$$", @", ", IOSObjectArray_Get(ous, i));
+      }
+      ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OUS withSequence:ousResult];
+    }
+    else {
+      ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OU withSequence:@""];
+      ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_OUS withSequence:@""];
+    }
+    
+#line 294
+    NSString *title = EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(@"t", subjectPrincipal);
+    ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_TITLE withSequence:title != nil ? title : @""];
+    
+#line 297
+    if (subjectPrincipal != nil && mask != nil) {
+      subjectPrincipal = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateIdsWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(subjectPrincipal, mask);
+    }
+    
+#line 301
+    ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SUBJECTDN withSequence:subjectPrincipal];
+    
+#line 304
     NSString *givenName = EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(@"GIVENNAME", subjectPrincipal);
     ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_GIVENNAME withSequence:givenName != nil ? givenName : @""];
     
-#line 279
+#line 308
     NSString *surname = EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(@"SURNAME", subjectPrincipal);
-    if (subjectPrincipal != nil && obfuscate) {
-      subjectPrincipal = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(subjectPrincipal, mask);
-    }
     ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_SURNAME withSequence:surname != nil ? surname : @""];
     
-#line 286
+#line 312
     NSString *organization = EsGobAfirmaCoreMiscAOUtil_getRDNvalueFromLdapNameWithNSString_withNSString_(@"o", subjectPrincipal);
     ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_ORGANIZATION withSequence:organization != nil ? organization : @""];
   }
   
-#line 291
+#line 317
   ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_REASON withSequence:reason != nil ? reason : @""];
   ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_LOCATION withSequence:signatureProductionCity != nil ? signatureProductionCity : @""];
   ret = [((NSString *) nil_chk(ret)) java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_CONTACT withSequence:signerContact != nil ? signerContact : @""];
   
-#line 296
+#line 322
   while ([((NSString *) nil_chk(ret)) java_contains:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_PREFIX]) {
     jint strIdx = [ret java_indexOfString:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_PREFIX];
     NSString *sdTag = [ret java_substring:
-#line 299
+#line 325
     strIdx endIndex:
-#line 300
+#line 326
     [ret java_indexOfString:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DELIMITER fromIndex:strIdx + [((NSString *) nil_chk(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_PREFIX)) java_length]] + [((NSString *) nil_chk(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DELIMITER)) java_length]];
     
-#line 302
+#line 328
     NSString *date;
     JavaUtilDate *tbpDate = signDate != nil ? [signDate getTime] : new_JavaUtilDate_init();
     if ([((NSString *) nil_chk(sdTag)) java_contains:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_DELIMITER]) {
       NSString *dateFormat = IOSObjectArray_Get(nil_chk([((NSString *) nil_chk([sdTag java_replace:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DELIMITER withSequence:@""])) java_split:EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LAYERTEXT_TAG_DATE_DELIMITER]), 1);
       @try {
         date = [new_JavaTextSimpleDateFormat_initWithNSString_(dateFormat) formatWithJavaUtilDate:
-#line 308
+#line 334
         tbpDate];
       }
       @catch (
-#line 311
+#line 337
       JavaLangException *e) {
         [((JavaUtilLoggingLogger *) nil_chk(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_LOGGER)) warningWithNSString:JreStrcat("$$$@", @"Patron incorrecto para la fecha de firma en la firma visible (",
-#line 313
+#line 339
         dateFormat, @"), se usara el por defecto: ", e)];
         
-#line 315
+#line 341
         date = [new_JavaTextSimpleDateFormat_init() formatWithJavaUtilDate:
-#line 316
+#line 342
         tbpDate];
       }
     }
     else {
       
-#line 321
+#line 347
       date = [new_JavaTextSimpleDateFormat_init() formatWithJavaUtilDate:
-#line 322
+#line 348
       tbpDate];
     }
     
-#line 325
+#line 351
     ret = [ret java_replace:sdTag withSequence:date];
   }
   return ret;
 }
 
 
-#line 337
+#line 363
 EsGobAfirmaSignersPadesPdfTextMask *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_prepareMaskWithBoolean_withNSString_(jboolean obfuscate, NSString *maskConfig) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   EsGobAfirmaSignersPadesPdfTextMask *mask = nil;
@@ -764,33 +798,33 @@ EsGobAfirmaSignersPadesPdfTextMask *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_
 }
 
 
-#line 392
+#line 418
 ComAowagieTextImage *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_buildRotatedSignatureImageWithComAowagieTextPdfPdfStamper_withComAowagieTextPdfPdfSignatureAppearance_withComAowagieTextRectangle_withInt_withComAowagieTextImage_(ComAowagieTextPdfPdfStamper *stamper, ComAowagieTextPdfPdfSignatureAppearance *appearance, ComAowagieTextRectangle *rubricRect, jint degrees, ComAowagieTextImage *rubricImg) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 400
+#line 426
   jfloat rubricWidth = [((ComAowagieTextRectangle *) nil_chk(rubricRect)) getWidth];
   jfloat rubricHeight = [rubricRect getHeight];
   
-#line 404
+#line 430
   jint rotation = JreIntMod(degrees, 360);
   if (rotation < 0) {
     rotation += 360;
   }
   
-#line 420
+#line 446
   jfloat canvasWidth = rotation == 0 || rotation == 180 ? rubricWidth : rubricHeight;
   jfloat canvasHeight = rotation == 0 || rotation == 180 ? rubricHeight : rubricWidth;
   ComAowagieTextPdfPdfTemplate *canvas = ComAowagieTextPdfPdfTemplate_createTemplateWithComAowagieTextPdfPdfWriter_withFloat_withFloat_([((ComAowagieTextPdfPdfStamper *) nil_chk(stamper)) getWriter], canvasWidth, canvasHeight);
   
-#line 426
+#line 452
   if (rubricImg != nil) {
     
-#line 428
+#line 454
     [rubricImg setInterpolationWithBoolean:true];
     [rubricImg setAbsolutePositionWithFloat:0 withFloat:0];
     
-#line 432
+#line 458
     if (rotation == 90 || rotation == 270) {
       jfloat scale_ = JavaLangMath_minWithFloat_withFloat_(rubricHeight / [rubricImg getWidth], rubricWidth / [rubricImg getHeight]);
       jfloat w = [rubricImg getWidth] * scale_;
@@ -801,7 +835,7 @@ ComAowagieTextImage *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_buildRotatedSig
     }
     else {
       
-#line 440
+#line 466
       jfloat scale_ = JavaLangMath_minWithFloat_withFloat_(rubricWidth / [rubricImg getWidth], rubricHeight / [rubricImg getHeight]);
       jfloat w = [rubricImg getWidth] * scale_;
       jfloat h = [rubricImg getHeight] * scale_;
@@ -811,10 +845,10 @@ ComAowagieTextImage *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_buildRotatedSig
     }
   }
   
-#line 450
+#line 476
   if ([((ComAowagieTextPdfPdfSignatureAppearance *) nil_chk(appearance)) getLayer2Text] != nil) {
     
-#line 452
+#line 478
     ComAowagieTextFont *f = [appearance getLayer2Font];
     if (f == nil) {
       f = new_ComAowagieTextFont_init();
@@ -822,32 +856,32 @@ ComAowagieTextImage *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_buildRotatedSig
     ComAowagieTextPdfBaseFont *bf = [f getCalculatedBaseFontWithBoolean:false];
     [((ComAowagieTextPdfPdfTemplate *) nil_chk(canvas)) setFontAndSizeWithComAowagieTextPdfBaseFont:bf withFloat:[f getSize]];
     
-#line 459
+#line 485
     ComAowagieTextRectangle *rect = new_ComAowagieTextRectangle_initWithComAowagieTextRectangle_([canvas getBoundingBox]);
     EsGobAfirmaSignersPadesPdfVisibleAreasUtils_printTextWithComAowagieTextPdfPdfTemplate_withNSString_withComAowagieTextFont_withComAowagieTextRectangle_(canvas, [appearance getLayer2Text], f, rect);
   }
   
-#line 464
+#line 490
   ComAowagieTextImage *rotatedRubric = ComAowagieTextImage_getInstanceWithComAowagieTextPdfPdfTemplate_(canvas);
   [((ComAowagieTextImage *) nil_chk(rotatedRubric)) setInterpolationWithBoolean:true];
   [rotatedRubric setRotationDegreesWithFloat:rotation];
   [rotatedRubric setAbsolutePositionWithFloat:0 withFloat:0];
   
-#line 481
+#line 507
   ComAowagieTextPdfPdfTemplate *rotatedCanvas = ComAowagieTextPdfPdfTemplate_createTemplateWithComAowagieTextPdfPdfWriter_withFloat_withFloat_([stamper getWriter], rubricWidth, rubricHeight);
   {
     ComAowagieTextPdfByteBuffer *actualBuffer =
-#line 482
+#line 508
     [((ComAowagieTextPdfPdfTemplate *) nil_chk(canvas)) getInternalBuffer];
     JavaLangThrowable *__primaryException2 = nil;
     
-#line 482
+#line 508
     @try {
       ComAowagieTextPdfByteBuffer *rotatedBuffer = [((ComAowagieTextPdfPdfTemplate *) nil_chk(rotatedCanvas)) getInternalBuffer];
       JavaLangThrowable *__primaryException1 = nil;
       @try {
         
-#line 484
+#line 510
         [((ComAowagieTextPdfByteBuffer *) nil_chk(rotatedBuffer)) writeWithByteArray:[((ComAowagieTextPdfByteBuffer *) nil_chk(actualBuffer)) toByteArray]];
       }
       @catch (JavaLangThrowable *e) {
@@ -891,31 +925,31 @@ ComAowagieTextImage *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_buildRotatedSig
     }
   }
   
-#line 488
+#line 514
   [rotatedCanvas reset];
   
-#line 491
+#line 517
   [rotatedCanvas addImageWithComAowagieTextImage:rotatedRubric];
   
-#line 494
+#line 520
   rotatedRubric = ComAowagieTextImage_getInstanceWithComAowagieTextPdfPdfTemplate_(rotatedCanvas);
   [((ComAowagieTextImage *) nil_chk(rotatedRubric)) setInterpolationWithBoolean:true];
   [rotatedRubric setAbsolutePositionWithFloat:0 withFloat:0];
   
-#line 498
+#line 524
   return rotatedRubric;
 }
 
 
-#line 509
+#line 535
 void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_printTextWithComAowagieTextPdfPdfTemplate_withNSString_withComAowagieTextFont_withComAowagieTextRectangle_(ComAowagieTextPdfPdfTemplate *template_, NSString *text, ComAowagieTextFont *font, ComAowagieTextRectangle *dataRect) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   ComAowagieTextRectangle *sr = new_ComAowagieTextRectangle_initWithFloat_withFloat_withFloat_withFloat_(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_MARGIN, EsGobAfirmaSignersPadesPdfVisibleAreasUtils_MARGIN, [((ComAowagieTextRectangle *) nil_chk(dataRect)) getWidth] - EsGobAfirmaSignersPadesPdfVisibleAreasUtils_MARGIN, [dataRect getHeight] - EsGobAfirmaSignersPadesPdfVisibleAreasUtils_MARGIN);
   
-#line 513
+#line 539
   jfloat adjustedFontSize = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_fitTextWithComAowagieTextFont_withNSString_withComAowagieTextRectangle_withFloat_withInt_(font, text, sr, [((ComAowagieTextFont *) nil_chk(font)) getSize], ComAowagieTextPdfPdfWriter_RUN_DIRECTION_DEFAULT);
   
-#line 515
+#line 541
   ComAowagieTextPdfColumnText *ct = new_ComAowagieTextPdfColumnText_initWithComAowagieTextPdfPdfContentByte_(template_);
   [ct setRunDirectionWithInt:ComAowagieTextPdfPdfWriter_RUN_DIRECTION_DEFAULT];
   [ct setSimpleColumnWithComAowagieTextPhrase:new_ComAowagieTextPhrase_initWithNSString_withComAowagieTextFont_(text, font) withFloat:[sr getLeft] withFloat:[sr getBottom] withFloat:[sr getRight] withFloat:[sr getTop] withFloat:adjustedFontSize withInt:ComAowagieTextElement_ALIGN_LEFT];
@@ -923,11 +957,11 @@ void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_printTextWithComAowagieTextPdfP
 }
 
 
-#line 531
+#line 557
 jfloat EsGobAfirmaSignersPadesPdfVisibleAreasUtils_fitTextWithComAowagieTextFont_withNSString_withComAowagieTextRectangle_withFloat_withInt_(ComAowagieTextFont *font, NSString *text, ComAowagieTextRectangle *rect, jfloat maxFontSize, jint runDirection) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 532
+#line 558
   jfloat maxSize = maxFontSize;
   @try {
     ComAowagieTextPdfColumnText *ct = nil;
@@ -941,7 +975,7 @@ jfloat EsGobAfirmaSignersPadesPdfVisibleAreasUtils_fitTextWithComAowagieTextFont
           ++lf;
         }
         else
-#line 543
+#line 569
         if (IOSCharArray_Get(t, k) == 0x000d) {
           ++cr;
         }
@@ -977,7 +1011,7 @@ jfloat EsGobAfirmaSignersPadesPdfVisibleAreasUtils_fitTextWithComAowagieTextFont
       }
       else {
         
-#line 576
+#line 602
         max = size;
       }
     }
@@ -989,49 +1023,49 @@ jfloat EsGobAfirmaSignersPadesPdfVisibleAreasUtils_fitTextWithComAowagieTextFont
 }
 
 
-#line 593
+#line 619
 ComAowagieTextRectangle *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_getSignaturePositionOnPageWithJavaUtilProperties_(JavaUtilProperties *extraParams) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 594
+#line 620
   return EsGobAfirmaSignersPadesPdfUtil_getPositionOnPageWithJavaUtilProperties_withNSString_(extraParams, @"signature");
 }
 
 
-#line 606
+#line 632
 jboolean EsGobAfirmaSignersPadesPdfVisibleAreasUtils_isVisibleSignatureWithJavaUtilProperties_(JavaUtilProperties *extraParams) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   if (extraParams == nil) {
     return true;
   }
   
-#line 612
+#line 638
   NSString *signatureField = [extraParams getPropertyWithNSString:EsGobAfirmaSignersPadesCommonPdfExtraParams_SIGNATURE_FIELD];
   if (signatureField != nil) {
     return true;
   }
   
-#line 617
+#line 643
   ComAowagieTextRectangle *signatureRect = EsGobAfirmaSignersPadesPdfUtil_getPositionOnPageWithJavaUtilProperties_withNSString_(extraParams, @"signature");
   if (signatureRect != nil &&
-#line 619
+#line 645
   JavaLangMath_signumWithFloat_([signatureRect getWidth]) != 0 &&
-#line 620
+#line 646
   JavaLangMath_signumWithFloat_([signatureRect getHeight]) != 0) {
     return true;
   }
   
-#line 624
+#line 650
   return false;
 }
 
 
-#line 634
-NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(NSString *text, EsGobAfirmaSignersPadesPdfTextMask *mask) {
+#line 660
+NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateIdsWithNSString_withEsGobAfirmaSignersPadesPdfTextMask_(NSString *text, EsGobAfirmaSignersPadesPdfTextMask *mask) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   IOSCharArray *chars = [((NSString *) nil_chk(text)) java_toCharArray];
   
-#line 638
+#line 664
   jint digitCount = 0;
   jint pos = 0;
   jboolean found = false;
@@ -1060,32 +1094,32 @@ NSString *EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithNSString_with
     found = false;
   }
   
-#line 666
+#line 692
   return [NSString java_stringWithCharacters:chars];
 }
 
 
-#line 679
+#line 705
 void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithCharArray_withInt_withInt_withEsGobAfirmaSignersPadesPdfTextMask_(IOSCharArray *text, jint pos, jint length, EsGobAfirmaSignersPadesPdfTextMask *mask) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   jint numDigits = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_countDigitsWithCharArray_(text);
   jint plainDigits = EsGobAfirmaSignersPadesPdfVisibleAreasUtils_countPlainPositionsWithBooleanArray_([((EsGobAfirmaSignersPadesPdfTextMask *) nil_chk(mask)) getPositions]);
   jboolean applyOnlyDigits = numDigits >= plainDigits;
   
-#line 687
+#line 713
   if (applyOnlyDigits) {
     
-#line 689
+#line 715
     IOSBooleanArray *posMasked = [mask getPositions];
     
-#line 694
+#line 720
     if ([mask isShiftSupported] && numDigits < ((IOSBooleanArray *) nil_chk(posMasked))->size_) {
       
-#line 696
+#line 722
       posMasked = [IOSBooleanArray newArrayWithLength:numDigits];
       IOSBooleanArray *maskPositions = [mask getPositions];
       
-#line 699
+#line 725
       jint currentCount = 0;
       jint omitCount = ((IOSBooleanArray *) nil_chk(maskPositions))->size_ - numDigits;
       for (jint i = 0; i < maskPositions->size_; i++) {
@@ -1098,7 +1132,7 @@ void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithCharArray_withInt_
       }
     }
     
-#line 713
+#line 739
     for (jint i = 0, j = 0; i < length; i++) {
       if (JavaLangCharacter_isDigitWithChar_(IOSCharArray_Get(nil_chk(text), pos + i))) {
         if (j >= ((IOSBooleanArray *) nil_chk(posMasked))->size_ || !IOSBooleanArray_Get(posMasked, j)) {
@@ -1113,7 +1147,7 @@ void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithCharArray_withInt_
   }
   else {
     
-#line 728
+#line 754
     IOSBooleanArray *posMasked = [mask getPositions];
     jint posMaskedPos = ((IOSBooleanArray *) nil_chk(posMasked))->size_ - 1;
     for (jint i = pos + length - 1; i >= pos; i--) {
@@ -1126,56 +1160,56 @@ void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_obfuscateWithCharArray_withInt_
 }
 
 
-#line 746
+#line 772
 jint EsGobAfirmaSignersPadesPdfVisibleAreasUtils_countPlainPositionsWithBooleanArray_(IOSBooleanArray *positions) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 747
+#line 773
   jint count = 0;
   {
     IOSBooleanArray *a__ =
-#line 748
+#line 774
     positions;
     jboolean const *b__ = ((IOSBooleanArray *) nil_chk(a__))->buffer_;
     jboolean const *e__ = b__ + a__->size_;
     while (b__ < e__) {
       jboolean position = *b__++;
       
-#line 749
+#line 775
       if (position) {
         count++;
       }
     }
   }
   
-#line 753
+#line 779
   return count;
 }
 
 
-#line 761
+#line 787
 jint EsGobAfirmaSignersPadesPdfVisibleAreasUtils_countDigitsWithCharArray_(IOSCharArray *text) {
   EsGobAfirmaSignersPadesPdfVisibleAreasUtils_initialize();
   
-#line 762
+#line 788
   jint digitsCount = 0;
   {
     IOSCharArray *a__ =
-#line 763
+#line 789
     text;
     jchar const *b__ = ((IOSCharArray *) nil_chk(a__))->buffer_;
     jchar const *e__ = b__ + a__->size_;
     while (b__ < e__) {
       jchar c = *b__++;
       
-#line 764
+#line 790
       if (JavaLangCharacter_isDigitWithChar_(c)) {
         digitsCount++;
       }
     }
   }
   
-#line 768
+#line 794
   return digitsCount;
 }
 
@@ -1184,11 +1218,11 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(EsGobAfirmaSignersPadesPdfVisibleAreasUtils)
 #line 1 "/Users/desarrolloabamobile/Documents/JAVA/pades-ios/src/main/java/es/gob/afirma/signers/pades/PdfVisibleAreasUtils.java"
 
 
-#line 356
+#line 382
 @implementation EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues
 
 
-#line 362
+#line 388
 - (instancetype)initWithInt:(jint)red
                     withInt:(jint)green
                     withInt:(jint)blue {
@@ -1197,7 +1231,7 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(EsGobAfirmaSignersPadesPdfVisibleAreasUtils)
 }
 
 
-#line 368
+#line 394
 - (jint)getR {
   return self->r_;
 }
@@ -1238,24 +1272,24 @@ J2OBJC_CLASS_TYPE_LITERAL_SOURCE(EsGobAfirmaSignersPadesPdfVisibleAreasUtils)
 @end
 
 
-#line 362
+#line 388
 void EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues_initWithInt_withInt_withInt_(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues *self, jint red, jint green, jint blue) {
   NSObject_init(self);
   
-#line 363
+#line 389
   self->r_ = red;
   self->g_ = green;
   self->b_ = blue;
 }
 
 
-#line 362
+#line 388
 EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues *new_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues_initWithInt_withInt_withInt_(jint red, jint green, jint blue) {
   J2OBJC_NEW_IMPL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues, initWithInt_withInt_withInt_, red, green, blue)
 }
 
 
-#line 362
+#line 388
 EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues *create_EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues_initWithInt_withInt_withInt_(jint red, jint green, jint blue) {
   J2OBJC_CREATE_IMPL(EsGobAfirmaSignersPadesPdfVisibleAreasUtils_ColorValues, initWithInt_withInt_withInt_, red, green, blue)
 }

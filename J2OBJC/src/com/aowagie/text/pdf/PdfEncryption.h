@@ -134,19 +134,19 @@
 - (jint)calculateStreamSizeWithInt:(jint)n;
 
 /*!
- @brief implements Algorithm 9: Computing the encryption dictionary’s O (owner password) and OE (owner encryption) values
+ @brief implements Algorithm 9: Computing the encryption dictionary's O (owner password) and OE (owner encryption) values
   (Security handlers of revision 6) - ISO 32000-2 section 7.6.4.4.8
  */
 - (void)computeOAndOeAlg9WithByteArray:(IOSByteArray *)ownerPassword;
 
 /*!
- @brief implements Algorithm 10: Computing the encryption dictionary’s Perms (permissions) value (Security handlers of
+ @brief implements Algorithm 10: Computing the encryption dictionary's Perms (permissions) value (Security handlers of
   revision 6) - ISO 32000-2 section 7.6.4.4.9
  */
 - (void)computePermsAlg10WithInt:(jint)permissions;
 
 /*!
- @brief implements Algorithm 8: Computing the encryption dictionary’s U (user password) and UE (user encryption) values
+ @brief implements Algorithm 8: Computing the encryption dictionary's U (user password) and UE (user encryption) values
   (Security handlers of revision 6) - ISO 32000-2 section 7.6.4.4.7
  */
 - (void)computeUAndUeAlg8WithByteArray:(IOSByteArray *)userPassword;

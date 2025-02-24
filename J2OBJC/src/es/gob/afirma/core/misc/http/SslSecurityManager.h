@@ -30,7 +30,7 @@
 #pragma mark Public
 
 /*!
- @brief Configura los almacenes de confianza de Java y AutoFirma para la validaci&oacute;n de las
+ @brief Configura los almacenes de confianza de Java y Autofirma para la validaci&oacute;n de las
   conexiones SSL.
  @throw IOExceptionCuando falla la lectura del almac&eacute;n del cliente.
  @throw GeneralSecurityExceptionCuando falla la carga del almac&eacute;n.

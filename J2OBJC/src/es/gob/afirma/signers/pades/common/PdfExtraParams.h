@@ -775,8 +775,7 @@ J2OBJC_STATIC_FIELD_OBJ_FINAL(EsGobAfirmaSignersPadesCommonPdfExtraParams, SIGNE
 
 /*!
  @brief Contrase&ntilde;a de apertura del PDF (contrase&ntilde;a del propietario) si
-  este estaba cifrado.No se soporta la firma de documentos PDF cifrados con
-  certificados o con algoritmo AES256.
+  este estaba cifrado.
  */
 inline NSString *EsGobAfirmaSignersPadesCommonPdfExtraParams_get_OWNER_PASSWORD_STRING(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
