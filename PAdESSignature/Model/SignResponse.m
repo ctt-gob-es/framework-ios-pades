@@ -5,9 +5,9 @@
 //  Created by Desarrollo Abamobile on 5/2/25.
 //
 
-#import "PostsignResponse.h"
+#import "SignResponse.h"
 
-@implementation PostsignResponse
+@implementation SignResponse
 
 - (instancetype)initWithSignedString:(nullable NSString *)signedString
 							   error:(nullable NSError *)error

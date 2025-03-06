@@ -2386,15 +2386,15 @@
 		8320A60A2D6C6C84009EAE42 /* P7ContentSignerParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 83209CC02D6C6C7E009EAE42 /* P7ContentSignerParameters.m */; };
 		8320A60B2D6C6C84009EAE42 /* AOAlgorithmID.m in Sources */ = {isa = PBXBuildFile; fileRef = 83209CC12D6C6C7E009EAE42 /* AOAlgorithmID.m */; };
 		833536102D087EDC00865BB2 /* PAdESSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = 8335360F2D087EDC00865BB2 /* PAdESSignature.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		833549242D09680200865BB2 /* PAdESSignatureUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 833549222D09680100865BB2 /* PAdESSignatureUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		833549252D09680200865BB2 /* PAdESSignatureUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 833549232D09680200865BB2 /* PAdESSignatureUtils.m */; };
+		833549242D09680200865BB2 /* PAdESSigner.h in Headers */ = {isa = PBXBuildFile; fileRef = 833549222D09680100865BB2 /* PAdESSigner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		833549252D09680200865BB2 /* PAdESSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 833549232D09680200865BB2 /* PAdESSigner.m */; };
 		8355BAD42D0C53FA0068467A /* PKCS1DecoderUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */; };
 		8355BAD52D0C561E0068467A /* PKCS1DecoderUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		835E0E4D2D5364AC00AED45A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835E0E4C2D5364AC00AED45A /* UIKit.framework */; };
 		83EF820B2D534CAF0008920A /* PresignResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EF820A2D534CAE0008920A /* PresignResponse.m */; };
 		83EF820D2D534CC00008920A /* PresignResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 83EF820C2D534CBA0008920A /* PresignResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		83EF82102D534CDE0008920A /* PostsignResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EF820F2D534CDE0008920A /* PostsignResponse.m */; };
-		83EF82112D534CE10008920A /* PostsignResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 83EF820E2D534CD20008920A /* PostsignResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83EF82102D534CDE0008920A /* SignResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EF820F2D534CDE0008920A /* SignResponse.m */; };
+		83EF82112D534CE10008920A /* SignResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 83EF820E2D534CD20008920A /* SignResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		83F13D812D09928A00FE5227 /* Courier-Bold.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D702D09928A00FE5227 /* Courier-Bold.afm */; };
 		83F13D822D09928A00FE5227 /* Courier-BoldOblique.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D712D09928A00FE5227 /* Courier-BoldOblique.afm */; };
 		83F13D832D09928A00FE5227 /* Courier-Oblique.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D722D09928A00FE5227 /* Courier-Oblique.afm */; };
@@ -2410,6 +2410,10 @@
 		83F13D8D2D09928A00FE5227 /* Times-Italic.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7C2D09928A00FE5227 /* Times-Italic.afm */; };
 		83F13D8E2D09928A00FE5227 /* Times-Roman.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7D2D09928A00FE5227 /* Times-Roman.afm */; };
 		83F13D8F2D09928A00FE5227 /* ZapfDingbats.afm in Resources */ = {isa = PBXBuildFile; fileRef = 83F13D7E2D09928A00FE5227 /* ZapfDingbats.afm */; };
+		A04C97B52D77BD7900F4FFB9 /* PAdESSignatureErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = A04C97B42D77BD7900F4FFB9 /* PAdESSignatureErrors.h */; };
+		A04C97B72D77BDDE00F4FFB9 /* PAdESSignatureErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = A04C97B62D77BDDE00F4FFB9 /* PAdESSignatureErrors.m */; };
+		A04C97B92D78699400F4FFB9 /* CertificateService.h in Headers */ = {isa = PBXBuildFile; fileRef = A04C97B82D78699400F4FFB9 /* CertificateService.h */; };
+		A04C97BB2D7869A300F4FFB9 /* CertificateService.m in Sources */ = {isa = PBXBuildFile; fileRef = A04C97BA2D7869A300F4FFB9 /* CertificateService.m */; };
 		A0DD2BE12D5BA7DF0025138A /* HashAlgorithmType.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DD2BE02D5BA7DF0025138A /* HashAlgorithmType.m */; };
 		A0DD2BE22D5BEB4F0025138A /* HashAlgorithmType.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DD2BDF2D5BA6A10025138A /* HashAlgorithmType.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0DD2BE42D5BEF500025138A /* SignatureAlgorithmType.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DD2BE32D5BEF500025138A /* SignatureAlgorithmType.m */; };
@@ -4797,15 +4801,15 @@
 		83209CC12D6C6C7E009EAE42 /* AOAlgorithmID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AOAlgorithmID.m; sourceTree = "<group>"; };
 		8335360C2D087EDC00865BB2 /* PAdESSignature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PAdESSignature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8335360F2D087EDC00865BB2 /* PAdESSignature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAdESSignature.h; sourceTree = "<group>"; };
-		833549222D09680100865BB2 /* PAdESSignatureUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAdESSignatureUtils.h; sourceTree = "<group>"; };
-		833549232D09680200865BB2 /* PAdESSignatureUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAdESSignatureUtils.m; sourceTree = "<group>"; };
+		833549222D09680100865BB2 /* PAdESSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAdESSigner.h; sourceTree = "<group>"; };
+		833549232D09680200865BB2 /* PAdESSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAdESSigner.m; sourceTree = "<group>"; };
 		8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKCS1DecoderUtils.h; sourceTree = "<group>"; };
 		8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKCS1DecoderUtils.m; sourceTree = "<group>"; };
 		835E0E4C2D5364AC00AED45A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		83EF820A2D534CAE0008920A /* PresignResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PresignResponse.m; sourceTree = "<group>"; };
 		83EF820C2D534CBA0008920A /* PresignResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PresignResponse.h; sourceTree = "<group>"; };
-		83EF820E2D534CD20008920A /* PostsignResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostsignResponse.h; sourceTree = "<group>"; };
-		83EF820F2D534CDE0008920A /* PostsignResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostsignResponse.m; sourceTree = "<group>"; };
+		83EF820E2D534CD20008920A /* SignResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignResponse.h; sourceTree = "<group>"; };
+		83EF820F2D534CDE0008920A /* SignResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignResponse.m; sourceTree = "<group>"; };
 		83F13D702D09928A00FE5227 /* Courier-Bold.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-Bold.afm"; sourceTree = "<group>"; };
 		83F13D712D09928A00FE5227 /* Courier-BoldOblique.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-BoldOblique.afm"; sourceTree = "<group>"; };
 		83F13D722D09928A00FE5227 /* Courier-Oblique.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Courier-Oblique.afm"; sourceTree = "<group>"; };
@@ -4821,6 +4825,10 @@
 		83F13D7C2D09928A00FE5227 /* Times-Italic.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Times-Italic.afm"; sourceTree = "<group>"; };
 		83F13D7D2D09928A00FE5227 /* Times-Roman.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Times-Roman.afm"; sourceTree = "<group>"; };
 		83F13D7E2D09928A00FE5227 /* ZapfDingbats.afm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ZapfDingbats.afm; sourceTree = "<group>"; };
+		A04C97B42D77BD7900F4FFB9 /* PAdESSignatureErrors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAdESSignatureErrors.h; sourceTree = "<group>"; };
+		A04C97B62D77BDDE00F4FFB9 /* PAdESSignatureErrors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAdESSignatureErrors.m; sourceTree = "<group>"; };
+		A04C97B82D78699400F4FFB9 /* CertificateService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CertificateService.h; sourceTree = "<group>"; };
+		A04C97BA2D7869A300F4FFB9 /* CertificateService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CertificateService.m; sourceTree = "<group>"; };
 		A0DD2BDF2D5BA6A10025138A /* HashAlgorithmType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HashAlgorithmType.h; sourceTree = "<group>"; };
 		A0DD2BE02D5BA7DF0025138A /* HashAlgorithmType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HashAlgorithmType.m; sourceTree = "<group>"; };
 		A0DD2BE32D5BEF500025138A /* SignatureAlgorithmType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignatureAlgorithmType.m; sourceTree = "<group>"; };
@@ -8354,19 +8362,12 @@
 		8335360E2D087EDC00865BB2 /* PAdESSignature */ = {
 			isa = PBXGroup;
 			children = (
-				833549222D09680100865BB2 /* PAdESSignatureUtils.h */,
-				833549232D09680200865BB2 /* PAdESSignatureUtils.m */,
-				8335360F2D087EDC00865BB2 /* PAdESSignature.h */,
-				8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */,
-				8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */,
-				83EF820C2D534CBA0008920A /* PresignResponse.h */,
-				83EF820A2D534CAE0008920A /* PresignResponse.m */,
-				83EF820E2D534CD20008920A /* PostsignResponse.h */,
-				83EF820F2D534CDE0008920A /* PostsignResponse.m */,
-				A0DD2BDF2D5BA6A10025138A /* HashAlgorithmType.h */,
-				A0DD2BE02D5BA7DF0025138A /* HashAlgorithmType.m */,
-				A0DD2BE52D5BEF670025138A /* SignatureAlgorithmType.h */,
-				A0DD2BE32D5BEF500025138A /* SignatureAlgorithmType.m */,
+				A04C97A92D77B66F00F4FFB9 /* Public */,
+				A04C97A82D77B66F00F4FFB9 /* Model */,
+				A04C97B32D77B66F00F4FFB9 /* Services */,
+				A04C97A62D77B66F00F4FFB9 /* Types */,
+				A04C97A72D77B66F00F4FFB9 /* Utils */,
+				A04C97AE2D77B66F00F4FFB9 /* Internal */,
 			);
 			path = PAdESSignature;
 			sourceTree = "<group>";
@@ -8427,6 +8428,129 @@
 				83F13D7F2D09928A00FE5227 /* fonts */,
 			);
 			path = resources;
+			sourceTree = "<group>";
+		};
+		A04C97A62D77B66F00F4FFB9 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				A0DD2BE02D5BA7DF0025138A /* HashAlgorithmType.m */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		A04C97A72D77B66F00F4FFB9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8355BAD32D0C53FA0068467A /* PKCS1DecoderUtils.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A04C97A82D77B66F00F4FFB9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83EF820A2D534CAE0008920A /* PresignResponse.m */,
+				83EF820F2D534CDE0008920A /* SignResponse.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A04C97A92D77B66F00F4FFB9 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				8335360F2D087EDC00865BB2 /* PAdESSignature.h */,
+				A04C97AA2D77B66F00F4FFB9 /* Types */,
+				A04C97AB2D77B66F00F4FFB9 /* Utils */,
+				A04C97AC2D77B66F00F4FFB9 /* Model */,
+				A04C97AD2D77B66F00F4FFB9 /* Services */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		A04C97AA2D77B66F00F4FFB9 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				A0DD2BDF2D5BA6A10025138A /* HashAlgorithmType.h */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		A04C97AB2D77B66F00F4FFB9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8355BAD22D0C53ED0068467A /* PKCS1DecoderUtils.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A04C97AC2D77B66F00F4FFB9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83EF820C2D534CBA0008920A /* PresignResponse.h */,
+				83EF820E2D534CD20008920A /* SignResponse.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A04C97AD2D77B66F00F4FFB9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				833549222D09680100865BB2 /* PAdESSigner.h */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A04C97AE2D77B66F00F4FFB9 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				A04C97AF2D77B66F00F4FFB9 /* Types */,
+				A04C97B02D77B66F00F4FFB9 /* Utils */,
+				A04C97B12D77B66F00F4FFB9 /* Service */,
+				A04C97B22D77B66F00F4FFB9 /* Error */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		A04C97AF2D77B66F00F4FFB9 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				A0DD2BE52D5BEF670025138A /* SignatureAlgorithmType.h */,
+				A0DD2BE32D5BEF500025138A /* SignatureAlgorithmType.m */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		A04C97B02D77B66F00F4FFB9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A04C97B12D77B66F00F4FFB9 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				A04C97B82D78699400F4FFB9 /* CertificateService.h */,
+				A04C97BA2D7869A300F4FFB9 /* CertificateService.m */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		A04C97B22D77B66F00F4FFB9 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				A04C97B42D77BD7900F4FFB9 /* PAdESSignatureErrors.h */,
+				A04C97B62D77BDDE00F4FFB9 /* PAdESSignatureErrors.m */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		A04C97B32D77B66F00F4FFB9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				833549232D09680200865BB2 /* PAdESSigner.m */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -8531,6 +8655,7 @@
 				8320A0032D6C6C7F009EAE42 /* CRLNumber.h in Headers */,
 				83209EEC2D6C6C7F009EAE42 /* ElementListener.h in Headers */,
 				8320A4932D6C6C82009EAE42 /* BcDefaultDigestProvider.h in Headers */,
+				A04C97B52D77BD7900F4FFB9 /* PAdESSignatureErrors.h in Headers */,
 				8320A3592D6C6C82009EAE42 /* SecP192R1Point.h in Headers */,
 				83209D9E2D6C6C7F009EAE42 /* MetaDo.h in Headers */,
 				83209E522D6C6C7F009EAE42 /* StandardDecryption.h in Headers */,
@@ -8689,6 +8814,7 @@
 				8320A24B2D6C6C81009EAE42 /* StringList.h in Headers */,
 				8320A1A22D6C6C80009EAE42 /* MD5Digest.h in Headers */,
 				8320A4002D6C6C82009EAE42 /* KeyTransRecipient.h in Headers */,
+				A04C97B92D78699400F4FFB9 /* CertificateService.h in Headers */,
 				83209F372D6C6C7F009EAE42 /* LargeElement.h in Headers */,
 				8320A4F62D6C6C83009EAE42 /* UrlParametersToSign.h in Headers */,
 				8320A0CA2D6C6C80009EAE42 /* SigningCertificate.h in Headers */,
@@ -8967,7 +9093,7 @@
 				8320A3542D6C6C82009EAE42 /* SecP224R1FieldElement.h in Headers */,
 				8320A33F2D6C6C81009EAE42 /* SecP256R1Point.h in Headers */,
 				83209CF42D6C6C7E009EAE42 /* Dimension2D.h in Headers */,
-				833549242D09680200865BB2 /* PAdESSignatureUtils.h in Headers */,
+				833549242D09680200865BB2 /* PAdESSigner.h in Headers */,
 				8320A30B2D6C6C81009EAE42 /* SecP521R1Curve.h in Headers */,
 				8320A4D82D6C6C83009EAE42 /* AOUtil.h in Headers */,
 				8320A5DC2D6C6C84009EAE42 /* PdfSessionManager.h in Headers */,
@@ -9380,7 +9506,7 @@
 				8320A5982D6C6C83009EAE42 /* ExtraParamsProcessor.h in Headers */,
 				8320A55E2D6C6C83009EAE42 /* AOCounterSigner.h in Headers */,
 				8320A47B2D6C6C82009EAE42 /* AttributeCertificateIssuer.h in Headers */,
-				83EF82112D534CE10008920A /* PostsignResponse.h in Headers */,
+				83EF82112D534CE10008920A /* SignResponse.h in Headers */,
 				83209DA02D6C6C7F009EAE42 /* InputMeta.h in Headers */,
 				8320A1D12D6C6C80009EAE42 /* KTSParameterSpec.h in Headers */,
 				83209EC52D6C6C7F009EAE42 /* PdfDocumentActions.h in Headers */,
@@ -10094,6 +10220,7 @@
 				83209FC82D6C6C7F009EAE42 /* X9IntegerConverter.m in Sources */,
 				83209EE92D6C6C7F009EAE42 /* Markup.m in Sources */,
 				8320A3A12D6C6C82009EAE42 /* Nat192.m in Sources */,
+				A04C97BB2D7869A300F4FFB9 /* CertificateService.m in Sources */,
 				83209F102D6C6C7F009EAE42 /* XmpBasicSchema.m in Sources */,
 				83209E972D6C6C7F009EAE42 /* FontsResourceAnchor.m in Sources */,
 				83209EA72D6C6C7F009EAE42 /* BidiLine.m in Sources */,
@@ -10155,6 +10282,7 @@
 				8320A3922D6C6C82009EAE42 /* GenericPolynomialExtensionField.m in Sources */,
 				8320A5972D6C6C83009EAE42 /* AOTriphaseException.m in Sources */,
 				83209CDC2D6C6C7E009EAE42 /* Ellipse2D.m in Sources */,
+				A04C97B72D77BDDE00F4FFB9 /* PAdESSignatureErrors.m in Sources */,
 				8320A1F32D6C6C81009EAE42 /* X509CRLObject.m in Sources */,
 				8320A0ED2D6C6C80009EAE42 /* OCSPObjectIdentifiers.m in Sources */,
 				83209D662D6C6C7F009EAE42 /* XfdfReader.m in Sources */,
@@ -10218,7 +10346,7 @@
 				8320A33E2D6C6C81009EAE42 /* SecT409K1Point.m in Sources */,
 				8320A4342D6C6C82009EAE42 /* CMSSignerDigestMismatchException.m in Sources */,
 				8320A2042D6C6C81009EAE42 /* ECParameterSpec.m in Sources */,
-				833549252D09680200865BB2 /* PAdESSignatureUtils.m in Sources */,
+				833549252D09680200865BB2 /* PAdESSigner.m in Sources */,
 				8320A1332D6C6C80009EAE42 /* ASN1StreamParser.m in Sources */,
 				8320A2952D6C6C81009EAE42 /* WNafUtil.m in Sources */,
 				8320A5A12D6C6C83009EAE42 /* AOCancelledOperationException.m in Sources */,
@@ -10850,7 +10978,7 @@
 				8320A1C72D6C6C80009EAE42 /* ProviderJcaJceHelper.m in Sources */,
 				8320A0B92D6C6C80009EAE42 /* DERFactory.m in Sources */,
 				8320A2D22D6C6C81009EAE42 /* SecP256R1Point.m in Sources */,
-				83EF82102D534CDE0008920A /* PostsignResponse.m in Sources */,
+				83EF82102D534CDE0008920A /* SignResponse.m in Sources */,
 				83209F222D6C6C7F009EAE42 /* SAXmyHandler.m in Sources */,
 				83209E002D6C6C7F009EAE42 /* MappedRandomAccessFile.m in Sources */,
 				8320A4762D6C6C82009EAE42 /* OCSPUtils.m in Sources */,
@@ -10973,8 +11101,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/PAdESSignature/Public/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				J2OBJC_HOME = "/Users/desarrolloabamobile/Downloads/j2objc-2.8";
+				J2OBJC_HOME = "/Users/luis/desarrollo/j2objc-2.8";
 				LIBRARY_SEARCH_PATHS = "$(J2OBJC_HOME)/lib";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -11004,6 +11133,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"$(J2OBJC_HOME)/include",
 					"$(SRCROOT)/J2OBJC/**",
+					"$(SRCROOT)/PAdESSignature/Internal/**",
 				);
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -11058,8 +11188,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/PAdESSignature/Public/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				J2OBJC_HOME = "/Users/desarrolloabamobile/Downloads/j2objc-2.8";
+				J2OBJC_HOME = "/Users/luis/desarrollo/j2objc-2.8";
 				LIBRARY_SEARCH_PATHS = "$(J2OBJC_HOME)/lib";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -11088,6 +11219,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"$(J2OBJC_HOME)/include",
 					"$(SRCROOT)/J2OBJC/**",
+					"$(SRCROOT)/PAdESSignature/Internal/**",
 				);
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
